@@ -190,7 +190,7 @@
         ).attr({
             'stroke-width': config['stroke-width'],
             'stroke': config.stroke,
-            'arrow-end': hasArrow === false ? 'none':config['arrow-end']
+            'arrow-end': hasArrow === false ? 'none' : config['arrow-end']
         });
     };
 
@@ -373,29 +373,39 @@
         return position;
     };
 
-    TopologyDiagram.prototype.createTopologyAllNode = function () {
-        var data = this.data,
-            config = this.config,
-            relateTypeEnum = config.relateTypeEnum,
-            node;
+    TopologyDiagram.prototype.loadTopologyNodes = function () {
+        this.AddTopologyNodes(this.data, null, this.config.relateTypeEnum.child);
+        this.createTopologyAllLine();
+    };
+
+    TopologyDiagram.prototype.AddTopologyNodes = function (data, relateNode, relateType) {
+        // var config = this.config,
+        //     relateTypeEnum = config.relateTypeEnum,
+        //     node;
+
+        var node;
 
         if (data && data instanceof Array) {
             for (var i = 0, len = data.length; i < len; i++) {
                 var item = data[i];
 
-                node = this.createTopologyNode(item, i + 1, len, null, relateTypeEnum.child);
+                node = this.createTopologyNode(item, i + 1, len, relateNode, relateType);
 
                 if (item.children && item.children.length > 0) {
-                    var children = item.children,
-                        childItem;
-
-                    for (var j = 0, jlen = children.length; j < jlen; j++) {
-                        childItem = children[j];
-
-                        this.createTopologyNode(childItem, j + 1, jlen, node, relateTypeEnum.child);
-                    }
+                    this.AddTopologyNodes(item.children, node, relateType);
                 }
             }
+            // if (item.children && item.children.length > 0) {
+            //     var children = item.children,
+            //         childItem;
+
+            //     for (var j = 0, jlen = children.length; j < jlen; j++) {
+            //         childItem = children[j];
+
+            //         // this.createTopologyNode(childItem, j + 1, jlen, node, relateTypeEnum.child);
+            //         this.AddTopologyNodes(data);
+            //     }
+            // }
         }
     };
 
@@ -459,7 +469,7 @@
     $.fn.extend({
         topology: function (data) {
             var topologyDiagram = new TopologyDiagram(this[0], Raphael, data);
-            topologyDiagram.createAllTopology();
+            topologyDiagram.loadTopologyNodes();
         }
     });
 })(jQuery, Raphael);

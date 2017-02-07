@@ -8,19 +8,34 @@ $(function () {
             id: '1-1',
             src: 'images/counter.png',
             text: '二级节点1-1',
-            children: []
+            children: [{
+                id: '1-1-1',
+                src: 'images/counter.png',
+                text: '三级节点1-1-1',
+                children: []
+            }]
         },
         {
             id: '1-2',
             src: 'images/counter.png',
             text: '二级节点1-2',
-            children: []
+            children: [{
+                id: '1-2-1',
+                src: 'images/counter.png',
+                text: '三级节点1-2-1',
+                children: []
+            }]
         },
         {
             id: '1-3',
             src: 'images/counter.png',
             text: '二级节点1-3',
-            children: []
+            children: [{
+                id: '1-3-1',
+                src: 'images/counter.png',
+                text: '三级节点1-3-1',
+                children: []
+            }]
         }
         ]
     }];
