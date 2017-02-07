@@ -431,34 +431,51 @@
 
     TopologyDiagram.prototype.createTopologyAllLine = function () {
         var nodes = this.nodes,
-            // config = this.config,
+            config = this.config,
             // node = config.node,
             // offset = {
             //     x: node['margin-top'],
             //     y: node['margin-left']
             // },
+            pathWidth = config.path['stroke-width'],
             offsetX = this.config.node['margin-left'] / 2;
 
         for (var k in nodes) {
             var parent = nodes[k],
                 children = parent.childrenNodes,
                 parentX = parent.x + parent.width,
-                parentY = parent.y + parent.height / 2;
+                parentY = parent.y + parent.height / 2,
+                childrenLength,
+                childItem,
+                childX,
+                childY;
 
             if (children && children.length > 0) {
+                childrenLength = children.length;
+                // 中间的横线
                 this.createStraightLine(parentX, parentY, parentX + offsetX, parentY, false);
-            }
+                // 上竖线
+                childItem = children[0];
+                childY = childItem.y + childItem.height / 2 - pathWidth;
+                this.createStraightLine(parentX + offsetX, parentY, parentX + offsetX, childY, false);
+                // 下竖线
+                childItem = children[childrenLength - 1];
+                childY = childItem.y + childItem.height / 2 + pathWidth;
+                this.createStraightLine(parentX + offsetX, parentY, parentX + offsetX, childY, false);
 
-            for (var i = 0, len = children.length; i < len; i++) {
-                var childItem = children[i],
-                    childX = childItem.x,
+                for (var i = 0, len = childrenLength; i < len; i++) {
+                    childItem = children[i];
+                    childX = childItem.x;
                     childY = childItem.y + childItem.height / 2;
 
-                if (parentY === childY) {
-                    this.createStraightLine(parentX + offsetX, parentY, childX, childY);
-                } else {
-                    // this.createStraightLine(parentX, parentY, childX - offsetX, parentY);
-                    this.createBrokenLine(parentX + offsetX, parentY, childX, childY);
+                    this.createStraightLine(parentX + offsetX, childY, childX, childY);
+                    // if (parentY === childY) {
+                    //     this.createStraightLine(parentX + offsetX, parentY, childX, childY);
+                    // } else {
+                    //     // this.createStraightLine(parentX, parentY, childX - offsetX, parentY);
+                    //     // this.createBrokenLine(parentX + offsetX, parentY, childX, childY);
+                    //     this.createStraightLine(parentX + offsetX, childY, childX, childY);
+                    // }
                 }
             }
         }
