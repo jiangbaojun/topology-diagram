@@ -217,7 +217,79 @@
         return this.createPath(startX, startY, middleX, middleY, endX, endY);
     };
 
-    TopologyDiagram.prototype.createTopologyNode = function (data, index, siblingsTotal, relateNode, relateType) {
+    // TopologyDiagram.prototype.createTopologyNode = function (data, index, siblingsTotal, relateNode, relateType) {
+    //     var currentData = data,
+    //         nodeElements,
+    //         id = this.getId(),
+    //         src = currentData.src,
+    //         text = currentData.text,
+    //         config = this.config,
+    //         relateTypeEnum = config.relateTypeEnum,
+    //         position,
+    //         nodes = this.nodes,
+    //         currentNode,
+    //         prevNode;
+
+    //     currentNode = {
+    //         id: id,
+    //         x: 0,
+    //         y: 0,
+    //         width: 0,
+    //         height: 0,
+    //         // x: position.x,
+    //         // y: position.y,
+    //         // width: nodeElements.width,
+    //         // height: nodeElements.height,
+    //         // nodeElements: nodeElements,
+    //         originalData: currentData,
+    //         parentNodes: [],
+    //         childrenNodes: [],
+    //         prevNode: null,
+    //         nextNode: null,
+    //         lines: []
+    //     };
+
+    //     if (relateNode) {
+    //         // 创建下级节点
+    //         if (relateType === relateTypeEnum.child) {
+    //             if (relateNode.childrenNodes.length > 0) {
+    //                 prevNode = relateNode.childrenNodes[relateNode.childrenNodes.length - 1];
+
+    //                 prevNode.nextNode = currentNode;
+    //                 currentNode.prevNode = prevNode;
+    //             }
+    //             currentNode.parentNodes = [relateNode];
+    //             relateNode.childrenNodes.push(currentNode);
+    //             // 创建父级节点
+    //         } else if (relateType === relateTypeEnum.parent) {
+    //             if (relateNode.parentNodes.length > 0) {
+    //                 prevNode = relateNode.parentNodes[relateNode.parentNodes.length - 1];
+    //                 prevNode.nextNode = currentNode;
+    //                 currentNode.prevNode = prevNode;
+    //             }
+    //             currentNode.childrenNodes = [relateNode];
+    //             relateNode.parentNodes.push(currentNode);
+    //         }
+    //     }
+
+    //     position = this.CalculateTopologyNodePosition(relateNode, relateType, index, siblingsTotal, currentNode);
+
+    //     nodeElements = this.createNode(position.x, position.y, src, text, id);
+
+    //     $.extend(currentNode, {
+    //         x: position.x,
+    //         y: position.y,
+    //         width: nodeElements.width,
+    //         height: nodeElements.height,
+    //         nodeElements: nodeElements
+    //     });
+
+    //     nodes[id] = currentNode;
+
+    //     return currentNode;
+    // };
+
+    TopologyDiagram.prototype.createTopologyNode = function (data, siblingsIndex, siblingsCount, relateNode, relateType) {
         var currentData = data,
             nodeElements,
             id = this.getId(),
@@ -230,22 +302,24 @@
             currentNode,
             prevNode;
 
-        position = this.CalculateTopologyNodePosition(relateNode, relateType, index, siblingsTotal);
-
-        nodeElements = this.createNode(position.x, position.y, src, text, id);
-
         currentNode = {
             id: id,
-            x: position.x,
-            y: position.y,
-            width: nodeElements.width,
-            height: nodeElements.height,
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0,
+            // x: position.x,
+            // y: position.y,
+            // width: nodeElements.width,
+            // height: nodeElements.height,
+            // nodeElements: nodeElements,
             originalData: currentData,
-            nodeElements: nodeElements,
             parentNodes: [],
             childrenNodes: [],
             prevNode: null,
             nextNode: null,
+            siblingsIndex: siblingsIndex,
+            siblingsCount: siblingsCount,
             lines: []
         };
 
@@ -260,8 +334,8 @@
                 }
                 currentNode.parentNodes = [relateNode];
                 relateNode.childrenNodes.push(currentNode);
-            } else if (relateType === relateTypeEnum.parent) {
                 // 创建父级节点
+            } else if (relateType === relateTypeEnum.parent) {
                 if (relateNode.parentNodes.length > 0) {
                     prevNode = relateNode.parentNodes[relateNode.parentNodes.length - 1];
                     prevNode.nextNode = currentNode;
@@ -271,6 +345,18 @@
                 relateNode.parentNodes.push(currentNode);
             }
         }
+
+        position = this.CalculateTopologyNodePosition(relateNode, currentNode, relateType);
+
+        nodeElements = this.createNode(position.x, position.y, src, text, id);
+
+        $.extend(currentNode, {
+            x: position.x,
+            y: position.y,
+            width: nodeElements.width,
+            height: nodeElements.height,
+            nodeElements: nodeElements
+        });
 
         nodes[id] = currentNode;
 
@@ -292,32 +378,38 @@
         // return currentNode;
     };
 
-    TopologyDiagram.prototype.CalculateTopologyNodePosition = function (relateNode, relateType, index, siblingsTotal) {
-        // relateType必须存在
+    TopologyDiagram.prototype.CalculateTopologyNodePosition = function (relateNode, currentNode, relateType) {
+        // relateType必须存在，没有传入则默认为虚拟根节点
         if (!relateNode) {
             relateNode = this.virtualRootNode;
         }
 
         var config = this.config,
-            // startPosition = config.node.startPosition,
-            // position = $.extend({}, startPosition),
             position = {},
             width = relateNode.width,
             x = relateNode.x,
             y = relateNode.y,
-            // width = 0,
             height = config.rect.height,
             relateTypeEnum = config.relateTypeEnum,
             offset = {
                 x: config.node['margin-left'],
                 y: config.node['margin-top']
+            },
+            siblingsCount = currentNode.siblingsCount,
+            siblingsIndex = currentNode.siblingsIndex,
+            siblingsIsOdd = siblingsCount % 2 === 1,
+            siblingsMiddleIndex = Math.ceil(siblingsCount / 2),
+            prevNode = currentNode.prevNode,
+            // 计算偏移量相关参数
+            currentItemChild = currentNode.originalData.children,
+            currentItemChildCount = currentItemChild.length,
+            currentItemChildMiddleIndex = Math.ceil(currentItemChildCount / 2),
+            nodeHeight = config.rect.height,
+            // prevNodeOffsetYBottom = currentNode.prevNode.offsetY.bottom,
+            offsetY = {
+                top: 0,
+                bottom: 0
             };
-
-        // if (relateNode) {
-        //     width = relateNode.width;
-        //     x = relateNode.x;
-        //     y = relateNode.y;
-        // }
 
         if (relateType === relateTypeEnum.child) {
             x += width + offset.x;
@@ -325,69 +417,111 @@
             x -= offset.x;
         }
 
-        if (siblingsTotal === 1) {
+        // 创建节点兄弟节点个数为1
+        if (siblingsCount === 1) {
             position.x = x;
             position.y = y;
-            return position;
+        } else {
+            // 计算同辈节点中首个节点的起始位置
+            if (siblingsIndex === 1) {
+                y = y - (siblingsMiddleIndex - siblingsIndex) * offset.y;
+                if (!siblingsIsOdd) {
+                    y -= height;
+                }
+            } else {
+                x = prevNode.x;
+                y = prevNode.y + offset.y;
+            }
+
+            position.x = x;
+            position.y = y;
         }
 
-        var middleIndex = Math.ceil(siblingsTotal / 2);
-        // 包含奇数个节点
-        if (siblingsTotal % 2 === 1) {
-            if (index < middleIndex) {
-                y = y - (middleIndex - index) * offset.y;
-            } else if (index > middleIndex) {
-                y = y + (index - middleIndex) * offset.y;
-            }
-            // 包含偶数个节点
-        } else if (siblingsTotal % 2 === 0) {
-            middleIndex += 1;
-            if (index < middleIndex) {
-                y = y - (middleIndex - index) * offset.y + height / 2;
-            } else if (index >= middleIndex) {
-                y = y + (index - middleIndex + 1) * offset.y - height / 2;
-            }
-        }
-
-        position.x = x;
-        position.y = y;
-
-        // var parent = parent || {},
-        //     nodeElements,
-        //     // children = childNodes,
-        //     start = {
-        //         X: parent.x || 0,
-        //         y: parent.y || 0
-        //     },
-        //     next = {
-        //         x: start.x,
-        //         y: start.y
-        //     },
-        //     end = {
-        //         x: start.x,
-        //         y: start.y
-        //     },
-        //     offset = {
-        //         x: 0,
-        //         y: 2 * (this.rect.height + 2 * (this.node.padding))
-        //     },
-        //     pathInfo,
-        //     nodeInfo;
-
-        // if (children && children.length > 0) {
-        //     // 计算子节点的位置
-        //     for (var i = 0, len = children.length; i < len; i++) {
-        //         // this.createStraightLine(start.x, start.y, end.x, end.y);
+        // 计算节点y值坐标的偏移量
+        // if (currentItemChildCount > 1) {
+        //     if (currentItemChildCount % 2 === 0) {
+        //         offsetY.bottom = Math.abs((currentItemChild[currentItemChildCount - 1].y - currentItemChild[0].y) / 2) + nodeHeight / 2 + nodeOffseY;
+        //     } else {
+        //         offsetY.bottom = Math.abs(currentItemChild[currentItemChildCount - 1].y - currentItemChild[currentItemChildMiddleIndex - 1].y);
         //     }
         // }
 
-        // return {
-        //     x: 100,
-        //     y: 100
-        // };
-
         return position;
     };
+
+    // TopologyDiagram.prototype.CalculateTopologyNodePosition = function (relateNode, relateType, index, siblingsTotal, currentNode) {
+    //     // relateType必须存在，没有传入则默认为虚拟根节点
+    //     if (!relateNode) {
+    //         relateNode = this.virtualRootNode;
+    //     }
+
+    //     var config = this.config,
+    //         position = {},
+    //         width = relateNode.width,
+    //         x = relateNode.x,
+    //         y = relateNode.y,
+    //         height = config.rect.height,
+    //         relateTypeEnum = config.relateTypeEnum,
+    //         offset = {
+    //             x: config.node['margin-left'],
+    //             y: config.node['margin-top']
+    //         },
+    //         // 计算偏移量相关参数
+    //         currentItemChild = currentNode.originalData.children,
+    //         currentItemChildCount = currentItemChild.length,
+    //         currentItemChildMiddleIndex = Math.ceil(currentItemChildCount / 2),
+    //         nodeHeight = config.rect.height,
+    //         prevNodeOffsetYBottom = currentNode.prevNode.offsetY.bottom,
+    //         offsetY = {
+    //             top: 0,
+    //             bottom: 0
+    //         };
+
+    //     if (relateType === relateTypeEnum.child) {
+    //         x += width + offset.x;
+    //     } else if (relateType === relateTypeEnum.parent) {
+    //         x -= offset.x;
+    //     }
+
+    //     // 创建节点兄弟节点个数为1
+    //     if (siblingsTotal === 1) {
+    //         position.x = x;
+    //         position.y = y;
+    //         // 创建节点兄弟节点个数大于1
+    //     } else {
+    //         var middleIndex = Math.ceil(siblingsTotal / 2);
+    //         // 包含奇数个节点
+    //         if (siblingsTotal % 2 === 1) {
+    //             if (index < middleIndex) {
+    //                 y = y - (middleIndex - index) * offset.y;
+    //             } else if (index > middleIndex) {
+    //                 y = y + (index - middleIndex) * offset.y;
+    //             }
+    //             // 包含偶数个节点
+    //         } else if (siblingsTotal % 2 === 0) {
+    //             middleIndex += 1;
+    //             if (index < middleIndex) {
+    //                 y = y - (middleIndex - index) * offset.y + height / 2;
+    //             } else if (index >= middleIndex) {
+    //                 y = y + (index - middleIndex + 1) * offset.y - height / 2;
+    //             }
+    //         }
+
+    //         position.x = x;
+    //         position.y = y;
+    //     }
+
+    //     // 计算节点y值坐标的偏移量
+    //     if (currentItemChildCount > 1) {
+    //         if (currentItemChildCount % 2 === 0) {
+    //             offsetY.bottom = Math.abs((currentItemChild[currentItemChildCount - 1].y - currentItemChild[0].y) / 2) + nodeHeight / 2 + nodeOffseY;
+    //         } else {
+    //             offsetY.bottom = Math.abs(currentItemChild[currentItemChildCount - 1].y - currentItemChild[currentItemChildMiddleIndex - 1].y);
+    //         }
+    //     }
+
+    //     return position;
+    // };
 
     TopologyDiagram.prototype.loadTopologyNodes = function () {
         this.AddTopologyNodes(this.data, this.virtualRootNode, this.config.relateTypeEnum.child);
@@ -432,11 +566,6 @@
     TopologyDiagram.prototype.createTopologyAllLine = function () {
         var nodes = this.nodes,
             config = this.config,
-            // node = config.node,
-            // offset = {
-            //     x: node['margin-top'],
-            //     y: node['margin-left']
-            // },
             pathWidth = config.path['stroke-width'],
             offsetX = this.config.node['margin-left'] / 2;
 
@@ -469,13 +598,6 @@
                     childY = childItem.y + childItem.height / 2;
 
                     this.createStraightLine(parentX + offsetX, childY, childX, childY);
-                    // if (parentY === childY) {
-                    //     this.createStraightLine(parentX + offsetX, parentY, childX, childY);
-                    // } else {
-                    //     // this.createStraightLine(parentX, parentY, childX - offsetX, parentY);
-                    //     // this.createBrokenLine(parentX + offsetX, parentY, childX, childY);
-                    //     this.createStraightLine(parentX + offsetX, childY, childX, childY);
-                    // }
                 }
             }
         }
