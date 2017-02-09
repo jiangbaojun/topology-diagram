@@ -48,7 +48,7 @@
                 'padding-left': 4,
                 'padding-top': 3,
                 'margin-left': 40,
-                'margin-top': 44
+                'margin-top': 22
             },
             relateTypeEnum: {
                 parent: 'parent',
@@ -74,7 +74,7 @@
             virtualRoot: true,
             id: 'virtualRoot',
             x: 100,
-            y: 200,
+            y: 100,
             width: 0,
             height: 0,
             originalData: null,
@@ -308,11 +308,6 @@
             y: 0,
             width: 0,
             height: 0,
-            // x: position.x,
-            // y: position.y,
-            // width: nodeElements.width,
-            // height: nodeElements.height,
-            // nodeElements: nodeElements,
             originalData: currentData,
             parentNodes: [],
             childrenNodes: [],
@@ -320,7 +315,11 @@
             nextNode: null,
             siblingsIndex: siblingsIndex,
             siblingsCount: siblingsCount,
-            lines: []
+            lines: [],
+            offsetY: {
+                top: 0,
+                bottom: 0
+            }
         };
 
         if (relateNode) {
@@ -353,6 +352,7 @@
         $.extend(currentNode, {
             x: position.x,
             y: position.y,
+            offsetY: position.offsetY,
             width: nodeElements.width,
             height: nodeElements.height,
             nodeElements: nodeElements
@@ -385,68 +385,88 @@
         }
 
         var config = this.config,
-            position = {},
-            width = relateNode.width,
+            nodeWidth = relateNode.width,
             x = relateNode.x,
             y = relateNode.y,
-            height = config.rect.height,
             relateTypeEnum = config.relateTypeEnum,
-            offset = {
+            nodeOffset = {
                 x: config.node['margin-left'],
                 y: config.node['margin-top']
             },
+            nodeHeight = config.rect.height,
             siblingsCount = currentNode.siblingsCount,
             siblingsIndex = currentNode.siblingsIndex,
             siblingsIsOdd = siblingsCount % 2 === 1,
             siblingsMiddleIndex = Math.ceil(siblingsCount / 2),
             prevNode = currentNode.prevNode,
-            // 计算偏移量相关参数
+            // 计算标准偏移量相关参数
             currentItemChild = currentNode.originalData.children,
             currentItemChildCount = currentItemChild.length,
             currentItemChildMiddleIndex = Math.ceil(currentItemChildCount / 2),
-            nodeHeight = config.rect.height,
-            // prevNodeOffsetYBottom = currentNode.prevNode.offsetY.bottom,
-            offsetY = {
+            positionOffsetY = {
                 top: 0,
                 bottom: 0
-            };
+            },
+            // 计算offsetTop累计实际偏移量相关参数
+            prevNodeChildren,
+            prevNodeChildrenCount,
+            prevNodeChildItem;
 
         if (relateType === relateTypeEnum.child) {
-            x += width + offset.x;
+            x += nodeWidth + nodeOffset.x;
         } else if (relateType === relateTypeEnum.parent) {
-            x -= offset.x;
+            x -= nodeOffset.x;
         }
 
-        // 创建节点兄弟节点个数为1
-        if (siblingsCount === 1) {
-            position.x = x;
-            position.y = y;
-        } else {
+        if (siblingsCount !== 1) {
             // 计算同辈节点中首个节点的起始位置
             if (siblingsIndex === 1) {
-                y = y - (siblingsMiddleIndex - siblingsIndex) * offset.y;
-                if (!siblingsIsOdd) {
-                    y -= height;
+                if (siblingsIsOdd) {
+                    y -= (siblingsMiddleIndex - siblingsIndex) * (nodeOffset.y + nodeHeight);
+                } else {
+                    y -= siblingsCount / 2 * nodeHeight + (siblingsCount / 2 - 1) * nodeOffset.y;
                 }
             } else {
                 x = prevNode.x;
-                y = prevNode.y + offset.y;
+                y = prevNode.y + nodeHeight + nodeOffset.y;
             }
-
-            position.x = x;
-            position.y = y;
         }
 
-        // 计算节点y值坐标的偏移量
-        // if (currentItemChildCount > 1) {
-        //     if (currentItemChildCount % 2 === 0) {
-        //         offsetY.bottom = Math.abs((currentItemChild[currentItemChildCount - 1].y - currentItemChild[0].y) / 2) + nodeHeight / 2 + nodeOffseY;
-        //     } else {
-        //         offsetY.bottom = Math.abs(currentItemChild[currentItemChildCount - 1].y - currentItemChild[currentItemChildMiddleIndex - 1].y);
-        //     }
-        // }
+        // 计算节点y（节点左上角的坐标）值坐标的标准偏移量(由子节点的个数计算)
+        if (currentItemChildCount > 1) {
+            if (currentItemChildCount % 2 === 0) {
+                // positionOffsetY.top = currentItemChildCount / 2 * nodeHeight + (currentItemChildCount / 2 - 1) * nodeOffset.y;
+                // positionOffsetY.bottom = positionOffsetY.top + nodeHeight / 2;
+                positionOffsetY.top = currentItemChildCount / 2 * nodeHeight + (currentItemChildCount / 2 - 1) * nodeOffset.y;
+                positionOffsetY.bottom = currentItemChildMiddleIndex * nodeOffset.y + (currentItemChildMiddleIndex - 1) * nodeHeight;
+            } else {
+                positionOffsetY.top = (currentItemChildMiddleIndex - 1) * (nodeOffset.y + nodeHeight);
+                positionOffsetY.bottom = positionOffsetY.top;
+            }
+        }
 
-        return position;
+        if (siblingsIndex !== 1) {
+            if (prevNode) {
+                prevNodeChildren = prevNode.childrenNodes;
+
+                prevNodeChildrenCount = prevNodeChildren.length;
+                for (var i = 0; i < prevNodeChildrenCount; i++) {
+                    prevNodeChildItem = prevNodeChildren[i];
+                    prevNode.offsetY.bottom += prevNodeChildItem.offsetY.top + prevNodeChildItem.offsetY.bottom;
+                }
+            }
+            y += prevNode.offsetY.bottom;
+        }
+
+        y += positionOffsetY.top;
+
+        // 追加全部子节点的偏移量
+
+        return {
+            x: x,
+            y: y,
+            offsetY: positionOffsetY
+        };
     };
 
     // TopologyDiagram.prototype.CalculateTopologyNodePosition = function (relateNode, relateType, index, siblingsTotal, currentNode) {
@@ -530,12 +550,6 @@
 
     TopologyDiagram.prototype.AddTopologyNodes = function (data, relateNode, relateType) {
         var node;
-        // offsetY = 0,
-        // childrenNodes = [],
-        // childrenCount = 0,
-        // childMiddleIndex = 1,
-        // nodeHeight = this.config.rect.height,
-        // nodeOffseY = this.config.node['margin-top'];
 
         if (data && data instanceof Array) {
             for (var i = 0, len = data.length; i < len; i++) {
@@ -547,18 +561,6 @@
                 if (children && children.length > 0) {
                     this.AddTopologyNodes(children, node, relateType);
                 }
-                // 计算下一个同级节点的y值偏移量
-                // childrenNodes = node.childrenNodes;
-                // childrenCount = childrenNodes.length;
-                // if (childrenCount > 1) {
-                //     childMiddleIndex = Math.ceil(childrenCount / 2);
-
-                //     if (childrenCount % 2 === 0) {
-                //         offsetY = Math.abs((childrenNodes[childrenCount - 1].y - childrenNodes[0].y) / 2) + nodeHeight / 2 + nodeOffseY;
-                //     } else {
-                //         offsetY = Math.abs(childrenNodes[childrenCount - 1].y - childrenNodes[childMiddleIndex - 1].y);
-                //     }
-                // }
             }
         }
     };
