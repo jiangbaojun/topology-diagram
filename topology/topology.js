@@ -68,7 +68,8 @@
         };
         this.data = data;
         // 通过创建node自动生成的id绑定节点相关信息
-        this.nodes = {};
+        this.nodesHash = {};
+        this.nodes = [];
         // 虚拟的根节点
         this.virtualRootNode = {
             virtualRoot: true,
@@ -227,13 +228,17 @@
             relateTypeEnum = config.relateTypeEnum,
             position,
             nodes = this.nodes,
+            nodesHash = this.nodesHash,
             currentNode,
             prevNode;
 
         currentNode = {
             id: id,
+            // isRoot: false,
             x: 0,
             y: 0,
+            text: text,
+            src: src,
             width: 0,
             height: 0,
             originalData: currentData,
@@ -286,9 +291,58 @@
             nodeElements: nodeElements
         });
 
-        nodes[id] = currentNode;
+        // 将根节点加入nodes保存
+        nodesHash[id] = currentNode;
+        var item,
+            virtualRootNode,
+            replaceNodeIndex = -1;
+
+        // 添加子节点
+        if (relateType === relateTypeEnum.child) {
+            if (relateNode.virtualRoot === true) {
+                nodes.push(currentNode);
+            }
+            // 添加父节点
+        } else {
+            virtualRootNode = relateNode.parentNodes[0];
+            if (virtualRootNode && virtualRootNode.virtualRoot === true) {
+                for (var i = 0, len = relateNode.length; i < len; i++) {
+                    item = relateNode.childrenNodes[i];
+                    if (item.id === relateNode.id) {
+                        replaceNodeIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            if (replaceNodeIndex !== -1) {
+                virtualRootNode.childrenNodes.splice(replaceNodeIndex, 1, currentNode);
+            }
+        }
 
         return currentNode;
+    };
+
+    TopologyDiagram.prototype.moveTopologyNode = function (node, x, y) {
+        var nodeElements = node.nodeElements,
+            rect = nodeElements.rect,
+            text = nodeElements.text,
+            image = nodeElements.image,
+            offsetX = x === null ? 0 : x - rect.attrs.x,
+            offsetY = y === null ? 0 : y - rect.attrs.y;
+
+        rect.attr({
+            x: rect.attrs.x + offsetX,
+            y: rect.attrs.y + offsetY
+        });
+        text.attr({
+            x: text.attrs.x + offsetX,
+            y: text.attrs.y + offsetY
+        });
+        image.attr({
+            x: image.attrs.x + offsetX,
+            y: image.attrs.y + offsetY
+        });
     };
 
     TopologyDiagram.prototype.relateTopologyNode = function (relateNode, currentNode, relateType) {
@@ -306,6 +360,100 @@
         // return currentNode;
     };
 
+    // TopologyDiagram.prototype.CalculateTopologyNodePosition = function (relateNode, currentNode, relateType) {
+    //     // relateType必须存在，没有传入则默认为虚拟根节点
+    //     if (!relateNode) {
+    //         relateNode = this.virtualRootNode;
+    //     }
+
+    //     var config = this.config,
+    //         nodeWidth = relateNode.width,
+    //         x = relateNode.x,
+    //         y = relateNode.y,
+    //         relateTypeEnum = config.relateTypeEnum,
+    //         nodeOffset = {
+    //             x: config.node['margin-left'],
+    //             y: config.node['margin-top']
+    //         },
+    //         nodeHeight = config.rect.height,
+    //         siblingsCount = currentNode.siblingsCount,
+    //         siblingsIndex = currentNode.siblingsIndex,
+    //         siblingsIsOdd = siblingsCount % 2 === 1,
+    //         siblingsMiddleIndex = Math.ceil(siblingsCount / 2),
+    //         prevNode = currentNode.prevNode,
+    //         // 计算标准偏移量相关参数
+    //         currentItemChild = currentNode.originalData.children,
+    //         currentItemChildCount = currentItemChild.length,
+    //         currentItemChildMiddleIndex = Math.ceil(currentItemChildCount / 2),
+    //         positionOffsetY = {
+    //             top: 0,
+    //             bottom: 0
+    //         },
+    //         // 计算offsetTop累计实际偏移量相关参数
+    //         prevNodeChildren,
+    //         prevNodeChildrenCount,
+    //         prevNodeChildItem;
+
+    //     // 如果是下级节点x坐标正移
+    //     if (relateType === relateTypeEnum.child) {
+    //         x += nodeWidth + nodeOffset.x;
+    //     } else if (relateType === relateTypeEnum.parent) {
+    //         x -= nodeOffset.x;
+    //     }
+
+    //     // 同辈节点中首个节点通过关联节点的位置计算
+    //     if (siblingsCount !== 1) {
+    //         // 计算同辈节点中首个节点的起始位置
+    //         if (siblingsIndex === 1) {
+    //             if (siblingsIsOdd) {
+    //                 y -= (siblingsMiddleIndex - siblingsIndex) * (nodeOffset.y + nodeHeight);
+    //             } else {
+    //                 y -= siblingsCount / 2 * nodeHeight + (siblingsCount / 2 - 1) * nodeOffset.y;
+    //             }
+    //             // 同辈节点中非首个节点直接通过前一个节点计算
+    //         } else {
+    //             x = prevNode.x;
+    //             y = prevNode.y + nodeHeight + nodeOffset.y;
+    //         }
+    //     }
+
+    //     // 计算节点y（节点左上角的坐标）值坐标的标准偏移量(由子节点的个数计算)
+    //     // 根据数量奇偶，分别计算节点Y值的上偏移量和下偏移量
+    //     if (currentItemChildCount > 1) {
+    //         if (currentItemChildCount % 2 === 0) {
+    //             positionOffsetY.top = currentItemChildCount / 2 * nodeHeight + (currentItemChildCount / 2 - 1) * nodeOffset.y;
+    //             positionOffsetY.bottom = currentItemChildMiddleIndex * nodeOffset.y + (currentItemChildMiddleIndex - 1) * nodeHeight;
+    //         } else {
+    //             positionOffsetY.top = (currentItemChildMiddleIndex - 1) * (nodeOffset.y + nodeHeight);
+    //             positionOffsetY.bottom = positionOffsetY.top;
+    //         }
+    //     }
+
+    //     // 计算prevNode节点Y值实际的下偏移量（通过计算累加下级节点的偏移量得到）
+    //     if (siblingsIndex !== 1) {
+    //         // 追加全部子节点的偏移量
+    //         if (prevNode) {
+    //             prevNodeChildren = prevNode.childrenNodes;
+
+    //             prevNodeChildrenCount = prevNodeChildren.length;
+    //             for (var i = 0; i < prevNodeChildrenCount; i++) {
+    //                 prevNodeChildItem = prevNodeChildren[i];
+    //                 prevNode.offsetY.bottom += prevNodeChildItem.offsetY.top + prevNodeChildItem.offsetY.bottom;
+    //             }
+    //         }
+    //         y += prevNode.offsetY.bottom;
+    //     }
+
+    //     // 当前节点的y值位置：上一个节点的下偏移量+当前节点的上偏移量
+    //     y += positionOffsetY.top;
+
+    //     return {
+    //         x: x,
+    //         y: y,
+    //         offsetY: positionOffsetY
+    //     };
+    // };
+
     TopologyDiagram.prototype.CalculateTopologyNodePosition = function (relateNode, currentNode, relateType) {
         // relateType必须存在，没有传入则默认为虚拟根节点
         if (!relateNode) {
@@ -322,19 +470,11 @@
                 y: config.node['margin-top']
             },
             nodeHeight = config.rect.height,
-            siblingsCount = currentNode.siblingsCount,
-            siblingsIndex = currentNode.siblingsIndex,
-            siblingsIsOdd = siblingsCount % 2 === 1,
-            siblingsMiddleIndex = Math.ceil(siblingsCount / 2),
+            positionOffsetY = 0,
             prevNode = currentNode.prevNode,
             // 计算标准偏移量相关参数
             currentItemChild = currentNode.originalData.children,
             currentItemChildCount = currentItemChild.length,
-            currentItemChildMiddleIndex = Math.ceil(currentItemChildCount / 2),
-            positionOffsetY = {
-                top: 0,
-                bottom: 0
-            },
             // 计算offsetTop累计实际偏移量相关参数
             prevNodeChildren,
             prevNodeChildrenCount,
@@ -347,36 +487,18 @@
             x -= nodeOffset.x;
         }
 
-        // 同辈节点中首个节点通过关联节点的位置计算
-        if (siblingsCount !== 1) {
-            // 计算同辈节点中首个节点的起始位置
-            if (siblingsIndex === 1) {
-                if (siblingsIsOdd) {
-                    y -= (siblingsMiddleIndex - siblingsIndex) * (nodeOffset.y + nodeHeight);
-                } else {
-                    y -= siblingsCount / 2 * nodeHeight + (siblingsCount / 2 - 1) * nodeOffset.y;
-                }
-                // 同辈节点中非首个节点直接通过前一个节点计算
-            } else {
-                x = prevNode.x;
-                y = prevNode.y + nodeHeight + nodeOffset.y;
-            }
+        // 计算同辈节点中首个节点的起始位置
+        if (prevNode) {
+            x = prevNode.x;
+            y = prevNode.y + nodeHeight + nodeOffset.y;
         }
 
-        // 计算节点y（节点左上角的坐标）值坐标的标准偏移量(由子节点的个数计算)
-        // 根据数量奇偶，分别计算节点Y值的上偏移量和下偏移量
         if (currentItemChildCount > 1) {
-            if (currentItemChildCount % 2 === 0) {
-                positionOffsetY.top = currentItemChildCount / 2 * nodeHeight + (currentItemChildCount / 2 - 1) * nodeOffset.y;
-                positionOffsetY.bottom = currentItemChildMiddleIndex * nodeOffset.y + (currentItemChildMiddleIndex - 1) * nodeHeight;
-            } else {
-                positionOffsetY.top = (currentItemChildMiddleIndex - 1) * (nodeOffset.y + nodeHeight);
-                positionOffsetY.bottom = positionOffsetY.top;
-            }
+            positionOffsetY = (currentItemChildCount - 1) * (nodeHeight + nodeOffset.y);
         }
 
         // 计算prevNode节点Y值实际的下偏移量（通过计算累加下级节点的偏移量得到）
-        if (siblingsIndex !== 1) {
+        if (prevNode) {
             // 追加全部子节点的偏移量
             if (prevNode) {
                 prevNodeChildren = prevNode.childrenNodes;
@@ -384,14 +506,11 @@
                 prevNodeChildrenCount = prevNodeChildren.length;
                 for (var i = 0; i < prevNodeChildrenCount; i++) {
                     prevNodeChildItem = prevNodeChildren[i];
-                    prevNode.offsetY.bottom += prevNodeChildItem.offsetY.top + prevNodeChildItem.offsetY.bottom;
+                    prevNode.offsetY += prevNodeChildItem.offsetY;
                 }
             }
-            y += prevNode.offsetY.bottom;
+            y += prevNode.offsetY;
         }
-
-        // 当前节点的y值位置：上一个节点的下偏移量+当前节点的上偏移量
-        y += positionOffsetY.top;
 
         return {
             x: x,
@@ -402,6 +521,7 @@
 
     TopologyDiagram.prototype.loadTopologyNodes = function () {
         this.AddTopologyNodes(this.data, this.virtualRootNode, this.config.relateTypeEnum.child);
+        this.fixTopologyNodesPosition(this.nodes);
         this.createTopologyAllLine();
     };
 
@@ -422,8 +542,46 @@
         }
     };
 
+    // 基于原始的拓扑图，美化拓扑图展示：使父节点位置居中
+    TopologyDiagram.prototype.fixTopologyNodesPosition = function (nodes) {
+        return;
+        debugger;
+        var node,
+            childrenNodes,
+            firstChild,
+            // firstChildItem,
+            lastChild,
+            y,
+            offset,
+            offsetY = {
+                top: 0,
+                bottom: 0
+            },
+            nodeHeight = this.config.rect.height;
+        // lastChildItem;
+        // debugger;
+        for (var i, len = nodes.length; i < len; i++) {
+            childrenNodes = node.childrenNodes;
+            this.fixTopologyNodesPosition(childrenNodes);
+            if (node.virtualRoot !== true && childrenNodes.length > 1) {
+                firstChild = childrenNodes[0];
+                lastChild = childrenNodes[childrenNodes.length - 1];
+
+                offset = (lastChild.y - firstChild.y) / 2;
+                offsetY.top = offset - nodeHeight / 2;
+                offsetY.bottom = offset + nodeHeight / 2;
+                y = firstChild.y + offset;
+                node.y = y;
+                console.log(node.text + '$before:' + (node.offsetY.top + node.offsetY.bottom));
+                console.log(node.text + '$after:' + (offsetY.top + offsetY.bottom));
+                node.offsetY = offsetY;
+                this.moveTopologyNode(node, null, y);
+            }
+        }
+    };
+
     TopologyDiagram.prototype.createTopologyAllLine = function () {
-        var nodes = this.nodes,
+        var nodes = this.nodesHash,
             config = this.config,
             pathWidth = config.path['stroke-width'],
             offsetX = this.config.node['margin-left'] / 2;
@@ -460,11 +618,6 @@
                 }
             }
         }
-    };
-
-    TopologyDiagram.prototype.createAllTopology = function () {
-        this.createTopologyAllNode();
-        this.createTopologyAllLine();
     };
 
     TopologyDiagram.prototype.getId = (function () {
