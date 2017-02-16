@@ -224,31 +224,6 @@
         return this.createPath(startX, startY, middleX, middleY, endX, endY);
     };
 
-    TopologyDiagram.prototype.setMergeTopologyNode = function (currentNode, parentNode) {
-        // var nodeMergeHash = this.nodeMergeHash,
-        // nodeMergeValue = currentData[this.nodeMergeKey] || null,
-        var config = this.config,
-            // relateTypeEnum = config.relateTypeEnum,
-            nodeHeight = config.rect.height,
-            nodeOffsetY = config.node['margin-top'],
-            children,
-            childItem;
-
-        // 追加子节点
-        // currentNode = nodeMergeHash[nodeMergeValue];
-        children = currentNode.parentNodes[0].childrenNodes;
-        parentNode.childrenNodes = children;
-        // 追加父节点
-        for (var i = 0, len = children.length; i < len; i++) {
-            childItem = children[i];
-            childItem.parentNodes.push(parentNode);
-        }
-        // 调整关联节点的位置
-        parentNode.offsetY = 0;
-        parentNode.y = parentNode.prevNode.y + nodeOffsetY + nodeHeight;
-        this.moveTopologyNode(parentNode);
-    };
-
     TopologyDiagram.prototype.createTopologyNode = function (data, parentNode) {
         var currentData = data,
             nodeElements,
@@ -291,18 +266,10 @@
             offsetY: 0
         };
 
+        // 关联需合并汇聚的节点
         if (nodeMergeValue !== null && nodeMergeHash[nodeMergeValue]) {
-            // debugger;
-            // // 追加子节点
             currentNode = nodeMergeHash[nodeMergeValue];
-            // parentNode.childrenNodes = currentNode.parentNodes[0].childrenNodes;
-            // // 追加父节点
-
-            // // 调整关联节点的位置
-            // parentNode.offsetY = 0;
-            // parentNode.y = parentNode.prevNode.y + nodeOffsetY + nodeHeight;
-            // this.moveTopologyNode(parentNode);
-            this.setMergeTopologyNode(currentNode, parentNode);
+            this.relateMergeTopologyNode(currentNode, parentNode);
             return null;
         }
 
@@ -348,7 +315,7 @@
         return currentNode;
     };
 
-    TopologyDiagram.prototype.moveTopologyNode = function (node) {
+    TopologyDiagram.prototype.moveTopologyNode = function (node, offset, isRecursion) {
         var nodeElements = node.nodeElements,
             rect = nodeElements.rect,
             text = nodeElements.text,
@@ -358,6 +325,13 @@
             offsetX = x === null ? 0 : x - rect.attrs.x,
             offsetY = y === null ? 0 : y - rect.attrs.y;
 
+        if (offset) {
+            offsetX += (offset.x || 0);
+            offsetY += (offset.y || 0);
+
+            node.x = x + offsetX;
+            node.y = y + offsetY;
+        }
         if (offsetX === 0 && offsetY === 0) {
             return;
         }
@@ -373,6 +347,46 @@
             x: image.attrs.x + offsetX,
             y: image.attrs.y + offsetY
         });
+
+        if (isRecursion) {
+            var children = node.childrenNodes;
+
+            if (!node.mergeNode && children && children.length > 0) {
+                for (var i = 0, len = children.length; i < len; i++) {
+                    node = children[i];
+                    this.moveTopologyNode(node, offset, isRecursion);
+                }
+            }
+        }
+    };
+
+    TopologyDiagram.prototype.setTopologyNodePosition = function (node, offset, isRecursion) {
+        var x = node.x,
+            y = node.y,
+            offsetX = 0,
+            offsetY = 0;
+
+        if (offset) {
+            offsetX += (offset.x || 0);
+            offsetY += (offset.y || 0);
+
+            node.x = x + offsetX;
+            node.y = y + offsetY;
+        }
+        if (offsetX === 0 && offsetY === 0) {
+            return;
+        }
+
+        if (isRecursion) {
+            var children = node.childrenNodes;
+
+            if (!node.mergeNode && children && children.length > 0) {
+                for (var i = 0, len = children.length; i < len; i++) {
+                    node = children[i];
+                    this.setTopologyNodePosition(node, offset, isRecursion);
+                }
+            }
+        }
     };
 
     TopologyDiagram.prototype.relateTopologyNode = function (parentNode, currentNode) {
@@ -395,6 +409,56 @@
         }
 
         // return currentNode;
+    };
+
+    TopologyDiagram.prototype.relateMergeTopologyNode = function (currentNode, parentNode) {
+        // var nodeMergeHash = this.nodeMergeHash,
+        // nodeMergeValue = currentData[this.nodeMergeKey] || null,
+        var config = this.config,
+            // relateTypeEnum = config.relateTypeEnum,
+            nodeHeight = config.rect.height,
+            nodeOffsetY = config.node['margin-top'],
+            children,
+            mergeNode,
+            prevNode,
+            childItem,
+            nextY,
+            offsetY;
+
+        // 追加子节点
+        mergeNode = currentNode.parentNodes[0];
+        children = currentNode.parentNodes[0].childrenNodes;
+        parentNode.childrenNodes = children;
+        parentNode.mergeNode = mergeNode;
+        // 追加父节点
+        for (var i = 0, len = children.length; i < len; i++) {
+            childItem = children[i];
+            childItem.parentNodes.push(parentNode);
+        }
+
+        // // 调整需合并节点的位置
+        // prevNode = parentNode.prevNode;
+        // // if (prevNode.id === mergeNode.id) {
+        // //     debugger;
+        // //     mergeNode.offsetY = mergeNode.offsetY - nodeHeight - nodeOffsetY;
+        // // }
+        // debugger;
+        // // return;
+        // // if (prevNode.offsetY > 0) {
+        // //     // debugger;
+        // //     nextY = prevNode.y + nodeOffsetY + nodeHeight;
+        // //     offsetY = parentNode.y - nextY;
+        // //     parentNode.y = nextY;
+        // //     // 合并的节点不需要预留向下的偏移量
+        // //     parentNode.offsetY = offsetY - (nodeOffsetY + nodeHeight);
+        // //     this.moveTopologyNode(parentNode);
+        // // }
+
+        // if (prevNode.offsetY > 0) {
+        //     parentNode.offsetY += prevNode.offsetY;
+        //     parentNode.y = parentNode.y - prevNode.offsetY;
+        //     this.moveTopologyNode(parentNode);
+        // }
     };
 
     TopologyDiagram.prototype.CalculateTopologyNodePosition = function (parentNode, currentNode) {
@@ -423,13 +487,6 @@
             prevNodeChildrenCount,
             prevNodeChildItem;
 
-        // // 如果是下级节点x坐标正移
-        // if (relateType === relateTypeEnum.child) {
-        //     x += nodeWidth + nodeOffset.x;
-        // } else if (relateType === relateTypeEnum.parent) {
-        //     x -= (nodeOffset.x + nodeWidth);
-        // }
-
         x += nodeWidth + nodeOffset.x;
 
         // 计算同辈节点中首个节点的起始位置
@@ -444,8 +501,8 @@
 
         // 计算prevNode节点Y值实际的下偏移量（通过计算累加下级节点的偏移量得到）
         if (prevNode) {
-            // 追加全部子节点的偏移量
-            if (prevNode) {
+            // 非合并类型节点，追加全部子节点的偏移量
+            if (!prevNode.mergeNode) {
                 prevNodeChildren = prevNode.childrenNodes;
 
                 prevNodeChildrenCount = prevNodeChildren.length;
@@ -453,15 +510,16 @@
                     prevNodeChildItem = prevNodeChildren[i];
                     prevNode.offsetY += prevNodeChildItem.offsetY;
                 }
+
+                y += prevNode.offsetY;
+            } else {
+                y += prevNode.offsetY;
             }
-            y += prevNode.offsetY;
         }
 
         return {
             x: x,
             y: y,
-            // 自身由子节点个数造成的标准偏移量
-            // '_offsetY': positionOffsetY,
             // 全部子节点累计的偏移量
             offsetY: positionOffsetY
         };
@@ -469,6 +527,7 @@
 
     TopologyDiagram.prototype.loadTopologyNodes = function () {
         this.AddTopologyNodes(this.data, this.virtualRootNode);
+        this.fitTopologyNodesPosition(this.nodes);
         this.createTopologyAllLine();
     };
 
@@ -494,42 +553,157 @@
         }
     };
 
-    // // 基于原始的拓扑图，美化拓扑图展示：使父节点位置居中
-    // TopologyDiagram.prototype.fixTopologyNodesPosition = function (nodes) {
-    //     return;
-    //     var node,
-    //         childrenNodes,
-    //         firstChild,
-    //         // firstChildItem,
-    //         lastChild,
-    //         y,
-    //         offset,
-    //         offsetY = {
-    //             top: 0,
-    //             bottom: 0
-    //         },
-    //         nodeHeight = this.config.rect.height;
-    //     // lastChildItem;
-    //     // debugger;
-    //     for (var i, len = nodes.length; i < len; i++) {
-    //         childrenNodes = node.childrenNodes;
-    //         this.fixTopologyNodesPosition(childrenNodes);
-    //         if (node.virtualRoot !== true && childrenNodes.length > 1) {
-    //             firstChild = childrenNodes[0];
-    //             lastChild = childrenNodes[childrenNodes.length - 1];
+    TopologyDiagram.prototype.fitTopologyNodesPosition = function (nodes) {
+        var node,
+            childrenNodes,
+            childrenNodesCount; ;
 
-    //             offset = (lastChild.y - firstChild.y) / 2;
-    //             offsetY.top = offset - nodeHeight / 2;
-    //             offsetY.bottom = offset + nodeHeight / 2;
-    //             y = firstChild.y + offset;
-    //             node.y = y;
-    //             console.log(node.text + '$before:' + (node.offsetY.top + node.offsetY.bottom));
-    //             console.log(node.text + '$after:' + (offsetY.top + offsetY.bottom));
-    //             node.offsetY = offsetY;
-    //             this.moveTopologyNode(node, null, y);
-    //         }
-    //     }
-    // };
+        for (var i = 0, len = nodes.length; i < len; i++) {
+            node = nodes[i];
+            childrenNodes = node.childrenNodes;
+            childrenNodesCount = childrenNodes.length;
+
+            // 递归遍历非汇聚类型的节点
+            if (!node.mergeNode && childrenNodesCount > 0) {
+                this.fitTopologyNodesPosition(childrenNodes);
+            }
+
+            // 使发散类型的父节点位置居中
+            this.moveToMiddleByBranchTypeNode(node);
+
+            // 调整合并类型节点的位置
+            this.fitMergeTypeNode(node);
+
+            // 使合并类型的合并节点位置居中
+            this.moveToMiddleByMergeTypeNode(node);
+        }
+    };
+
+    TopologyDiagram.prototype.moveToMiddleByBranchTypeNode = function (node) {
+        var children = node.childrenNodes,
+            count = children.length,
+            first,
+            last,
+            y,
+            offset;
+
+        if (count <= 1) {
+            return;
+        }
+        if (count > 1) {
+            // debugger;
+            first = children[0];
+            last = children[count - 1];
+            offset = (last.y - first.y) / 2;
+            y = first.y + offset;
+            node.y = y;
+            this.moveTopologyNode(node);
+        }
+    };
+
+    TopologyDiagram.prototype.fitXByMergeTypeNode = function (node) {
+        var parents = node.parentNodes,
+            // children = node.childrenNodes,
+            parentsCount = parents.length,
+            firstNode,
+            firstNodeWidth,
+            width,
+            offsetX,
+            maxWidth = 0,
+            parentItem;
+
+        if (parentsCount > 1) {
+            firstNode = parents[0];
+            firstNodeWidth = firstNode.width;
+
+            for (var i = 1; i < parentsCount; i++) {
+                parentItem = parents[i];
+                width = parentItem.width;
+                if (width > maxWidth) {
+                    maxWidth = width;
+                }
+            }
+
+            if (maxWidth > firstNodeWidth) {
+                offsetX = maxWidth - firstNodeWidth;
+                this.setTopologyNodePosition(node, {
+                    x: offsetX,
+                    y: 0
+                }, true);
+            }
+
+            this.moveTopologyNode(node, null, true);
+        }
+    };
+
+    TopologyDiagram.prototype.fitYByMergeTypeNode = function (node) {
+        var parents = node.parentNodes,
+            parentsCount = parents.length,
+            offsetY,
+            parentItem,
+            nextItem,
+            lastItem,
+            nodeHeight = this.config.rect.height,
+            nodeOffsetY = this.config.node['margin-top'];
+
+        if (parentsCount > 1) {
+            // 重新调整汇聚类型的多个父节点位置
+            for (var i = 0; i < parentsCount - 1; i++) {
+                parentItem = parents[i];
+                nextItem = parents[i + 1];
+                offsetY = parentItem.offsetY;
+                nextItem.offsetY += parentItem.offsetY;
+                nextItem.y -= offsetY;
+                parentItem.offsetY = 0;
+                this.moveTopologyNode(nextItem);
+                if (i === parentsCount - 2) {
+                    lastItem = nextItem;
+                }
+            }
+
+            // 暂时注释：勿删
+            // 上移汇聚类型节点之后的兄弟节点
+            // while (lastItem.nextNode) {
+            //     lastItem = lastItem.nextNode;
+            //     offsetY = -(nodeHeight + nodeOffsetY);
+            //     this.setTopologyNodePosition(lastItem, {
+            //         x: 0,
+            //         y: offsetY
+            //     }, true);
+            //     this.moveTopologyNode(lastItem, null, true);
+            // }
+        }
+    };
+
+    TopologyDiagram.prototype.moveToMiddleByMergeTypeNode = function (node) {
+        var parents = node.parentNodes,
+            parentsCount = parents.length,
+            offsetY,
+            parentItem,
+            lastItem,
+            firstItem,
+            nodeHeight = this.config.rect.height,
+            currentY = node.y + nodeHeight / 2;
+
+        // 使合并类型的合并节点位置居中
+        if (parentsCount > 1) {
+            firstItem = parents[0];
+            lastItem = parents[parentsCount - 1];
+            offsetY = currentY - (firstItem.y + (lastItem.y - firstItem.y + nodeHeight) / 2);
+            if (offsetY !== 0) {
+                for (var i = 0; i < parentsCount; i++) {
+                    parentItem = parents[i];
+                    parentItem.y += offsetY;
+                    this.moveTopologyNode(parentItem);
+                }
+            }
+        }
+    };
+
+    TopologyDiagram.prototype.fitMergeTypeNode = function (node) {
+        this.fitXByMergeTypeNode(node);
+        this.fitYByMergeTypeNode(node);
+    };
 
     TopologyDiagram.prototype.createTopologyAllLine = function () {
         var nodes = this.nodesHash,
@@ -543,19 +717,18 @@
                 children = current.childrenNodes,
                 currentX = current.x + current.width,
                 currentY = current.y + current.height / 2,
-                // parentX = parent.x + parent.width,
-                // parentY = parent.y + parent.height / 2,
                 // 父节点
-                parentLength,
-                // parentItem,
+                parentLength = parent.length,
+                parentItem,
                 parentItemFirst,
                 parentItemEnd,
                 parentItemFirstY,
                 parentItemEndY,
                 parentX,
-                // parentY,
+                parentY,
+                // parentX,
                 // 子节点
-                childrenLength,
+                childrenLength = children.length,
                 childItem,
                 childItemFirst,
                 childItemEnd,
@@ -564,11 +737,17 @@
                 childX,
                 childY;
 
-            // 对普通的节点画竖线
-            if (children && children.length > 0) {
-                childrenLength = children.length;
-                // 中间的横线
-                current.line.end = true;
+            debugger;
+            // 一个节点
+            if (parentLength === 1) {
+                parentItem = parent[0];
+                if (!parentItem.virtualRoot && parentItem.childrenNodes.length === 1) {
+                    this.createStraightLine(parentItem.x + parentItem.width, currentY, current.x, currentY, true);
+                }
+            }
+            // 发散的节点
+            if (childrenLength > 1) {
+                // 前横线
                 this.createStraightLine(currentX, currentY, currentX + offsetX, currentY, false);
                 // 竖线
                 childItemFirst = children[0];
@@ -579,6 +758,7 @@
                 currentX += offsetX;
                 this.createStraightLine(currentX, childItemFirstY, currentX, childItemEndY, false);
 
+                // 后横线
                 for (var i = 0, len = childrenLength; i < len; i++) {
                     childItem = children[i];
                     childX = childItem.x;
@@ -590,15 +770,25 @@
                 }
             }
 
-            // 对合并的节点画竖线
-            if (parent && parent.length > 1) {
-                parentLength = parent.length;
+            // 聚合的节点
+            if (parentLength > 1) {
+                // 竖线
                 parentItemFirst = parent[0];
                 parentItemEnd = parent[parentLength - 1];
                 parentItemFirstY = parentItemFirst.y + parentItemFirst.height / 2 - pathWidth;
                 parentItemEndY = parentItemEnd.y + parentItemEnd.height / 2 + pathWidth;
-                parentX = current.x - offsetX;
-                this.createStraightLine(parentX, parentItemFirstY, parentX, parentItemEndY, false);
+                currentX = current.x - offsetX;
+                this.createStraightLine(currentX, parentItemFirstY, currentX, parentItemEndY, false);
+                // 后横线
+                this.createStraightLine(currentX, currentY, current.x, currentY, true);
+                // 前横线
+                for (var j = 0; j < parentLength; j++) {
+                    parentItem = parent[j];
+                    parentX = parentItem.x + parentItem.width;
+                    parentY = parentItem.y + parentItem.height / 2;
+
+                    this.createStraightLine(parentX, parentY, currentX, parentY, false);
+                }
             }
         }
     };
