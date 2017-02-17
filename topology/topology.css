@@ -1,0 +1,10 @@
+.topology-diagram {}
+
+.topology-diagram .node {
+    cursor: pointer;
+}
+
+::selection {
+    background: #fff;
+    color: #fff;
+}

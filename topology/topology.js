@@ -13,7 +13,9 @@
 (function ($, Raphael) {
     'use strict';
 
-    function TopologyDiagram(elem, Raphael, data) {
+    function TopologyDiagram(elem, Raphael, options) {
+        var self = this;
+
         this.config = {
             rect: {
                 width: 'auto',
@@ -41,7 +43,7 @@
             },
             path: {
                 'arrow-end': 'opan-wide-long',
-                stroke: '#274355',
+                stroke: '#8FA1AE',
                 'stroke-width': 1
             },
             node: {
@@ -53,7 +55,26 @@
             relateTypeEnum: {
                 parent: 'parent',
                 child: 'child'
+            },
+            virtualRootNode: {
+                virtualRoot: true,
+                id: 'virtualRoot',
+                x: 100,
+                y: 100,
+                width: 0,
+                height: 0,
+                originalData: null,
+                nodeElements: null,
+                parentNodes: [],
+                childrenNodes: [],
+                prevNode: null,
+                nextNode: null,
+                line: {
+                    start: false,
+                    end: false
+                }
             }
+
         };
         this.container = elem;
         this.paper = {
@@ -66,7 +87,7 @@
             height: 0
 
         };
-        this.data = data;
+        this.data = options.data;
         // 通过创建node自动生成的id绑定节点相关信息
         this.nodesHash = {};
         this.nodes = [];
@@ -74,42 +95,96 @@
         this.nodeMergeHash = {};
 
         // 虚拟的根节点
-        this.virtualRootNode = {
-            virtualRoot: true,
-            id: 'virtualRoot',
-            x: 100,
-            y: 100,
-            width: 0,
-            height: 0,
-            originalData: null,
-            nodeElements: null,
-            parentNodes: [],
-            childrenNodes: [],
-            prevNode: null,
-            nextNode: null,
-            line: {
-                start: false,
-                end: false
+        this.virtualRootNode;
+        // this.virtualRootNode = {
+        //     virtualRoot: true,
+        //     id: 'virtualRoot',
+        //     x: 100,
+        //     y: 100,
+        //     width: 0,
+        //     height: 0,
+        //     originalData: null,
+        //     nodeElements: null,
+        //     parentNodes: [],
+        //     childrenNodes: [],
+        //     prevNode: null,
+        //     nextNode: null,
+        //     line: {
+        //         start: false,
+        //         end: false
+        //     }
+        // };
+
+        this.ondblclickcallback;
+        this.onclickcallback;
+
+        if (options) {
+            this.ondblclickcallback = options.ondblclick || null;
+            this.onclickcallback = options.onclick || null;
+        }
+
+        // click 与 dblclick冲突，不能同时使用
+        this.onclick = function (handler, node) {
+            var fun = self.onclickcallback,
+                data = node.originalData;
+            // console.dir(data);
+            // console.log('click');
+            if (typeof fun === 'function') {
+                try {
+                    fun(data);
+                } catch (e) {
+                    throw e;
+                }
             }
         };
+        // 暂不执行click
+        this.onclick = function (handler, node) {};
+
+        this.ondblclick = function (handler, node) {
+            var fun = self.ondblclickcallback,
+                data = node.originalData;
+            // console.dir(data);
+            // console.log('dblclick');
+            if (typeof fun === 'function') {
+                try {
+                    fun(data, node.id);
+                } catch (e) {
+                    throw e;
+                }
+            }
+
+            // 设置选中节点
+            self.selected = node;
+        };
+
+        this.selected = null;
     };
 
     TopologyDiagram.prototype.createRect = function (x, y, width, id) {
         var config = this.config.rect,
             paper = this.paper.element,
-            rect;
+            rect,
+            self = this;
 
         rect = paper.rect(x, y, width, config.height, this.config.radius).attr({
             fill: config.fill.default,
             'stroke-width': config['stroke-width'],
-            stroke: config.stroke,
+            stroke: config.stroke.default,
             r: config.radius
+        });
+
+        rect.click(function (handler) {
+            self.onclick(handler, self.nodesHash[id]);
+        });
+
+        rect.dblclick(function (handler) {
+            self.ondblclick(handler, self.nodesHash[id]);
         });
 
         $(rect[0]).attr({
             'data-nodeId': id,
             'id': id + '-rect'
-        });
+        }).addClass('node node-rect');
 
         return rect;
     };
@@ -117,16 +192,25 @@
     TopologyDiagram.prototype.createImage = function (x, y, src, id) {
         var config = this.config.image,
             paper = this.paper.element,
-            image;
+            image,
+            self = this;
 
         image = paper.image(src, x, y, config.width, config.height).attr({
 
         });
 
+        image.click(function (handler) {
+            self.onclick(handler, self.nodesHash[id]);
+        });
+
+        image.dblclick(function (handler) {
+            self.ondblclick(handler, self.nodesHash[id]);
+        });
+
         $(image[0]).attr({
             'data-nodeId': id,
             'id': id + '-image'
-        });
+        }).addClass('node node-image');
 
         return image;
     };
@@ -136,7 +220,8 @@
             maxLength = config.maxLength,
             paper = this.paper.element,
             title = text,
-            textElem;
+            textElem,
+            self = this;
 
         if (text.length > maxLength) {
             text = text.slice(0, maxLength) + '...';
@@ -150,10 +235,18 @@
             id: id + '-text'
         });
 
+        textElem.click(function (handler) {
+            self.onclick(handler, self.nodesHash[id]);
+        });
+
+        textElem.dblclick(function (handler) {
+            self.ondblclick(handler, self.nodesHash[id]);
+        });
+
         $(textElem[0]).attr({
             'data-nodeId': id,
             'id': id + '-text'
-        });
+        }).addClass('node node-text');
 
         return textElem;
     };
@@ -197,6 +290,19 @@
             width: rectWidth,
             height: config.rect.height
         };
+    };
+
+    TopologyDiagram.prototype.selectedNode = function (node) {
+        var rect = node.nodeElements.rect,
+            // selectedNode = this.selected,
+            config = this.config;
+
+        this.selected = node;
+
+        rect.attr({
+            fill: config.fill.selected,
+            stroke: config.stroke.selected
+        });
     };
 
     TopologyDiagram.prototype.createPath = function (startX, startY, middleX, middleY, endX, endY, hasArrow) {
@@ -525,7 +631,18 @@
         };
     };
 
+    TopologyDiagram.prototype.init = function () {
+        var pager = this.paper.element;
+        pager.clear();
+        this.nodesHash = {};
+        this.nodes = [];
+        this.nodeMergeHash = {};
+        this.virtualRootNode = $.extend(true, {}, this.config.virtualRootNode);
+    };
+
     TopologyDiagram.prototype.loadTopologyNodes = function () {
+        debugger;
+        this.init();
         this.AddTopologyNodes(this.data, this.virtualRootNode);
         this.fitTopologyNodesPosition(this.nodes);
         this.createTopologyAllLine();
@@ -737,7 +854,7 @@
                 childX,
                 childY;
 
-            debugger;
+            // debugger;
             // 一个节点
             if (parentLength === 1) {
                 parentItem = parent[0];
@@ -800,20 +917,79 @@
         };
     })();
 
-    var topology = jQuery.fn.topology;
+    var methods = {
+        init: function (options) {
+            return this.each(function () {
+                var topologyDiagram,
+                    $elem = $(this);
 
-    // topology = function (data) {
-    //     topologyDiagram = new TopologyDiagram(this, Raphael, data);
-    // };
+                topologyDiagram = new TopologyDiagram(this, Raphael, options);
+                topologyDiagram.loadTopologyNodes();
+                $elem.addClass('topology-diagram').data('topology-diagram', topologyDiagram);
+            });
+        },
+        destroy: function () {
+            return this.each(function () {
+                var $elem = $(this),
+                    topologyDiagram = $elem.data('topology-diagram'),
+                    paper = topologyDiagram.paper.element;
 
-    // topology.addNode = function (data) {
+                paper.remove();
+                $elem.removeClass('topology-diagram');
+                $elem.removeData('topology-diagram');
+            });
+        },
+        getSelected: function () {
+            // return this.each(function () {
+            // });
+            var $elem = $(this),
+                topologyDiagram = $elem.data('topology-diagram'),
+                selected = topologyDiagram.selected ? topologyDiagram.selected.originalData : null;
 
-    // };
+            return selected;
+        },
+        addNodes: function (parentId, data) {
+            debugger;
+            var $elem = $(this),
+                topology = $elem.data('topology-diagram'),
+                oldData,
+                newData,
+                pager,
+                children,
+                nodes;
 
-    $.fn.extend({
-        topology: function (data) {
-            var topologyDiagram = new TopologyDiagram(this[0], Raphael, data);
-            topologyDiagram.loadTopologyNodes();
+            // oldData = topologyDiagram.nodesHash[parentId].originalData.children;
+            // newData = oldData.concat(data);
+            // pager = topology.paper.element;
+            // topologyDiagram.nodesHash[parentId].originalData = newData;
+            // topologyDiagram.nodesHash = {};
+            // topologyDiagram.nodes = [];
+
+            // pager.clear();
+
+            // topology.virtualRootNode = $.extend({}, true, topology.config.virtualRootNode);
+            // pager.rect(300, 100, 100, 100, 4);
+            nodes = topology.nodesHash[parentId].originalData.children;
+            children = nodes.concat(data);
+            topology.nodesHash[parentId].originalData.children = children;
+            topology.loadTopologyNodes();
         }
-    });
+    };
+
+    jQuery.fn.topology = function () {
+        var method = arguments[0],
+            arg = arguments;
+
+        if (methods[method]) {
+            method = methods[method];
+            arg = Array.prototype.slice.call(arguments, 1);
+        } else if (typeof (method) === 'object' || !method) {
+            method = methods.init;
+        } else {
+            $.error('Method ' + method + ' does not exist on jQuery.menubar');
+            return this;
+        }
+
+        return method.apply(this, arg);
+    };
 })(jQuery, Raphael);

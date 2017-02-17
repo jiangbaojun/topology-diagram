@@ -188,7 +188,15 @@ $(function () {
     }
     ];
 
-    $('#topology-sample').topology(sampleData);
+    //
+    // topology-sample
+    //
+    // $('#topology-sample').topology({
+    //     data: sampleData,
+    //     ondblclick: function (data) {
+    //         console.dir(data);
+    //     }
+    // });
 
     var multiRootData = [{
         id: '1',
@@ -251,7 +259,36 @@ $(function () {
         children: []
     }];
 
-    $('#topology-multiRoot').topology(multiRootData);
+    //
+    // topology-multiRoo
+    //
+    $('#topology-multiRoot').topology({
+        data: multiRootData,
+        ondblclick: function (data, nodeId) {
+
+        }
+    });
+
+    // 测试添加子节点
+    $('#topology-multiRoot').topology('addNodes', 2, [{
+        id: '1-1-1',
+        src: 'images/counter.png',
+        text: '1-1-1',
+        children: []
+    },
+    {
+        id: '1-1-2',
+        src: 'images/counter.png',
+        text: '1-1-2',
+        children: []
+    },
+    {
+        id: '1-1-3',
+        src: 'images/counter.png',
+        text: '1-1-3',
+        children: []
+    }
+    ]);
 
     // mergeData：支持节点合并的拓扑图
     var mergeData = [{
@@ -273,23 +310,23 @@ $(function () {
                 src: 'images/counter.png',
                 text: '三级节点1-2-1',
                 children: [{
-                    id: '1-2-1-1',
-                    src: 'images/counter.png',
-                    text: '1-2-1-1',
-                    children: []
-                }, {
+                        id: '1-2-1-1',
+                        src: 'images/counter.png',
+                        text: '1-2-1-1',
+                        children: []
+                    }, {
                         id: '1-2-1-2',
                         src: 'images/counter.png',
                         text: '1-2-1-2',
                         children: []
                     },
-                {
-                    id: '1-2-1-3',
-                    src: 'images/counter.png',
-                    text: '1-2-1-3',
-                    children: []
-                }
-                ]
+                    {
+                        id: '1-2-1-3',
+                        src: 'images/counter.png',
+                        text: '1-2-1-3',
+                        children: []
+                    }
+                    ]
             }]
         },
         {
@@ -303,17 +340,17 @@ $(function () {
                 children: []
             }]
         },
-        // {
-        //     id: '1-3-t1',
-        //     src: 'images/counter.png',
-        //     text: '1-3-t1',
-        //     children: [{
-        //             id: '1-2-1',
-        //             src: 'images/counter.png',
-        //             text: '三级节点1-2-1',
-        //             children: []
-        //         }]
-        // },
+            // {
+            //     id: '1-3-t1',
+            //     src: 'images/counter.png',
+            //     text: '1-3-t1',
+            //     children: [{
+            //             id: '1-2-1',
+            //             src: 'images/counter.png',
+            //             text: '三级节点1-2-1',
+            //             children: []
+            //         }]
+            // },
         {
             id: '1-3-t2',
             src: 'images/counter.png',
@@ -334,18 +371,18 @@ $(function () {
                 src: 'images/counter.png',
                 text: '1-4-1',
                 children: [{
-                    id: '1-4-1-1',
-                    src: 'images/counter.png',
-                    text: '1-4-1-1',
-                    children: []
-                },
-                {
-                    id: '1-4-1-2',
-                    src: 'images/counter.png',
-                    text: '1-4-1-2',
-                    children: []
-                }
-                ]
+                        id: '1-4-1-1',
+                        src: 'images/counter.png',
+                        text: '1-4-1-1',
+                        children: []
+                    },
+                    {
+                        id: '1-4-1-2',
+                        src: 'images/counter.png',
+                        text: '1-4-1-2',
+                        children: []
+                    }
+                    ]
             }]
         },
         {
@@ -383,5 +420,7 @@ $(function () {
     }
     ];
 
-    $('#topology-merge').topology(mergeData);
+    $('#topology-merge').topology({
+        data: mergeData
+    });
 });
