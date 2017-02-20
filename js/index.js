@@ -15,46 +15,46 @@ $(function () {
             src: 'images/counter.png',
             text: '二级节点1-2',
             children: [{
-                id: '1-2-1',
-                src: 'images/counter.png',
-                text: '三级节点1-2-1',
-                children: []
-            }]
+                    id: '1-2-1',
+                    src: 'images/counter.png',
+                    text: '三级节点1-2-1',
+                    children: []
+                }]
         },
         {
             id: '1-3',
             src: 'images/counter.png',
             text: '二级节点1-3',
             children: [{
-                id: '1-3-1',
-                src: 'images/counter.png',
-                text: '三级节点1-3-1',
-                children: []
-            }]
+                    id: '1-3-1',
+                    src: 'images/counter.png',
+                    text: '三级节点1-3-1',
+                    children: []
+                }]
         },
         {
             id: '1-4',
             src: 'images/counter.png',
             text: '二级节点1-4',
             children: [{
-                id: '1-4-1',
-                src: 'images/counter.png',
-                text: '1-4-1',
-                children: []
-            },
-            {
-                id: '1-4-2',
-                src: 'images/counter.png',
-                text: '节点1-4-2',
-                children: []
-            },
-            {
-                id: '1-4-2',
-                src: 'images/counter.png',
-                text: '节点1-4-2',
-                children: []
-            }
-            ]
+                    id: '1-4-1',
+                    src: 'images/counter.png',
+                    text: '1-4-1',
+                    children: []
+                },
+                {
+                    id: '1-4-2',
+                    src: 'images/counter.png',
+                    text: '节点1-4-2',
+                    children: []
+                },
+                {
+                    id: '1-4-2',
+                    src: 'images/counter.png',
+                    text: '节点1-4-2',
+                    children: []
+                }
+                ]
         }
         ]
     }];
@@ -262,33 +262,54 @@ $(function () {
     //
     // topology-multiRoo
     //
-    $('#topology-multiRoot').topology({
-        data: multiRootData,
-        ondblclick: function (data, nodeId) {
+    // $('#topology-multiRoot').topology({
+    //     data: multiRootData,
+    //     ondblclick: function (data, nodeId) {
 
-        }
-    });
+    //     }
+    // });
 
     // 测试添加子节点
+    // $('#topology-multiRoot').topology('addNodes', 2, [{
+    //     id: '1-1-1',
+    //     src: 'images/counter.png',
+    //     text: '1-1-1',
+    //     children: []
+    // },
+    // {
+    //     id: '1-1-2',
+    //     src: 'images/counter.png',
+    //     text: '1-1-2',
+    //     children: []
+    // },
+    // {
+    //     id: '1-1-3',
+    //     src: 'images/counter.png',
+    //     text: '1-1-3',
+    //     children: []
+    // }
+    // ]);
+
+    // 测试添加父节点节点
     $('#topology-multiRoot').topology('addNodes', 2, [{
-        id: '1-1-1',
+        id: '0-1-1-1',
         src: 'images/counter.png',
-        text: '1-1-1',
+        text: '0-1-1-1',
         children: []
     },
     {
-        id: '1-1-2',
+        id: '0-1-1-2',
         src: 'images/counter.png',
-        text: '1-1-2',
+        text: '0-1-1-2',
         children: []
     },
     {
-        id: '1-1-3',
+        id: '0-1-1-3',
         src: 'images/counter.png',
-        text: '1-1-3',
+        text: '0-1-1-3',
         children: []
     }
-    ]);
+    ], 'parent');
 
     // mergeData：支持节点合并的拓扑图
     var mergeData = [{
@@ -306,20 +327,20 @@ $(function () {
             src: 'images/counter.png',
             text: '1-2',
             children: [{
-                id: '1-2-1',
-                src: 'images/counter.png',
-                text: '三级节点1-2-1',
-                children: [{
+                    id: '1-2-1',
+                    src: 'images/counter.png',
+                    text: '三级节点1-2-1',
+                    children: [{
                         id: '1-2-1-1',
                         src: 'images/counter.png',
                         text: '1-2-1-1',
                         children: []
                     }, {
-                        id: '1-2-1-2',
-                        src: 'images/counter.png',
-                        text: '1-2-1-2',
-                        children: []
-                    },
+                            id: '1-2-1-2',
+                            src: 'images/counter.png',
+                            text: '1-2-1-2',
+                            children: []
+                        },
                     {
                         id: '1-2-1-3',
                         src: 'images/counter.png',
@@ -327,18 +348,18 @@ $(function () {
                         children: []
                     }
                     ]
-            }]
+                }]
         },
         {
             id: '1-3',
             src: 'images/counter.png',
             text: '二级节点1-3',
             children: [{
-                id: '1-2-1',
-                src: 'images/counter.png',
-                text: '三级节点1-2-1',
-                children: []
-            }]
+                    id: '1-2-1',
+                    src: 'images/counter.png',
+                    text: '三级节点1-2-1',
+                    children: []
+                }]
         },
             // {
             //     id: '1-3-t1',
@@ -356,21 +377,21 @@ $(function () {
             src: 'images/counter.png',
             text: '1-3-t2',
             children: [{
-                id: '1-2-1',
-                src: 'images/counter.png',
-                text: '三级节点1-2-1',
-                children: []
-            }]
+                    id: '1-2-1',
+                    src: 'images/counter.png',
+                    text: '三级节点1-2-1',
+                    children: []
+                }]
         },
         {
             id: '1-4',
             src: 'images/counter.png',
             text: '二级节点1-4',
             children: [{
-                id: '1-4-1',
-                src: 'images/counter.png',
-                text: '1-4-1',
-                children: [{
+                    id: '1-4-1',
+                    src: 'images/counter.png',
+                    text: '1-4-1',
+                    children: [{
                         id: '1-4-1-1',
                         src: 'images/counter.png',
                         text: '1-4-1-1',
@@ -383,18 +404,18 @@ $(function () {
                         children: []
                     }
                     ]
-            }]
+                }]
         },
         {
             id: '1-5',
             src: 'images/counter.png',
             text: '二级节点1-5',
             children: [{
-                id: '1-4-1',
-                src: 'images/counter.png',
-                text: '1-4-1',
-                children: []
-            }]
+                    id: '1-4-1',
+                    src: 'images/counter.png',
+                    text: '1-4-1',
+                    children: []
+                }]
         }
 
         ]
@@ -420,7 +441,7 @@ $(function () {
     }
     ];
 
-    $('#topology-merge').topology({
-        data: mergeData
-    });
+    // $('#topology-merge').topology({
+    //     data: mergeData
+    // });
 });

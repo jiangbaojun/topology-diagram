@@ -124,37 +124,23 @@
         }
 
         // click 与 dblclick冲突，不能同时使用
-        this.onclick = function (handler, node) {
-            var fun = self.onclickcallback,
-                data = node.originalData;
-            // console.dir(data);
-            // console.log('click');
-            if (typeof fun === 'function') {
-                try {
-                    fun(data);
-                } catch (e) {
-                    throw e;
-                }
-            }
-        };
-        // 暂不执行click
         this.onclick = function (handler, node) {};
 
         this.ondblclick = function (handler, node) {
             var fun = self.ondblclickcallback,
-                data = node.originalData;
-            // console.dir(data);
-            // console.log('dblclick');
+                data = node.originalData,
+                elem = self.container;
+
+            // 设置选中节点
+            // self.selected = node;
+            // 执行回调函数
             if (typeof fun === 'function') {
                 try {
-                    fun(data, node.id);
+                    fun.call(elem, data, node.id);
                 } catch (e) {
                     throw e;
                 }
             }
-
-            // 设置选中节点
-            self.selected = node;
         };
 
         this.selected = null;
@@ -346,6 +332,8 @@
             nodeMergeHash = this.nodeMergeHash,
             currentNode,
             prevNode,
+            parentNodes,
+            lastParentNode,
             nodeMergeValue = currentData[this.nodeMergeKey] || null;
 
         currentNode = {
@@ -375,7 +363,16 @@
         // 关联需合并汇聚的节点
         if (nodeMergeValue !== null && nodeMergeHash[nodeMergeValue]) {
             currentNode = nodeMergeHash[nodeMergeValue];
-            this.relateMergeTopologyNode(currentNode, parentNode);
+            parentNodes = currentNode.parentNodes;
+            lastParentNode = parentNodes[parentNodes.length - 1];
+
+            // 为同级相邻的兄弟节点，添加关联
+            if (parentNode.prevNode && lastParentNode.id === parentNode.prevNode.id) {
+                this.relateMergeTopologyNode(currentNode, parentNode);
+            } else {
+                console.warn('node id=' + currentNode.originalData.id + ' is exist! ignore!');
+            }
+
             return null;
         }
 
@@ -638,10 +635,14 @@
         this.nodes = [];
         this.nodeMergeHash = {};
         this.virtualRootNode = $.extend(true, {}, this.config.virtualRootNode);
+        this.virtualRootNode.originalData = {
+            id: 'virtualRoot',
+            text: '',
+            children: this.data
+        };
     };
 
     TopologyDiagram.prototype.loadTopologyNodes = function () {
-        debugger;
         this.init();
         this.AddTopologyNodes(this.data, this.virtualRootNode);
         this.fitTopologyNodesPosition(this.nodes);
@@ -708,7 +709,6 @@
             return;
         }
         if (count > 1) {
-            // debugger;
             first = children[0];
             last = children[count - 1];
             offset = (last.y - first.y) / 2;
@@ -854,7 +854,6 @@
                 childX,
                 childY;
 
-            // debugger;
             // 一个节点
             if (parentLength === 1) {
                 parentItem = parent[0];
@@ -940,38 +939,76 @@
             });
         },
         getSelected: function () {
-            // return this.each(function () {
-            // });
             var $elem = $(this),
                 topologyDiagram = $elem.data('topology-diagram'),
                 selected = topologyDiagram.selected ? topologyDiagram.selected.originalData : null;
 
             return selected;
         },
-        addNodes: function (parentId, data) {
-            debugger;
+        addNodes: function (relateId, data, type) {
             var $elem = $(this),
                 topology = $elem.data('topology-diagram'),
-                oldData,
-                newData,
-                pager,
+                relateData,
+                // parents,
+                // parent,
+                // index,
+                // grandParent,
+                // node,
+                // splitNodes,
                 children,
                 nodes;
 
-            // oldData = topologyDiagram.nodesHash[parentId].originalData.children;
-            // newData = oldData.concat(data);
-            // pager = topology.paper.element;
-            // topologyDiagram.nodesHash[parentId].originalData = newData;
-            // topologyDiagram.nodesHash = {};
-            // topologyDiagram.nodes = [];
+            relateData = topology.nodesHash[relateId].originalData;
+            // if (type === 'parent') {
+            //     // 向关联的父级元素添加子节点
+            //     for (var i = 0, len = data.length; i < len; i++) {
+            //         node = data[i];
+            //         children = node;
+            //         while (children && children.length > 0) {
+            //             children = children.children;
+            //         }
+            //         children.children = [relateData];
+            //     }
+            //     parents = topology.nodesHash[relateId].parentNodes;
+            //     debugger;
+            //     parent = parents[parents.length - 1];
 
-            // pager.clear();
+            //     if (parent.id === 'virtualRoot') {
 
-            // topology.virtualRootNode = $.extend({}, true, topology.config.virtualRootNode);
-            // pager.rect(300, 100, 100, 100, 4);
-            nodes = topology.nodesHash[parentId].originalData.children;
+            //     } else {
+            //         grandParent = parent.parentNodes[0];
+
+            //         nodes = grandParent.childrenNodes;
+            //         index = nodes.length - 1;
+            //         for (i = 0, len = nodes.length; i < len; i++) {
+            //             node = nodes[i];
+            //             if (node.id === parent.id) {
+            //                 index = i;
+            //                 break;
+            //             }
+            //         }
+
+            //         nodes = grandParent.originalData.children;
+            //         splitNodes = nodes.splice(index + 1);
+            //         nodes = nodes.concat(data);
+            //         nodes = nodes.concat(splitNodes);
+            //         grandParent.originalData.children = nodes;
+            //         if (grandParent.id === 'virtualRoot') {
+            //             topology.data = nodes;
+            //         }
+            //     }
+            // } else {
+            //     nodes = relateData.children;
+            //     children = nodes.concat(data);
+            //     // topology.nodesHash[relateId].originalData.children = children;
+            //     relateData.children = children;
+            // }
+
+            nodes = relateData.children;
             children = nodes.concat(data);
-            topology.nodesHash[parentId].originalData.children = children;
+
+            relateData.children = children;
+
             topology.loadTopologyNodes();
         }
     };
