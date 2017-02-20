@@ -59,7 +59,7 @@
             virtualRootNode: {
                 virtualRoot: true,
                 id: 'virtualRoot',
-                x: 100,
+                x: 800,
                 y: 100,
                 width: 0,
                 height: 0,
@@ -85,9 +85,22 @@
         this.viewBox = {
             width: 0,
             height: 0
-
+        };
+        // forward reverse
+        this.direction = {
+            arrow: 'forward',
+            node: 'forward'
         };
         this.data = options.data;
+        if (options.direction) {
+            if (options.direction.arrow) {
+                this.direction.arrow = options.direction.arrow;
+            }
+
+            if (options.direction.node) {
+                this.direction.node = options.direction.node;
+            }
+        }
         // 通过创建node自动生成的id绑定节点相关信息
         this.nodesHash = {};
         this.nodes = [];
@@ -96,24 +109,6 @@
 
         // 虚拟的根节点
         this.virtualRootNode;
-        // this.virtualRootNode = {
-        //     virtualRoot: true,
-        //     id: 'virtualRoot',
-        //     x: 100,
-        //     y: 100,
-        //     width: 0,
-        //     height: 0,
-        //     originalData: null,
-        //     nodeElements: null,
-        //     parentNodes: [],
-        //     childrenNodes: [],
-        //     prevNode: null,
-        //     nextNode: null,
-        //     line: {
-        //         start: false,
-        //         end: false
-        //     }
-        // };
 
         this.ondblclickcallback;
         this.onclickcallback;
@@ -571,7 +566,8 @@
         }
 
         var config = this.config,
-            nodeWidth = parentNode.width,
+            // nodeWidth = parentNode.width,
+            nodeWidth,
             x = parentNode.x,
             y = parentNode.y,
             // relateTypeEnum = config.relateTypeEnum,
@@ -590,11 +586,19 @@
             prevNodeChildrenCount,
             prevNodeChildItem;
 
-        x += nodeWidth + nodeOffset.x;
-
-        // 计算同辈节点中首个节点的起始位置
+        debugger;
+        // this.direction.node = 'forward';
+        // x轴反向展示
+        if (this.direction.node === 'forward') {
+            nodeWidth = parentNode.width;
+            x += nodeWidth + nodeOffset.x;
+        } else {
+            nodeWidth = currentNode.width;
+            x -= nodeWidth + nodeOffset.x;
+        }
+        // 计算同辈节点中非首个节点的位置
         if (prevNode) {
-            x = prevNode.x;
+            // x = prevNode.x;
             y = prevNode.y + nodeHeight + nodeOffset.y;
         }
 
@@ -832,8 +836,12 @@
             var current = nodes[k],
                 parent = current.parentNodes,
                 children = current.childrenNodes,
-                currentX = current.x + current.width,
+                currentX = this.direction.node === 'forward' ? (current.x + current.width) : current.x,
+                // currentY = current.y + current.height / 2,
                 currentY = current.y + current.height / 2,
+                // currentX,
+                operator = this.direction.node === 'forward' ? 1 : -1,
+                // currentY,
                 // 父节点
                 parentLength = parent.length,
                 parentItem,
@@ -858,26 +866,28 @@
             if (parentLength === 1) {
                 parentItem = parent[0];
                 if (!parentItem.virtualRoot && parentItem.childrenNodes.length === 1) {
-                    this.createStraightLine(parentItem.x + parentItem.width, currentY, current.x, currentY, true);
+                    parentX = this.direction.node === 'forward' ? (parentItem.x + parentItem.width) : parentItem.x;
+                    currentX = this.direction.node === 'forward' ? current.x : (current.x + current.width);
+                    this.createStraightLine(parentX, currentY, currentX, currentY, true);
                 }
             }
             // 发散的节点
             if (childrenLength > 1) {
                 // 前横线
-                this.createStraightLine(currentX, currentY, currentX + offsetX, currentY, false);
+                this.createStraightLine(currentX, currentY, currentX + (operator * offsetX), currentY, false);
                 // 竖线
                 childItemFirst = children[0];
                 childItemEnd = children[childrenLength - 1];
                 childItemFirstY = childItemFirst.y + childItemFirst.height / 2 - pathWidth;
                 childItemEndY = childItemEnd.y + childItemEnd.height / 2 + pathWidth;
 
-                currentX += offsetX;
+                currentX += operator * offsetX;
                 this.createStraightLine(currentX, childItemFirstY, currentX, childItemEndY, false);
 
                 // 后横线
                 for (var i = 0, len = childrenLength; i < len; i++) {
                     childItem = children[i];
-                    childX = childItem.x;
+                    childX = this.direction.node === 'forward' ? childItem.x : childItem.x + childItem.width;
                     childY = childItem.y + childItem.height / 2;
                     if (!childItem.line.start) {
                         childItem.line.start = true;

@@ -1,4 +1,44 @@
 $(function () {
+    var reverseData = [{
+        id: '1',
+        src: 'images/counter.png',
+        text: '顶级节点1',
+        children: []
+    },
+    {
+        id: '2',
+        src: 'images/counter.png',
+        text: '顶级节点2',
+        children: []
+    },
+    {
+        id: '3',
+        src: 'images/counter.png',
+        text: '顶级节点3',
+        children: []
+    }
+    ];
+
+    reverseData[1].children = [{
+        id: '1-1',
+        src: 'images/counter.png',
+        text: '1-1',
+        children: []
+    },
+    {
+        id: '1-2',
+        src: 'images/counter.png',
+        text: '1-2..',
+        children: []
+    },
+    {
+        id: '1-3',
+        src: 'images/counter.png',
+        text: '1-3.......',
+        children: []
+    }
+    ];
+
     // sample：简单的拓扑图
     var sampleData = [{
         id: '1',
@@ -189,13 +229,16 @@ $(function () {
     ];
 
     //
-    // topology-sample
+    // topology-multiRoot
     //
-    $('#topology-sample').topology({
+    $('#topology-reverse').topology({
         data: sampleData,
-        ondblclick: function (data) {
-            console.dir(data);
+        ondblclick: function (data, nodeId) {
+
+        },
+        direction: {
+            arrow: 'reverse',
+            node: 'reverse'
         }
     });
 });
-
