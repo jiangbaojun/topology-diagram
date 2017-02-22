@@ -360,13 +360,13 @@ $(function () {
     //
     // topology-multiRoot
     //
-    $('#topology-reverse').topology({
+    $('#topology-reverse2').topology({
         data: mergeData,
         ondblclick: function (data, nodeId) {
 
         },
         direction: {
-            arrow: 'forward',
+            arrow: 'reverse',
             node: 'reverse'
         }
     });

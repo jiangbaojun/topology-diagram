@@ -39,7 +39,11 @@
                 'text-anchorstring': 'start',
                 'font-family': '微软雅黑',
                 'font-size': 12,
-                'maxLength': 8
+                'maxLength': 8,
+                fill: {
+                    default: '#5C5C5C',
+                    selected: '#039AFF'
+                }
             },
             path: {
                 'arrow-end': 'opan-wide-long',
@@ -60,7 +64,7 @@
                 virtualRoot: true,
                 id: 'virtualRoot',
                 x: -40,
-                x: 800,
+                // x: 800,
                 y: 0,
                 width: 0,
                 height: 0,
@@ -123,6 +127,7 @@
         if (options) {
             this.ondblclickcallback = options.ondblclick || null;
             this.onclickcallback = options.onclick || null;
+            this.ondblclickLoadcallback = options.ondblclickLoad || null;
         }
 
         // click 与 dblclick冲突，不能同时使用
@@ -131,21 +136,41 @@
         this.ondblclick = function (handler, node) {
             var fun = self.ondblclickcallback,
                 data = node.originalData,
-                elem = self.container;
+                elem = self.container,
+                loadFun = self.ondblclickLoadcallback,
+                children;
 
-            // 设置选中节点
-            // self.selected = node;
+            // // 设置选中节点
+            // self.selected = {
+            //     nodeId: node.id,
+            //     itemId: data.id
+            // };
+
+            self.selectNode(node);
+            debugger;
             // 执行回调函数
-            if (typeof fun === 'function') {
+            if (typeof fun === 'function' || typeof loadFun === 'function') {
                 try {
-                    fun.call(elem, data, node.id);
+                    if (typeof fun === 'function') {
+                        fun.call(elem, data, node.id);
+                    }
                 } catch (e) {
                     throw e;
+                } finally {
+                    if (typeof loadFun === 'function') {
+                        if (data.children.length < 1) {
+                            children = loadFun.call(data);
+                            $(elem).topology('addNodes', self.selected.nodeId, children);
+                        }
+                    }
                 }
             }
         };
 
-        this.selected = null;
+        this.selected = {
+            nodeId: null,
+            itemId: null
+        };
     };
 
     TopologyDiagram.prototype.createRect = function (x, y, width, id) {
@@ -220,6 +245,7 @@
             'font-size': config['font-size'],
             'text-anchor': 'start',
             'title': title,
+            fill: config.fill.default,
             id: id + '-text'
         });
 
@@ -280,16 +306,42 @@
         };
     };
 
-    TopologyDiagram.prototype.selectedNode = function (node) {
-        var rect = node.nodeElements.rect,
-            // selectedNode = this.selected,
-            config = this.config;
+    TopologyDiagram.prototype.selectNode = function (node) {
+        var rect,
+            text,
+            rectConfig = this.config.rect,
+            textConfig = this.config.text,
+            selected = this.selected,
+            selectedNode;
 
-        this.selected = node;
+        if (selected.nodeId) {
+            selectedNode = this.nodesHash[selected.nodeId];
+            rect = selectedNode.nodeElements.rect;
+            text = selectedNode.nodeElements.text;
+
+            rect.attr({
+                fill: rectConfig.fill.default,
+                stroke: rectConfig.stroke.default
+            });
+
+            text.attr({
+                fill: textConfig.fill.default
+            });
+        }
+
+        selected.nodeId = node.id;
+        selected.itemId = node.originalData.id;
+        selectedNode = node;
+        rect = selectedNode.nodeElements.rect;
+        text = selectedNode.nodeElements.text;
 
         rect.attr({
-            fill: config.fill.selected,
-            stroke: config.stroke.selected
+            fill: rectConfig.fill.selected,
+            stroke: rectConfig.stroke.selected
+        });
+
+        text.attr({
+            fill: textConfig.fill.selected
         });
     };
 
@@ -407,6 +459,12 @@
         // 记录根节点
         if (parentNode.virtualRoot === true) {
             nodes.push(currentNode);
+        }
+
+        // 设置选中项
+        if (this.selected.itemId && this.selected.itemId === currentData.id) {
+            this.selected.nodeId = currentNode.id;
+            this.selectNode(currentNode);
         }
 
         return currentNode;
@@ -839,11 +897,8 @@
                 parent = current.parentNodes,
                 children = current.childrenNodes,
                 currentX = direction.node === 'forward' ? (current.x + current.width) : current.x,
-                // currentY = current.y + current.height / 2,
                 currentY = current.y + current.height / 2,
-                // currentX,
                 operator = direction.node === 'forward' ? 1 : -1,
-                // currentY,
                 // 父节点
                 parentLength = parent.length,
                 parentItem,
@@ -853,7 +908,6 @@
                 parentItemEndY,
                 parentX,
                 parentY,
-                // parentX,
                 // 子节点
                 childrenLength = children.length,
                 childItem,
@@ -862,7 +916,11 @@
                 childItemFirstY,
                 childItemEndY,
                 childX,
-                childY;
+                childY,
+                startX,
+                endX,
+                startY,
+                endY;
 
             // 一个节点
             if (parentLength === 1) {
@@ -870,21 +928,42 @@
                 if (!parentItem.virtualRoot && parentItem.childrenNodes.length === 1) {
                     parentX = direction.node === 'forward' ? (parentItem.x + parentItem.width) : parentItem.x;
                     currentX = direction.node === 'forward' ? current.x : (current.x + current.width);
-                    this.createStraightLine(parentX, currentY, currentX, currentY, true);
+
+                    startX = parentX;
+                    endX = currentX;
+                    startY = currentY;
+                    endY = currentY;
+
+                    direction.arrow === 'forward'
+                        ? this.createStraightLine(startX, startY, endX, endY, true)
+                        : this.createStraightLine(endX, startY, startX, endY, true);
+                    // this.createStraightLine(parentX, currentY, currentX, currentY, true);
                 }
             }
             // 发散的节点
             if (childrenLength > 1) {
                 // 前横线
-                this.createStraightLine(currentX, currentY, currentX + (operator * offsetX), currentY, false);
+                startX = currentX;
+                endX = currentX + (operator * offsetX);
+                startY = currentY;
+                endY = currentY;
+
+                direction.arrow === 'forward'
+                    ? this.createStraightLine(startX, startY, endX, endY, false)
+                    : this.createStraightLine(endX, startY, startX, endY, true);
+
                 // 竖线
                 childItemFirst = children[0];
                 childItemEnd = children[childrenLength - 1];
                 childItemFirstY = childItemFirst.y + childItemFirst.height / 2 - pathWidth;
                 childItemEndY = childItemEnd.y + childItemEnd.height / 2 + pathWidth;
-
                 currentX += operator * offsetX;
-                this.createStraightLine(currentX, childItemFirstY, currentX, childItemEndY, false);
+
+                startX = currentX;
+                endX = currentX;
+                startY = childItemFirstY;
+                endY = childItemEndY;
+                this.createStraightLine(startX, startY, endX, endY, false);
 
                 // 后横线
                 for (var i = 0, len = childrenLength; i < len; i++) {
@@ -893,7 +972,14 @@
                     childY = childItem.y + childItem.height / 2;
                     if (!childItem.line.start) {
                         childItem.line.start = true;
-                        this.createStraightLine(currentX, childY, childX, childY);
+                        startX = currentX;
+                        endX = childX;
+                        startY = childY;
+                        endY = childY;
+
+                        direction.arrow === 'forward'
+                            ? this.createStraightLine(startX, startY, endX, endY)
+                            : this.createStraightLine(endX, startY, startX, endY, false);
                     }
                 }
             }
@@ -909,14 +995,29 @@
                 this.createStraightLine(currentX, parentItemFirstY, currentX, parentItemEndY, false);
                 // 后横线
                 parentX = direction.node === 'forward' ? current.x : current.x + current.width;
-                this.createStraightLine(currentX, currentY, parentX, currentY, true);
+
+                startX = currentX;
+                endX = parentX;
+                startY = currentY;
+                endY = currentY;
+                direction.arrow === 'forward'
+                    ? this.createStraightLine(startX, startY, endX, endY, true)
+                    : this.createStraightLine(endX, startY, startX, endY, false);
+                // this.createStraightLine(currentX, currentY, parentX, currentY, true);
                 // 前横线
                 for (var j = 0; j < parentLength; j++) {
                     parentItem = parent[j];
                     parentX = direction.node === 'forward' ? parentItem.x + parentItem.width : parentItem.x;
                     parentY = parentItem.y + parentItem.height / 2;
 
-                    this.createStraightLine(parentX, parentY, currentX, parentY, false);
+                    startX = parentX;
+                    endX = currentX;
+                    startY = parentY;
+                    endY = parentY;
+                    direction.arrow === 'forward'
+                        ? this.createStraightLine(startX, startY, endX, endY, false)
+                        : this.createStraightLine(endX, startY, startX, endY, true);
+                    // this.createStraightLine(parentX, parentY, currentX, parentY, false);
                 }
             }
         }
@@ -1010,68 +1111,19 @@
         getSelected: function () {
             var $elem = $(this),
                 topologyDiagram = $elem.data('topology-diagram'),
-                selected = topologyDiagram.selected ? topologyDiagram.selected.originalData : null;
+                selectedId = topologyDiagram.selected.nodeId,
+                selected = selectedId ? topologyDiagram.nodesHash[selectedId].originalData : null;
 
             return selected;
         },
-        addNodes: function (relateId, data, type) {
+        addNodes: function (parentId, data) {
             var $elem = $(this),
                 topology = $elem.data('topology-diagram'),
                 relateData,
-                // parents,
-                // parent,
-                // index,
-                // grandParent,
-                // node,
-                // splitNodes,
                 children,
                 nodes;
 
-            relateData = topology.nodesHash[relateId].originalData;
-            // if (type === 'parent') {
-            //     // 向关联的父级元素添加子节点
-            //     for (var i = 0, len = data.length; i < len; i++) {
-            //         node = data[i];
-            //         children = node;
-            //         while (children && children.length > 0) {
-            //             children = children.children;
-            //         }
-            //         children.children = [relateData];
-            //     }
-            //     parents = topology.nodesHash[relateId].parentNodes;
-            //     debugger;
-            //     parent = parents[parents.length - 1];
-
-            //     if (parent.id === 'virtualRoot') {
-
-            //     } else {
-            //         grandParent = parent.parentNodes[0];
-
-            //         nodes = grandParent.childrenNodes;
-            //         index = nodes.length - 1;
-            //         for (i = 0, len = nodes.length; i < len; i++) {
-            //             node = nodes[i];
-            //             if (node.id === parent.id) {
-            //                 index = i;
-            //                 break;
-            //             }
-            //         }
-
-            //         nodes = grandParent.originalData.children;
-            //         splitNodes = nodes.splice(index + 1);
-            //         nodes = nodes.concat(data);
-            //         nodes = nodes.concat(splitNodes);
-            //         grandParent.originalData.children = nodes;
-            //         if (grandParent.id === 'virtualRoot') {
-            //             topology.data = nodes;
-            //         }
-            //     }
-            // } else {
-            //     nodes = relateData.children;
-            //     children = nodes.concat(data);
-            //     // topology.nodesHash[relateId].originalData.children = children;
-            //     relateData.children = children;
-            // }
+            relateData = topology.nodesHash[parentId].originalData;
 
             nodes = relateData.children;
             children = nodes.concat(data);

@@ -43,7 +43,7 @@ $(function () {
     //
     // topology-addParents
     //
-    $('#topology-addParents').topology({
+    $('#topology-addReverseChildren').topology({
         data: multiRootData,
         direction: {
             arrow: 'forward',
@@ -68,7 +68,7 @@ $(function () {
                 text: '0-1-1-3',
                 children: []
             }
-            ], 'parent');
+            ]);
         }
     });
 });

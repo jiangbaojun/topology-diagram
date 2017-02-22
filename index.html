@@ -10,25 +10,28 @@
 <body>
     <p>一个根节点简单的拓扑图</p>
     <div id='topology-sample'></div>
-    <p>多个根节点的拓扑图</p>
+    <p>多个根节点的拓扑图（居中显示）</p>
     <div id='topology-multiRoot'></div>
     <p>合并节点的拓扑图</p>
     <div id='topology-merge'></div>
     <p>反向子节点的拓扑图（reverse）从右到左显示</p>
     <div id='topology-reverse'></div>
-    <p>双击添加子节点节点的拓扑图</p>
+    <p>反向子节点+反向箭头的拓扑图（reverse）从右到左显示</p>
+    <div id='topology-reverse2'></div>
+    <p>双击添加子节点节点的拓扑图（使用ondblclickLoad配置项）</p>
     <div id='topology-addChildren'></div>
-    <p>双击添加反向子节点的拓扑图</p>
-    <div id='topology-addParents'></div>
+    <p>双击添加反向子节点的拓扑图（addNodes方法）</p>
+    <div id='topology-addReverseChildren'></div>
     <script src="topology/jquery-3.1.1.js"></script>
     <script src="topology/raphael.js"></script>
     <script src="topology/topology.js"></script>
     <script src="js/sample.js"></script>
     <script src="js/multiRoot.js"></script>
     <script src="js/reverse.js"></script>
+    <script src="js/reverse2.js"></script>
     <script src="js/mergeData.js"></script>
     <script src="js/addChildren.js"></script>
-    <script src="js/addParents.js"></script>
+    <script src="js/addReverseChildren.js"></script>
 </body>
 
 </html>
