@@ -59,8 +59,9 @@
             virtualRootNode: {
                 virtualRoot: true,
                 id: 'virtualRoot',
+                x: -40,
                 x: 800,
-                y: 100,
+                y: 0,
                 width: 0,
                 height: 0,
                 originalData: null,
@@ -76,6 +77,8 @@
             }
 
         };
+        // left center
+        this.align = options.align || 'left';
         this.container = elem;
         this.paper = {
             element: Raphael(this.container, 1000, 1000),
@@ -84,7 +87,11 @@
         };
         this.viewBox = {
             width: 0,
-            height: 0
+            height: 0,
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0
         };
         // forward reverse
         this.direction = {
@@ -147,7 +154,7 @@
             rect,
             self = this;
 
-        rect = paper.rect(x, y, width, config.height, this.config.radius).attr({
+        rect = paper.rect(x, y, width, config.height, config.radius).attr({
             fill: config.fill.default,
             'stroke-width': config['stroke-width'],
             stroke: config.stroke.default,
@@ -317,10 +324,6 @@
             id = this.getId(),
             src = currentData.src,
             text = currentData.text,
-            // config = this.config,
-            // relateTypeEnum = config.relateTypeEnum,
-            // nodeHeight = config.rect.height,
-            // nodeOffsetY = config.node['margin-top'],
             position,
             nodes = this.nodes,
             nodesHash = this.nodesHash,
@@ -333,7 +336,6 @@
 
         currentNode = {
             id: id,
-            // isRoot: false,
             x: 0,
             y: 0,
             text: text,
@@ -345,13 +347,10 @@
             childrenNodes: [],
             prevNode: null,
             nextNode: null,
-            // siblingsIndex: siblingsIndex,
-            // siblingsCount: siblingsCount,
             line: {
                 start: false,
                 end: false
             },
-            // _offsetY: 0,
             offsetY: 0
         };
 
@@ -445,6 +444,8 @@
             x: image.attrs.x + offsetX,
             y: image.attrs.y + offsetY
         });
+
+        this.setViewBox(node);
 
         if (isRecursion) {
             var children = node.childrenNodes;
@@ -586,9 +587,7 @@
             prevNodeChildrenCount,
             prevNodeChildItem;
 
-        debugger;
-        // this.direction.node = 'forward';
-        // x轴反向展示
+        // x轴正向向展示
         if (this.direction.node === 'forward') {
             nodeWidth = parentNode.width;
             x += nodeWidth + nodeOffset.x;
@@ -651,6 +650,7 @@
         this.AddTopologyNodes(this.data, this.virtualRootNode);
         this.fitTopologyNodesPosition(this.nodes);
         this.createTopologyAllLine();
+        this.resetTopologyPager();
     };
 
     TopologyDiagram.prototype.AddTopologyNodes = function (data, parentNode) {
@@ -731,7 +731,8 @@
             width,
             offsetX,
             maxWidth = 0,
-            parentItem;
+            parentItem,
+            direction = this.direction;
 
         if (parentsCount > 1) {
             firstNode = parents[0];
@@ -748,7 +749,7 @@
             if (maxWidth > firstNodeWidth) {
                 offsetX = maxWidth - firstNodeWidth;
                 this.setTopologyNodePosition(node, {
-                    x: offsetX,
+                    x: (direction.node === 'forward') ? offsetX : -offsetX,
                     y: 0
                 }, true);
             }
@@ -830,17 +831,18 @@
         var nodes = this.nodesHash,
             config = this.config,
             pathWidth = config.path['stroke-width'],
-            offsetX = this.config.node['margin-left'] / 2;
+            offsetX = this.config.node['margin-left'] / 2,
+            direction = this.direction;
 
         for (var k in nodes) {
             var current = nodes[k],
                 parent = current.parentNodes,
                 children = current.childrenNodes,
-                currentX = this.direction.node === 'forward' ? (current.x + current.width) : current.x,
+                currentX = direction.node === 'forward' ? (current.x + current.width) : current.x,
                 // currentY = current.y + current.height / 2,
                 currentY = current.y + current.height / 2,
                 // currentX,
-                operator = this.direction.node === 'forward' ? 1 : -1,
+                operator = direction.node === 'forward' ? 1 : -1,
                 // currentY,
                 // 父节点
                 parentLength = parent.length,
@@ -866,8 +868,8 @@
             if (parentLength === 1) {
                 parentItem = parent[0];
                 if (!parentItem.virtualRoot && parentItem.childrenNodes.length === 1) {
-                    parentX = this.direction.node === 'forward' ? (parentItem.x + parentItem.width) : parentItem.x;
-                    currentX = this.direction.node === 'forward' ? current.x : (current.x + current.width);
+                    parentX = direction.node === 'forward' ? (parentItem.x + parentItem.width) : parentItem.x;
+                    currentX = direction.node === 'forward' ? current.x : (current.x + current.width);
                     this.createStraightLine(parentX, currentY, currentX, currentY, true);
                 }
             }
@@ -887,7 +889,7 @@
                 // 后横线
                 for (var i = 0, len = childrenLength; i < len; i++) {
                     childItem = children[i];
-                    childX = this.direction.node === 'forward' ? childItem.x : childItem.x + childItem.width;
+                    childX = direction.node === 'forward' ? childItem.x : childItem.x + childItem.width;
                     childY = childItem.y + childItem.height / 2;
                     if (!childItem.line.start) {
                         childItem.line.start = true;
@@ -903,18 +905,75 @@
                 parentItemEnd = parent[parentLength - 1];
                 parentItemFirstY = parentItemFirst.y + parentItemFirst.height / 2 - pathWidth;
                 parentItemEndY = parentItemEnd.y + parentItemEnd.height / 2 + pathWidth;
-                currentX = current.x - offsetX;
+                currentX = (direction.node === 'forward') ? current.x - offsetX : current.x + current.width + offsetX;
                 this.createStraightLine(currentX, parentItemFirstY, currentX, parentItemEndY, false);
                 // 后横线
-                this.createStraightLine(currentX, currentY, current.x, currentY, true);
+                parentX = direction.node === 'forward' ? current.x : current.x + current.width;
+                this.createStraightLine(currentX, currentY, parentX, currentY, true);
                 // 前横线
                 for (var j = 0; j < parentLength; j++) {
                     parentItem = parent[j];
-                    parentX = parentItem.x + parentItem.width;
+                    parentX = direction.node === 'forward' ? parentItem.x + parentItem.width : parentItem.x;
                     parentY = parentItem.y + parentItem.height / 2;
 
                     this.createStraightLine(parentX, parentY, currentX, parentY, false);
                 }
+            }
+        }
+    };
+
+    TopologyDiagram.prototype.setViewBox = function (node) {
+        var viewBox = this.viewBox,
+            top = viewBox.top,
+            bottom = viewBox.bottom,
+            left = viewBox.left,
+            right = viewBox.right,
+            currentTop = node.y,
+            currentBottom = node.y + node.height,
+            currentLeft = node.x,
+            currentRight = node.x + node.width;
+
+        if (currentTop < top) {
+            viewBox.top = currentTop;
+        }
+
+        if (bottom < currentBottom) {
+            viewBox.bottom = currentBottom;
+        }
+
+        if (currentLeft < left) {
+            viewBox.left = currentLeft;
+        }
+
+        if (right < currentRight) {
+            viewBox.right = currentRight;
+        }
+
+        viewBox.width = right - left;
+        viewBox.height = bottom - top;
+    };
+
+    TopologyDiagram.prototype.resetTopologyPager = function () {
+        var viewBox = this.viewBox,
+            paper = this.paper.element,
+            offset = 10,
+            height = viewBox.height + 2 * offset,
+            width = viewBox.width + 2 * offset,
+            viewBoxX = viewBox.left < 0 ? viewBox.left - offset : -offset,
+            viewBoxY = viewBox.top < 0 ? viewBox.top - offset : -offset,
+            container = $(this.container),
+            containerWidth = 0;
+
+        paper.setSize(width, height);
+        paper.setViewBox(viewBoxX, viewBoxY, width, height, false);
+
+        if (this.align === 'center') {
+            containerWidth = container.width();
+            if (containerWidth > width) {
+                container.find('>svg:first').css({
+                    left: '50%',
+                    'margin-left': '-' + width / 2 + 'px'
+                });
             }
         }
     };

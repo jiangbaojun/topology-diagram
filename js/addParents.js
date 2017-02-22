@@ -45,6 +45,10 @@ $(function () {
     //
     $('#topology-addParents').topology({
         data: multiRootData,
+        direction: {
+            arrow: 'forward',
+            node: 'reverse'
+        },
         ondblclick: function (data, nodeId) {
             $(this).topology('addNodes', nodeId, [{
                 id: (new Date()).getTime() + '1',

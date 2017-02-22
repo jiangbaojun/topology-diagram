@@ -44,6 +44,7 @@ $(function () {
     //
     $('#topology-multiRoot').topology({
         data: multiRootData,
+        align: 'center',
         ondblclick: function (data, nodeId) {
 
         }

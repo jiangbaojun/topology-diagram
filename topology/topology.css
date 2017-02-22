@@ -1,4 +1,7 @@
-.topology-diagram {}
+.topology-diagram {
+    position:relative;
+    overflow:auto;
+}
 
 .topology-diagram .node {
     cursor: pointer;
