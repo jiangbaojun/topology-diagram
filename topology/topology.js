@@ -123,11 +123,13 @@
 
         this.ondblclick;
         this.onclick;
+        this.onrightclick;
         this.ondblclickLoad;
 
         if (options) {
             this.ondblclick = options.ondblclick || null;
             this.onclick = options.onclick || null;
+            this.onrightclick = options.onrightclick || null;
             this.ondblclickLoad = options.ondblclickLoad || null;
         }
 
@@ -288,16 +290,29 @@
             }, 400);
         }
 
+        function bindRightClick(handler, node) {
+            this.currentEventType = 'onrightclick';
+            this.triggerNodeEvent(handler, node, 'onrightclick');
+        }
+
+        function bindMousedown(handler) {
+            if (handler.which === 1) {
+                bindClick.call(this, handler, node);
+            } else if (handler.which === 3) {
+                bindRightClick.call(this, handler, node);
+            }
+        }
+
         // 单击事件
-        if (this.onclick) {
-            rect.click(function (handler) {
-                bindClick.call(self, handler, node);
+        if (this.onclick || this.onrightclick) {
+            rect.mousedown(function (handler) {
+                bindMousedown.call(self, handler, node);
             });
-            text.click(function (handler) {
-                bindClick.call(self, handler, node);
+            text.mousedown(function (handler) {
+                bindMousedown.call(self, handler, node);
             });
-            image.click(function (handler) {
-                bindClick.call(self, handler, node);
+            image.mousedown(function (handler) {
+                bindMousedown.call(self, handler, node);
             });
         }
 
@@ -1117,6 +1132,11 @@
                 topologyDiagram = new TopologyDiagram(this, Raphael, options);
                 topologyDiagram.loadTopologyNodes();
                 $elem.addClass('topology-diagram').data('topology-diagram', topologyDiagram);
+
+                // 取消默认的右键菜单
+                this.oncontextmenu = function () {
+                    return false;
+                };
             });
         },
         destroy: function () {

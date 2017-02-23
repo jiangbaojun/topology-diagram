@@ -71,6 +71,9 @@ $(function () {
         },
         onclick: function (e, data, nodeId) {
             console.dir([e, data, nodeId]);
+        },
+        onrightclick: function (e, data, nodeId) {
+            console.dir([e, data, nodeId]);
         }
     });
 });
