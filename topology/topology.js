@@ -14,8 +14,6 @@
     'use strict';
 
     function TopologyDiagram(elem, Raphael, options) {
-        var self = this;
-
         this.config = {
             rect: {
                 width: 'auto',
@@ -1156,9 +1154,17 @@
             var $elem = $(this),
                 topologyDiagram = $elem.data('topology-diagram'),
                 selectedId = topologyDiagram.selected.nodeId,
-                selected = selectedId ? topologyDiagram.nodesHash[selectedId].originalData : null;
+                node = topologyDiagram.nodesHash[selectedId],
+                selected = node ? node.originalData : null;
 
-            return selected;
+            if (node) {
+                return {
+                    nodeId: node.id,
+                    data: selected
+                };
+            } else {
+                return null;
+            }
         },
         addNodes: function (parentId, data) {
             var $elem = $(this),
