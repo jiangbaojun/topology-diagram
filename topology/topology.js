@@ -85,7 +85,7 @@
         this.align = options.align || 'left';
         this.container = elem;
         this.paper = {
-            element: Raphael(this.container, 1000, 1000),
+            element: Raphael(this.container, 600, 600),
             height: 0,
             width: 0
         };
@@ -140,14 +140,9 @@
                 loadFun = self.ondblclickLoadcallback,
                 children;
 
-            // // 设置选中节点
-            // self.selected = {
-            //     nodeId: node.id,
-            //     itemId: data.id
-            // };
-
+            // 设置选中节点
             self.selectNode(node);
-            debugger;
+
             // 执行回调函数
             if (typeof fun === 'function' || typeof loadFun === 'function') {
                 try {
@@ -171,6 +166,9 @@
             nodeId: null,
             itemId: null
         };
+
+        // 调试代码时将此选项调整为true
+        this.dev = false;
     };
 
     TopologyDiagram.prototype.createRect = function (x, y, width, id) {
@@ -449,8 +447,8 @@
             offsetY: position.offsetY
         });
 
-        // 移动节点元素位置
-        this.moveTopologyNode(currentNode);
+        // 移动节点元素位置 dev:moveNode
+        this.dev ? this.moveTopologyNode(currentNode) : null;
 
         // 将根节点加入nodes保存
         nodesHash[id] = currentNode;
@@ -511,6 +509,7 @@
             if (!node.mergeNode && children && children.length > 0) {
                 for (var i = 0, len = children.length; i < len; i++) {
                     node = children[i];
+                    // 递归
                     this.moveTopologyNode(node, offset, isRecursion);
                 }
             }
@@ -564,23 +563,12 @@
             parentNode.childrenNodes.push(currentNode);
             currentNode.parentNodes.push(parentNode);
         }
-
-        // return currentNode;
     };
 
     TopologyDiagram.prototype.relateMergeTopologyNode = function (currentNode, parentNode) {
-        // var nodeMergeHash = this.nodeMergeHash,
-        // nodeMergeValue = currentData[this.nodeMergeKey] || null,
-        var config = this.config,
-            // relateTypeEnum = config.relateTypeEnum,
-            nodeHeight = config.rect.height,
-            nodeOffsetY = config.node['margin-top'],
-            children,
+        var children,
             mergeNode,
-            prevNode,
-            childItem,
-            nextY,
-            offsetY;
+            childItem;
 
         // 追加子节点
         mergeNode = currentNode.parentNodes[0];
@@ -592,30 +580,6 @@
             childItem = children[i];
             childItem.parentNodes.push(parentNode);
         }
-
-        // // 调整需合并节点的位置
-        // prevNode = parentNode.prevNode;
-        // // if (prevNode.id === mergeNode.id) {
-        // //     debugger;
-        // //     mergeNode.offsetY = mergeNode.offsetY - nodeHeight - nodeOffsetY;
-        // // }
-        // debugger;
-        // // return;
-        // // if (prevNode.offsetY > 0) {
-        // //     // debugger;
-        // //     nextY = prevNode.y + nodeOffsetY + nodeHeight;
-        // //     offsetY = parentNode.y - nextY;
-        // //     parentNode.y = nextY;
-        // //     // 合并的节点不需要预留向下的偏移量
-        // //     parentNode.offsetY = offsetY - (nodeOffsetY + nodeHeight);
-        // //     this.moveTopologyNode(parentNode);
-        // // }
-
-        // if (prevNode.offsetY > 0) {
-        //     parentNode.offsetY += prevNode.offsetY;
-        //     parentNode.y = parentNode.y - prevNode.offsetY;
-        //     this.moveTopologyNode(parentNode);
-        // }
     };
 
     TopologyDiagram.prototype.CalculateTopologyNodePosition = function (parentNode, currentNode) {
@@ -625,11 +589,9 @@
         }
 
         var config = this.config,
-            // nodeWidth = parentNode.width,
             nodeWidth,
             x = parentNode.x,
             y = parentNode.y,
-            // relateTypeEnum = config.relateTypeEnum,
             nodeOffset = {
                 x: config.node['margin-left'],
                 y: config.node['margin-top']
@@ -655,7 +617,6 @@
         }
         // 计算同辈节点中非首个节点的位置
         if (prevNode) {
-            // x = prevNode.x;
             y = prevNode.y + nodeHeight + nodeOffset.y;
         }
 
@@ -704,9 +665,18 @@
     };
 
     TopologyDiagram.prototype.loadTopologyNodes = function () {
+        var nodes;
         this.init();
         this.AddTopologyNodes(this.data, this.virtualRootNode);
+
         this.fitTopologyNodesPosition(this.nodes);
+
+        nodes = this.nodes;
+        for (var i = 0, len = nodes.length; i < len; i++) {
+            // 优化：调整完毕节点位置后，最后再统一移动节点
+            this.moveTopologyNode(nodes[i], null, true);
+        }
+
         this.createTopologyAllLine();
         this.resetTopologyPager();
     };
@@ -776,13 +746,14 @@
             offset = (last.y - first.y) / 2;
             y = first.y + offset;
             node.y = y;
-            this.moveTopologyNode(node);
+
+            // dev:moveNode
+            this.dev ? this.moveTopologyNode(node) : null;
         }
     };
 
     TopologyDiagram.prototype.fitXByMergeTypeNode = function (node) {
         var parents = node.parentNodes,
-            // children = node.childrenNodes,
             parentsCount = parents.length,
             firstNode,
             firstNodeWidth,
@@ -812,7 +783,8 @@
                 }, true);
             }
 
-            this.moveTopologyNode(node, null, true);
+            // dev:moveNode
+            this.dev ? this.moveTopologyNode(node, null, true) : null;
         }
     };
 
@@ -822,9 +794,7 @@
             offsetY,
             parentItem,
             nextItem,
-            lastItem,
-            nodeHeight = this.config.rect.height,
-            nodeOffsetY = this.config.node['margin-top'];
+            lastItem;
 
         if (parentsCount > 1) {
             // 重新调整汇聚类型的多个父节点位置
@@ -835,14 +805,20 @@
                 nextItem.offsetY += parentItem.offsetY;
                 nextItem.y -= offsetY;
                 parentItem.offsetY = 0;
-                this.moveTopologyNode(nextItem);
+
+                // dev:moveNode
+                this.dev ? this.moveTopologyNode(nextItem) : null;
+
                 if (i === parentsCount - 2) {
                     lastItem = nextItem;
                 }
             }
 
             // 暂时注释：勿删
-            // 上移汇聚类型节点之后的兄弟节点
+
+            // var nodeHeight = this.config.rect.height,
+            //     nodeOffsetY = this.config.node['margin-top'];
+            // // 上移汇聚类型节点之后的兄弟节点
             // while (lastItem.nextNode) {
             //     lastItem = lastItem.nextNode;
             //     offsetY = -(nodeHeight + nodeOffsetY);
@@ -874,7 +850,9 @@
                 for (var i = 0; i < parentsCount; i++) {
                     parentItem = parents[i];
                     parentItem.y += offsetY;
-                    this.moveTopologyNode(parentItem);
+
+                    // dev:moveNode
+                    this.dev ? this.moveTopologyNode(parentItem) : null;
                 }
             }
         }
@@ -1050,8 +1028,8 @@
             viewBox.right = currentRight;
         }
 
-        viewBox.width = right - left;
-        viewBox.height = bottom - top;
+        viewBox.width = viewBox.right - viewBox.left;
+        viewBox.height = viewBox.bottom - viewBox.top;
     };
 
     TopologyDiagram.prototype.resetTopologyPager = function () {
