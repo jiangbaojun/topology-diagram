@@ -45,6 +45,7 @@ $(function () {
     //
     $('#topology-addReverseChildren').topology({
         data: multiRootData,
+        align: 'right',
         direction: {
             arrow: 'forward',
             node: 'reverse'

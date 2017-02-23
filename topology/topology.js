@@ -495,7 +495,7 @@
         currentNode.height = nodeElements.height;
         currentNode.nodeElements = nodeElements;
 
-        position = this.CalculateTopologyNodePosition(parentNode, currentNode);
+        position = this.calculateTopologyNodePosition(parentNode, currentNode);
 
         $.extend(currentNode, {
             x: position.x,
@@ -641,7 +641,7 @@
         }
     };
 
-    TopologyDiagram.prototype.CalculateTopologyNodePosition = function (parentNode, currentNode) {
+    TopologyDiagram.prototype.calculateTopologyNodePosition = function (parentNode, currentNode) {
         // relateType必须存在，没有传入则默认为虚拟根节点
         if (!parentNode) {
             parentNode = this.virtualRootNode;
@@ -1100,17 +1100,19 @@
             viewBoxX = viewBox.left < 0 ? viewBox.left - offset : -offset,
             viewBoxY = viewBox.top < 0 ? viewBox.top - offset : -offset,
             container = $(this.container),
-            containerWidth = 0;
+            containerWidth = 0,
+            svg;
 
         paper.setSize(width, height);
         paper.setViewBox(viewBoxX, viewBoxY, width, height, false);
 
-        if (this.align === 'center') {
+        if (this.align === 'center' || this.align === 'right') {
             containerWidth = container.width();
             if (containerWidth > width) {
-                container.find('>svg:first').css({
-                    left: '50%',
-                    'margin-left': '-' + width / 2 + 'px'
+                svg = container.find('>svg:first');
+                svg.css({
+                    left: this.align === 'center' ? '50%' : '100%',
+                    'margin-left': this.align === 'center' ? '-' + width / 2 + 'px' : '-' + width + 'px'
                 });
             }
         }
