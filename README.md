@@ -22,24 +22,23 @@
 
 1. 标准的拓扑图
 
- ![标准的拓扑图](standard.png)
+![标准的拓扑图](https://github.com/huang-qing/topologyDiagram/raw/master/doc/standard.png)
 
 2. 多根的拓扑图
 
- ![多根的拓扑图](multiRoot.png)
-
+![多根的拓扑图](https://github.com/huang-qing/topologyDiagram/raw/master/doc/multiRoot.png)
 
 3. 自动合并节点的拓扑图
 
- ![自动合并节点的拓扑图](mergenode.png)
+![自动合并节点的拓扑图](https://github.com/huang-qing/topologyDiagram/raw/master/doc/mergenode.png)
 
 4. 节点反向展示的拓扑图
 
- ![节点反向展示的拓扑图](reversenode.png.png)
+![节点反向展示的拓扑图](https://github.com/huang-qing/topologyDiagram/raw/master/doc/reversenode.png)
 
 5. 箭头反向展示的拓扑图
 
- ![箭头反向展示的拓扑图](reversearrow.png)
+![箭头反向展示的拓扑图](https://github.com/huang-qing/topologyDiagram/raw/master/doc/reversearrow.png)
 
 ## 使用示例
 
