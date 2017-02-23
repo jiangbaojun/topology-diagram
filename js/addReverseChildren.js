@@ -49,7 +49,7 @@ $(function () {
             arrow: 'forward',
             node: 'reverse'
         },
-        ondblclick: function (data, nodeId) {
+        ondblclick: function (event, data, nodeId) {
             $(this).topology('addNodes', nodeId, [{
                 id: (new Date()).getTime() + '1',
                 src: 'images/counter.png',
@@ -69,6 +69,8 @@ $(function () {
                 children: []
             }
             ]);
+
+            console.dir([event, data, nodeId]);
         }
     });
 });

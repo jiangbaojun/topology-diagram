@@ -121,46 +121,17 @@
         // 虚拟的根节点
         this.virtualRootNode;
 
-        this.ondblclickcallback;
-        this.onclickcallback;
+        this.ondblclick;
+        this.onclick;
+        this.ondblclickLoad;
 
         if (options) {
-            this.ondblclickcallback = options.ondblclick || null;
-            this.onclickcallback = options.onclick || null;
-            this.ondblclickLoadcallback = options.ondblclickLoad || null;
+            this.ondblclick = options.ondblclick || null;
+            this.onclick = options.onclick || null;
+            this.ondblclickLoad = options.ondblclickLoad || null;
         }
 
-        // click 与 dblclick冲突，不能同时使用
-        this.onclick = function (handler, node) {};
-
-        this.ondblclick = function (handler, node) {
-            var fun = self.ondblclickcallback,
-                data = node.originalData,
-                elem = self.container,
-                loadFun = self.ondblclickLoadcallback,
-                children;
-
-            // 设置选中节点
-            self.selectNode(node);
-
-            // 执行回调函数
-            if (typeof fun === 'function' || typeof loadFun === 'function') {
-                try {
-                    if (typeof fun === 'function') {
-                        fun.call(elem, data, node.id);
-                    }
-                } catch (e) {
-                    throw e;
-                } finally {
-                    if (typeof loadFun === 'function') {
-                        if (data.children.length < 1) {
-                            children = loadFun.call(data);
-                            $(elem).topology('addNodes', self.selected.nodeId, children);
-                        }
-                    }
-                }
-            }
-        };
+        this.currentEventType;
 
         this.selected = {
             nodeId: null,
@@ -174,22 +145,13 @@
     TopologyDiagram.prototype.createRect = function (x, y, width, id) {
         var config = this.config.rect,
             paper = this.paper.element,
-            rect,
-            self = this;
+            rect;
 
         rect = paper.rect(x, y, width, config.height, config.radius).attr({
             fill: config.fill.default,
             'stroke-width': config['stroke-width'],
             stroke: config.stroke.default,
             r: config.radius
-        });
-
-        rect.click(function (handler) {
-            self.onclick(handler, self.nodesHash[id]);
-        });
-
-        rect.dblclick(function (handler) {
-            self.ondblclick(handler, self.nodesHash[id]);
         });
 
         $(rect[0]).attr({
@@ -203,19 +165,10 @@
     TopologyDiagram.prototype.createImage = function (x, y, src, id) {
         var config = this.config.image,
             paper = this.paper.element,
-            image,
-            self = this;
+            image;
 
         image = paper.image(src, x, y, config.width, config.height).attr({
 
-        });
-
-        image.click(function (handler) {
-            self.onclick(handler, self.nodesHash[id]);
-        });
-
-        image.dblclick(function (handler) {
-            self.ondblclick(handler, self.nodesHash[id]);
         });
 
         $(image[0]).attr({
@@ -231,8 +184,7 @@
             maxLength = config.maxLength,
             paper = this.paper.element,
             title = text,
-            textElem,
-            self = this;
+            textElem;
 
         if (text.length > maxLength) {
             text = text.slice(0, maxLength) + '...';
@@ -245,14 +197,6 @@
             'title': title,
             fill: config.fill.default,
             id: id + '-text'
-        });
-
-        textElem.click(function (handler) {
-            self.onclick(handler, self.nodesHash[id]);
-        });
-
-        textElem.dblclick(function (handler) {
-            self.ondblclick(handler, self.nodesHash[id]);
         });
 
         $(textElem[0]).attr({
@@ -302,6 +246,103 @@
             width: rectWidth,
             height: config.rect.height
         };
+    };
+
+    TopologyDiagram.prototype.bindNodeEvent = function (node) {
+        var elems = node.nodeElements,
+            rect = elems.rect,
+            image = elems.image,
+            text = elems.text,
+            self = this;
+
+        // 解决单击与双击直接的冲突
+        function bindClick(handler, node) {
+            var self = this,
+                trigger = self.triggerNodeEvent;
+
+            if (!this.onclick && !this.ondblclick && !this.ondblclickLoad) {
+                this.currentEventType = 'ondblclick';
+                trigger(handler, node, 'onclick');
+                this.currentEventType = null;
+            } else {
+                // 首先选中节点，使点击选中的效果不延时
+                this.selectNode(node);
+                setTimeout(function () {
+                    if (self.currentEventType === 'ondblclick') {
+                        return false;
+                    } else {
+                        self.currentEventType = 'onclick';
+                        trigger.call(self, handler, node, 'onclick');
+                        self.currentEventType = null;
+                    }
+                }, 400);
+            }
+        }
+
+        function bindDblClick(handler, node) {
+            var self = this;
+            this.currentEventType = 'ondblclick';
+            this.triggerNodeEvent(handler, node, 'ondblclick');
+            setTimeout(function () {
+                self.currentEventType = null;
+            }, 400);
+        }
+
+        // 单击事件
+        if (this.onclick) {
+            rect.click(function (handler) {
+                bindClick.call(self, handler, node);
+            });
+            text.click(function (handler) {
+                bindClick.call(self, handler, node);
+            });
+            image.click(function (handler) {
+                bindClick.call(self, handler, node);
+            });
+        }
+
+        // 双击事件
+        if (this.ondblclick || this.ondblclickLoad) {
+            rect.dblclick(function (handler) {
+                bindDblClick.call(self, handler, node);
+            });
+            text.dblclick(function (handler) {
+                bindDblClick.call(self, handler, node);
+            });
+            image.dblclick(function (handler) {
+                bindDblClick.call(self, handler, node);
+            });
+        }
+    };
+
+    TopologyDiagram.prototype.triggerNodeEvent = function (event, node, type) {
+        var fun = this[type],
+            data = node.originalData,
+            elem = this.container,
+            loadFun = this[type + 'Load'],
+            children;
+
+        console.log(type);
+        // 设置选中节点
+        this.selectNode(node);
+
+        // 执行回调函数
+        if (typeof fun === 'function' || typeof loadFun === 'function') {
+            try {
+                if (typeof fun === 'function') {
+                    fun.call(elem, event, data, node.id);
+                }
+            } catch (e) {
+                throw e;
+            } finally {
+                if (typeof loadFun === 'function') {
+                    if (data.children.length < 1) {
+                        children = loadFun.call(data);
+                        $(elem).topology('addNodes', this.selected.nodeId, children);
+                    }
+                }
+            }
+        }
     };
 
     TopologyDiagram.prototype.selectNode = function (node) {
@@ -464,6 +505,9 @@
             this.selected.nodeId = currentNode.id;
             this.selectNode(currentNode);
         }
+
+        // 绑定事件
+        this.bindNodeEvent(currentNode);
 
         return currentNode;
     };

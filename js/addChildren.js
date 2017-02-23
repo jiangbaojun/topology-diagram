@@ -45,6 +45,9 @@ $(function () {
     //
     $('#topology-addChildren').topology({
         data: multiRootData,
+        ondblclick: function (e, data, nodeId) {
+            console.dir([e, data, nodeId]);
+        },
         ondblclickLoad: function (data) {
             return [{
                 id: (new Date()).getTime() + '1',
@@ -63,7 +66,11 @@ $(function () {
                 src: 'images/counter.png',
                 text: '0-1-1-3',
                 children: []
-            }];
+            }
+            ];
+        },
+        onclick: function (e, data, nodeId) {
+            console.dir([e, data, nodeId]);
         }
     });
 });
