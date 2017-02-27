@@ -302,30 +302,28 @@
         }
 
         // 单击事件
-        if (this.onclick || this.onrightclick) {
-            rect.mousedown(function(handler) {
-                bindMousedown.call(self, handler, node);
-            });
-            text.mousedown(function(handler) {
-                bindMousedown.call(self, handler, node);
-            });
-            image.mousedown(function(handler) {
-                bindMousedown.call(self, handler, node);
-            });
-        }
+
+        rect.mousedown(function(handler) {
+            bindMousedown.call(self, handler, node);
+        });
+        text.mousedown(function(handler) {
+            bindMousedown.call(self, handler, node);
+        });
+        image.mousedown(function(handler) {
+            bindMousedown.call(self, handler, node);
+        });
 
         // 双击事件
-        if (this.ondblclick || this.ondblclickLoad) {
-            rect.dblclick(function(handler) {
-                bindDblClick.call(self, handler, node);
-            });
-            text.dblclick(function(handler) {
-                bindDblClick.call(self, handler, node);
-            });
-            image.dblclick(function(handler) {
-                bindDblClick.call(self, handler, node);
-            });
-        }
+
+        rect.dblclick(function(handler) {
+            bindDblClick.call(self, handler, node);
+        });
+        text.dblclick(function(handler) {
+            bindDblClick.call(self, handler, node);
+        });
+        image.dblclick(function(handler) {
+            bindDblClick.call(self, handler, node);
+        });
     };
 
     TopologyDiagram.prototype.triggerNodeEvent = function(event, node, type) {
@@ -335,7 +333,7 @@
             loadFun = this[type + 'Load'],
             children;
 
-        console.log(type);
+        // console.log(type);
         // 设置选中节点
         this.selectNode(node);
 
@@ -1169,20 +1167,30 @@
             }
         },
         addNodes: function(parentId, data) {
-            var $elem = $(this),
-                topology = $elem.data('topology-diagram'),
-                relateData,
-                children,
-                nodes;
+            return this.each(function() {
+                var $elem = $(this),
+                    topology = $elem.data('topology-diagram'),
+                    relateData,
+                    children,
+                    nodes;
 
-            relateData = topology.nodesHash[parentId].originalData;
+                relateData = topology.nodesHash[parentId].originalData;
 
-            nodes = relateData.children;
-            children = nodes.concat(data);
+                nodes = relateData.children;
+                children = nodes.concat(data);
 
-            relateData.children = children;
+                relateData.children = children;
 
-            topology.loadTopologyNodes();
+                topology.loadTopologyNodes();
+            });
+        },
+        bindEvent: function(name, callback) {
+            return this.each(function() {
+                var $elem = $(this),
+                    topology = $elem.data('topology-diagram');
+
+                topology[name] = callback;
+            });
         }
     };
 
