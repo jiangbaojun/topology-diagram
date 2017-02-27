@@ -236,6 +236,14 @@ $('#topologyElementId').topology('getSelected');
 $('#topologyElementId').topology('addNodes',nodes);
 ```
 
+`bindEvent`:绑定事件 事件名称:`onclick` `ondblclick` `ondblclickLoad` `onrightclick`
+
+```javascript
+$('#topologyElementId').topology('bindEvent','onclick',function(e, data, nodeId){
+
+});
+```
+
 
 ## demo 演示
 安装Node.js，cmd中初始化项目
