@@ -10,7 +10,7 @@
  * Date: 2017-01-20
  */
 
-(function($, Raphael) {
+;(function($, Raphael) {
     'use strict';
 
     function TopologyDiagram(elem, Raphael, options) {

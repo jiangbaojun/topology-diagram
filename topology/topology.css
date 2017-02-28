@@ -7,7 +7,7 @@
     cursor: pointer;
 }
 
-::selection {
+.topology-diagram tspan::selection {
     background: #fff;
     color: #fff;
 }
