@@ -19,12 +19,12 @@
                 width: 'auto',
                 height: 22,
                 stroke: {
-                    default: '#C1C5CA',
+                    'default': '#C1C5CA',
                     selected: '#B2C9E0'
                 },
                 'stroke-width': 1,
                 fill: {
-                    default: '#F4F4F4',
+                    'default': '#F4F4F4',
                     selected: '#EBF4FD'
                 },
                 radius: 3
@@ -39,7 +39,7 @@
                 'font-size': 12,
                 'maxLength': 8,
                 fill: {
-                    default: '#5C5C5C',
+                    'default': '#5C5C5C',
                     selected: '#039AFF'
                 }
             },
@@ -148,9 +148,9 @@
             rect;
 
         rect = paper.rect(x, y, width, config.height, config.radius).attr({
-            fill: config.fill.default,
+            fill: config.fill['default'],
             'stroke-width': config['stroke-width'],
-            stroke: config.stroke.default,
+            stroke: config.stroke['default'],
             r: config.radius
         });
 
@@ -195,7 +195,7 @@
             'font-size': config['font-size'],
             'text-anchor': 'start',
             'title': title,
-            fill: config.fill.default,
+            fill: config.fill['default'],
             id: id + '-text'
         });
 
@@ -370,12 +370,12 @@
             text = selectedNode.nodeElements.text;
 
             rect.attr({
-                fill: rectConfig.fill.default,
-                stroke: rectConfig.stroke.default
+                fill: rectConfig.fill['default'],
+                stroke: rectConfig.stroke['default']
             });
 
             text.attr({
-                fill: textConfig.fill.default
+                fill: textConfig.fill['default']
             });
         }
 
