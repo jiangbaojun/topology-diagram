@@ -263,7 +263,7 @@
 
             if (!this.onclick && !this.ondblclick && !this.ondblclickLoad) {
                 this.currentEventType = 'ondblclick';
-                trigger(handler, node, 'onclick');
+                trigger.call(self, handler, node, 'onclick');
                 this.currentEventType = null;
             } else {
                 // 首先选中节点，使点击选中的效果不延时
@@ -742,6 +742,10 @@
     TopologyDiagram.prototype.AddTopologyNodes = function(data, parentNode) {
         var node;
 
+        if (typeof data === 'object' && !(data instanceof Array)) {
+            data = [data];
+        }
+
         if (data && data instanceof Array) {
             for (var i = 0, len = data.length; i < len; i++) {
                 var item = data[i],
@@ -1133,8 +1137,10 @@
     var methods = {
         init: function(options) {
             return this.each(function() {
-                var topologyDiagram,
-                    $elem = $(this);
+                var $elem = $(this),
+                    topologyDiagram;
+
+                methods.destroy.apply($elem);
 
                 topologyDiagram = new TopologyDiagram(this, Raphael, options);
                 topologyDiagram.loadTopologyNodes();
@@ -1150,11 +1156,14 @@
             return this.each(function() {
                 var $elem = $(this),
                     topologyDiagram = $elem.data('topology-diagram'),
-                    paper = topologyDiagram.paper.element;
+                    paper;
 
-                paper.remove();
-                $elem.removeClass('topology-diagram');
-                $elem.removeData('topology-diagram');
+                if (topologyDiagram) {
+                    paper = topologyDiagram.paper.element;
+                    paper.remove();
+                    $elem.removeClass('topology-diagram');
+                    $elem.removeData('topology-diagram');
+                }
             });
         },
         getSelected: function() {
