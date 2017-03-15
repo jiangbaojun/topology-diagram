@@ -10,7 +10,8 @@
  * Date: 2017-01-20
  */
 
-;(function($, Raphael) {
+;
+(function($, Raphael) {
     'use strict';
 
     function TopologyDiagram(elem, Raphael, options) {
@@ -744,7 +745,13 @@
         if (data && data instanceof Array) {
             for (var i = 0, len = data.length; i < len; i++) {
                 var item = data[i],
-                    children = item.children;
+                    children;
+
+                if (!item) {
+                    continue;
+                }
+
+                children = item.children;
 
                 // 合并的节点返回null
                 node = this.createTopologyNode(item, parentNode);
@@ -763,7 +770,7 @@
     TopologyDiagram.prototype.fitTopologyNodesPosition = function(nodes) {
         var node,
             childrenNodes,
-            childrenNodesCount; ;
+            childrenNodesCount;
 
         for (var i = 0, len = nodes.length; i < len; i++) {
             node = nodes[i];
