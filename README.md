@@ -194,6 +194,8 @@ javascript：
 
 `align`:拓扑图展示位置。居左`left` 居中`center` 居右`right` 
 
+`vertical-align`:拓扑图展示位置。居上`top` 居中`middle` 居下`bottom` 
+
 `direction`: 正向 `forward` 反向 `reverse`
     + `node`：拓扑图节点显示方向 
     + `arrow`：拓扑图箭头显示方向 
