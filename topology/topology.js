@@ -80,8 +80,10 @@
             }
 
         };
-        // left center
+        // left center right
         this.align = options.align || 'left';
+        // top middle bottom
+        this['vertical-align'] = options['vertical-align'] || 'top';
         this.container = elem;
         this.paper = {
             element: Raphael(this.container, 600, 600),
@@ -1110,18 +1112,32 @@
             viewBoxY = viewBox.top < 0 ? viewBox.top - offset : -offset,
             container = $(this.container),
             containerWidth = 0,
+            containerHeight = 0,
             svg;
 
         paper.setSize(width, height);
         paper.setViewBox(viewBoxX, viewBoxY, width, height, false);
 
+        // 水平位置
         if (this.align === 'center' || this.align === 'right') {
             containerWidth = container.width();
             if (containerWidth > width) {
                 svg = container.find('>svg:first');
                 svg.css({
-                    left: this.align === 'center' ? '50%' : '100%',
+                    left: this.align === 'center' ? '50%' : '90%',
                     'margin-left': this.align === 'center' ? '-' + width / 2 + 'px' : '-' + width + 'px'
+                });
+            }
+        }
+
+        // 垂直位置
+        if (this['vertical-align'] === 'middle' || this['vertical-align'] === 'bottom') {
+            containerHeight = container.height();
+            if (containerHeight > height) {
+                svg = container.find('>svg:first');
+                svg.css({
+                    top: this['vertical-align'] === 'middle' ? '50%' : '90%',
+                    'margin-top': this['vertical-align'] === 'middle' ? '-' + height / 2 + 'px' : '-' + height + 'px'
                 });
             }
         }
