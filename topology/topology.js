@@ -63,7 +63,7 @@
                 virtualRoot: true,
                 id: 'virtualRoot',
                 x: -40,
-                x: 100,
+                //x: 100,
                 y: 0,
                 width: 0,
                 height: 0,

@@ -8,6 +8,5 @@
 }
 
 .topology-diagram tspan::selection {
-    background: #fff;
-    color: #fff;
+    background: #f4f4f4;
 }
