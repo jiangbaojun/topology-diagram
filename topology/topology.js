@@ -63,7 +63,7 @@
                 virtualRoot: true,
                 id: 'virtualRoot',
                 x: -40,
-                // x: 800,
+                x: 100,
                 y: 0,
                 width: 0,
                 height: 0,
@@ -165,7 +165,7 @@
         return rect;
     };
 
-    TopologyDiagram.prototype.createImage = function (x, y, src, id) {
+    TopologyDiagram.prototype.createImage = function (x, y, src, id, index) {
         var config = this.config.image,
             paper = this.paper.element,
             image;
@@ -176,7 +176,7 @@
 
         $(image[0]).attr({
             'data-nodeId': id,
-            'id': id + '-image'
+            'id': id + '-' + index + '-image'
         }).addClass('node node-image');
 
         return image;
@@ -217,20 +217,38 @@
             rectElem,
             rectWidth,
             imageElem,
+            imageElems = [],
             textElem,
             startX = x,
             nextX,
             endX,
             startY = y,
             nextY,
-            bBox;
+            bBox,
+            srcLength = 1,
+            srcItem;
+
+
+        //支持多图标
+        if (typeof src === 'string') {
+            src = [src];
+        }
+        else if (src instanceof Array) {
+            srcLength = src.length;
+        }
 
         nextX = startX + paddingLeft;
         nextY = startY + paddingTop;
-        imageElem = this.createImage(nextX, nextY, src, id);
+        for (var i = 0, len = srcLength; i < len; i++) {
+            srcItem = src[i];
+            imageElem = this.createImage(nextX, nextY, srcItem, id, i);
 
-        bBox = imageElem.getBBox();
-        nextX = nextX + bBox.width + paddingLeft;
+            imageElems.push(imageElem);
+            //计算下一个位置
+            bBox = imageElem.getBBox();
+            nextX = nextX + bBox.width + paddingLeft;
+        }
+
         textElem = this.createText(nextX, nextY, text, id);
 
         bBox = textElem.getBBox();
@@ -240,10 +258,14 @@
         rectElem = this.createRect(startX, startY, rectWidth, id);
 
         textElem.toFront();
-        imageElem.toFront();
+
+        //置顶
+        for (i = 0, len = srcLength; i < len; i++) {
+            imageElems[i].toFront();
+        }
 
         return {
-            image: imageElem,
+            image: imageElems,
             text: textElem,
             rect: rectElem,
             width: rectWidth,
@@ -254,8 +276,12 @@
     TopologyDiagram.prototype.bindNodeEvent = function (node) {
         var elems = node.nodeElements,
             rect = elems.rect,
-            image = elems.image,
+            images = elems.image,
+            image,
+            imageItem,
+            imageLength = images.length,
             text = elems.text,
+            i,
             self = this;
 
         // 解决单击与双击直接的冲突
@@ -312,9 +338,14 @@
         text.mousedown(function (handler) {
             bindMousedown.call(self, handler, node);
         });
-        image.mousedown(function (handler) {
-            bindMousedown.call(self, handler, node);
-        });
+
+        for (i = 0; i < imageLength; i++) {
+            image = images[i];
+            image.mousedown(function (handler) {
+                bindMousedown.call(self, handler, node);
+            });
+        }
+
 
         // 双击事件
 
@@ -324,9 +355,14 @@
         text.dblclick(function (handler) {
             bindDblClick.call(self, handler, node);
         });
-        image.dblclick(function (handler) {
-            bindDblClick.call(self, handler, node);
-        });
+
+
+        for (i = 0; i < imageLength; i++) {
+            image = images[i];
+            image.dblclick(function (handler) {
+                bindDblClick.call(self, handler, node);
+            });
+        }
     };
 
     TopologyDiagram.prototype.triggerNodeEvent = function (event, node, type) {
@@ -427,6 +463,7 @@
         var currentData = data,
             nodeElements,
             id = this.getId(),
+            //src是字符串或数组[src]
             src = currentData.src || currentData.ico || currentData.img,
             text = currentData.text,
             position,
@@ -532,7 +569,8 @@
         var nodeElements = node.nodeElements,
             rect = nodeElements.rect,
             text = nodeElements.text,
-            image = nodeElements.image,
+            images = nodeElements.image,
+            image,
             x = node.x,
             y = node.y,
             offsetX = x === null ? 0 : x - rect.attrs.x,
@@ -556,10 +594,14 @@
             x: text.attrs.x + offsetX,
             y: text.attrs.y + offsetY
         });
-        image.attr({
-            x: image.attrs.x + offsetX,
-            y: image.attrs.y + offsetY
-        });
+      
+        for (var i = 0, len = images.length; i < len; i++) {
+            image = images[i];
+            image.attr({
+                x: image.attrs.x + offsetX,
+                y: image.attrs.y + offsetY
+            });
+        }
 
         this.setViewBox(node);
 
