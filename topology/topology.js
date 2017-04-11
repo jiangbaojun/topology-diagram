@@ -11,7 +11,7 @@
  */
 
 ;
-(function($, Raphael) {
+(function ($, Raphael) {
     'use strict';
 
     function TopologyDiagram(elem, Raphael, options) {
@@ -145,7 +145,7 @@
         this.dev = false;
     };
 
-    TopologyDiagram.prototype.createRect = function(x, y, width, id) {
+    TopologyDiagram.prototype.createRect = function (x, y, width, id) {
         var config = this.config.rect,
             paper = this.paper.element,
             rect;
@@ -165,7 +165,7 @@
         return rect;
     };
 
-    TopologyDiagram.prototype.createImage = function(x, y, src, id) {
+    TopologyDiagram.prototype.createImage = function (x, y, src, id) {
         var config = this.config.image,
             paper = this.paper.element,
             image;
@@ -182,7 +182,7 @@
         return image;
     };
 
-    TopologyDiagram.prototype.createText = function(x, y, text, id) {
+    TopologyDiagram.prototype.createText = function (x, y, text, id) {
         var config = this.config.text,
             maxLength = config.maxLength,
             paper = this.paper.element,
@@ -210,7 +210,7 @@
         return textElem;
     };
 
-    TopologyDiagram.prototype.createNode = function(x, y, src, text, id) {
+    TopologyDiagram.prototype.createNode = function (x, y, src, text, id) {
         var config = this.config,
             paddingLeft = config.node['padding-left'],
             paddingTop = config.node['padding-top'],
@@ -251,7 +251,7 @@
         };
     };
 
-    TopologyDiagram.prototype.bindNodeEvent = function(node) {
+    TopologyDiagram.prototype.bindNodeEvent = function (node) {
         var elems = node.nodeElements,
             rect = elems.rect,
             image = elems.image,
@@ -270,7 +270,7 @@
             } else {
                 // 首先选中节点，使点击选中的效果不延时
                 this.selectNode(node);
-                setTimeout(function() {
+                setTimeout(function () {
                     if (self.currentEventType === 'ondblclick') {
                         return false;
                     } else {
@@ -286,7 +286,7 @@
             var self = this;
             this.currentEventType = 'ondblclick';
             this.triggerNodeEvent(handler, node, 'ondblclick');
-            setTimeout(function() {
+            setTimeout(function () {
                 self.currentEventType = null;
             }, 400);
         }
@@ -306,30 +306,30 @@
 
         // 单击事件
 
-        rect.mousedown(function(handler) {
+        rect.mousedown(function (handler) {
             bindMousedown.call(self, handler, node);
         });
-        text.mousedown(function(handler) {
+        text.mousedown(function (handler) {
             bindMousedown.call(self, handler, node);
         });
-        image.mousedown(function(handler) {
+        image.mousedown(function (handler) {
             bindMousedown.call(self, handler, node);
         });
 
         // 双击事件
 
-        rect.dblclick(function(handler) {
+        rect.dblclick(function (handler) {
             bindDblClick.call(self, handler, node);
         });
-        text.dblclick(function(handler) {
+        text.dblclick(function (handler) {
             bindDblClick.call(self, handler, node);
         });
-        image.dblclick(function(handler) {
+        image.dblclick(function (handler) {
             bindDblClick.call(self, handler, node);
         });
     };
 
-    TopologyDiagram.prototype.triggerNodeEvent = function(event, node, type) {
+    TopologyDiagram.prototype.triggerNodeEvent = function (event, node, type) {
         var fun = this[type],
             data = node.originalData,
             elem = this.container,
@@ -359,7 +359,7 @@
         }
     };
 
-    TopologyDiagram.prototype.selectNode = function(node) {
+    TopologyDiagram.prototype.selectNode = function (node) {
         var rect,
             text,
             rectConfig = this.config.rect,
@@ -398,7 +398,7 @@
         });
     };
 
-    TopologyDiagram.prototype.createPath = function(startX, startY, middleX, middleY, endX, endY, hasArrow) {
+    TopologyDiagram.prototype.createPath = function (startX, startY, middleX, middleY, endX, endY, hasArrow) {
         var config = this.config.path,
             paper = this.paper.element;
 
@@ -412,18 +412,18 @@
         });
     };
 
-    TopologyDiagram.prototype.createStraightLine = function(startX, startY, endX, endY, hasArrow) {
+    TopologyDiagram.prototype.createStraightLine = function (startX, startY, endX, endY, hasArrow) {
         return this.createPath(startX, startY, endX, endY, endX, endY, hasArrow);
     };
 
-    TopologyDiagram.prototype.createBrokenLine = function(startX, startY, endX, endY) {
+    TopologyDiagram.prototype.createBrokenLine = function (startX, startY, endX, endY) {
         var middleX = startX,
             middleY = endY;
 
         return this.createPath(startX, startY, middleX, middleY, endX, endY);
     };
 
-    TopologyDiagram.prototype.createTopologyNode = function(data, parentNode) {
+    TopologyDiagram.prototype.createTopologyNode = function (data, parentNode) {
         var currentData = data,
             nodeElements,
             id = this.getId(),
@@ -528,7 +528,7 @@
         return currentNode;
     };
 
-    TopologyDiagram.prototype.moveTopologyNode = function(node, offset, isRecursion) {
+    TopologyDiagram.prototype.moveTopologyNode = function (node, offset, isRecursion) {
         var nodeElements = node.nodeElements,
             rect = nodeElements.rect,
             text = nodeElements.text,
@@ -576,7 +576,7 @@
         }
     };
 
-    TopologyDiagram.prototype.setTopologyNodePosition = function(node, offset, isRecursion) {
+    TopologyDiagram.prototype.setTopologyNodePosition = function (node, offset, isRecursion) {
         var x = node.x,
             y = node.y,
             offsetX = 0,
@@ -605,7 +605,7 @@
         }
     };
 
-    TopologyDiagram.prototype.relateTopologyNode = function(parentNode, currentNode) {
+    TopologyDiagram.prototype.relateTopologyNode = function (parentNode, currentNode) {
         var childrenNodes = parentNode.childrenNodes,
             childrenCount = childrenNodes.length,
             childItem,
@@ -625,7 +625,7 @@
         }
     };
 
-    TopologyDiagram.prototype.relateMergeTopologyNode = function(currentNode, parentNode) {
+    TopologyDiagram.prototype.relateMergeTopologyNode = function (currentNode, parentNode) {
         var children,
             mergeNode,
             childItem;
@@ -642,7 +642,7 @@
         }
     };
 
-    TopologyDiagram.prototype.calculateTopologyNodePosition = function(parentNode, currentNode) {
+    TopologyDiagram.prototype.calculateTopologyNodePosition = function (parentNode, currentNode) {
         // relateType必须存在，没有传入则默认为虚拟根节点
         if (!parentNode) {
             parentNode = this.virtualRootNode;
@@ -710,7 +710,7 @@
         };
     };
 
-    TopologyDiagram.prototype.init = function() {
+    TopologyDiagram.prototype.init = function () {
         var pager = this.paper.element;
         pager.clear();
         this.nodesHash = {};
@@ -724,7 +724,7 @@
         };
     };
 
-    TopologyDiagram.prototype.loadTopologyNodes = function() {
+    TopologyDiagram.prototype.loadTopologyNodes = function () {
         var nodes;
         this.init();
         this.AddTopologyNodes(this.data, this.virtualRootNode);
@@ -741,7 +741,7 @@
         this.resetTopologyPager();
     };
 
-    TopologyDiagram.prototype.AddTopologyNodes = function(data, parentNode) {
+    TopologyDiagram.prototype.AddTopologyNodes = function (data, parentNode) {
         var node;
 
         if (typeof data === 'object' && !(data instanceof Array)) {
@@ -773,7 +773,7 @@
         }
     };
 
-    TopologyDiagram.prototype.fitTopologyNodesPosition = function(nodes) {
+    TopologyDiagram.prototype.fitTopologyNodesPosition = function (nodes) {
         var node,
             childrenNodes,
             childrenNodesCount;
@@ -799,7 +799,7 @@
         }
     };
 
-    TopologyDiagram.prototype.moveToMiddleByBranchTypeNode = function(node) {
+    TopologyDiagram.prototype.moveToMiddleByBranchTypeNode = function (node) {
         var children = node.childrenNodes,
             count = children.length,
             first,
@@ -822,7 +822,7 @@
         }
     };
 
-    TopologyDiagram.prototype.fitXByMergeTypeNode = function(node) {
+    TopologyDiagram.prototype.fitXByMergeTypeNode = function (node) {
         var parents = node.parentNodes,
             parentsCount = parents.length,
             firstNode,
@@ -858,7 +858,7 @@
         }
     };
 
-    TopologyDiagram.prototype.fitYByMergeTypeNode = function(node) {
+    TopologyDiagram.prototype.fitYByMergeTypeNode = function (node) {
         var parents = node.parentNodes,
             parentsCount = parents.length,
             offsetY,
@@ -901,7 +901,7 @@
         }
     };
 
-    TopologyDiagram.prototype.moveToMiddleByMergeTypeNode = function(node) {
+    TopologyDiagram.prototype.moveToMiddleByMergeTypeNode = function (node) {
         var parents = node.parentNodes,
             parentsCount = parents.length,
             offsetY,
@@ -928,12 +928,12 @@
         }
     };
 
-    TopologyDiagram.prototype.fitMergeTypeNode = function(node) {
+    TopologyDiagram.prototype.fitMergeTypeNode = function (node) {
         this.fitXByMergeTypeNode(node);
         this.fitYByMergeTypeNode(node);
     };
 
-    TopologyDiagram.prototype.createTopologyAllLine = function() {
+    TopologyDiagram.prototype.createTopologyAllLine = function () {
         var nodes = this.nodesHash,
             config = this.config,
             pathWidth = config.path['stroke-width'],
@@ -1071,7 +1071,7 @@
         }
     };
 
-    TopologyDiagram.prototype.setViewBox = function(node) {
+    TopologyDiagram.prototype.setViewBox = function (node) {
         var viewBox = this.viewBox,
             top = viewBox.top,
             bottom = viewBox.bottom,
@@ -1102,7 +1102,7 @@
         viewBox.height = viewBox.bottom - viewBox.top;
     };
 
-    TopologyDiagram.prototype.resetTopologyPager = function() {
+    TopologyDiagram.prototype.resetTopologyPager = function () {
         var viewBox = this.viewBox,
             paper = this.paper.element,
             offset = 10,
@@ -1143,16 +1143,16 @@
         }
     };
 
-    TopologyDiagram.prototype.getId = (function() {
+    TopologyDiagram.prototype.getId = (function () {
         var id = 0;
-        return function() {
+        return function () {
             return ++id;
         };
     })();
 
     var methods = {
-        init: function(options) {
-            return this.each(function() {
+        init: function (options) {
+            return this.each(function () {
                 var $elem = $(this),
                     topologyDiagram;
 
@@ -1163,13 +1163,29 @@
                 $elem.addClass('topology-diagram').data('topology-diagram', topologyDiagram);
 
                 // 取消默认的右键菜单
-                this.oncontextmenu = function() {
+                this.oncontextmenu = function () {
                     return false;
                 };
             });
         },
-        destroy: function() {
-            return this.each(function() {
+        loadNodes: function (data) {
+            return this.each(function () {
+                var $elem = $(this),
+                    topology = $elem.data('topology-diagram');
+                //relateData,
+                //children,
+                //nodes;
+
+                if (!data) {
+                    console.warn('no load data');
+                    return;
+                }
+                topology.data = data;
+                topology.loadTopologyNodes();
+            });
+        },
+        destroy: function () {
+            return this.each(function () {
                 var $elem = $(this),
                     topologyDiagram = $elem.data('topology-diagram'),
                     paper;
@@ -1182,7 +1198,7 @@
                 }
             });
         },
-        getSelected: function() {
+        getSelected: function () {
             var $elem = $(this),
                 topologyDiagram = $elem.data('topology-diagram'),
                 selectedId = topologyDiagram.selected.nodeId,
@@ -1198,13 +1214,17 @@
                 return null;
             }
         },
-        addNodes: function(parentId, data) {
-            return this.each(function() {
+        addNodes: function (parentId, data) {
+            return this.each(function () {
                 var $elem = $(this),
                     topology = $elem.data('topology-diagram'),
                     relateData,
                     children,
                     nodes;
+                if (!parentId || !topology.nodesHash[parentId]) {
+                    console.warn('parentId is not exist');
+                    return;
+                }
 
                 relateData = topology.nodesHash[parentId].originalData;
 
@@ -1216,8 +1236,8 @@
                 topology.loadTopologyNodes();
             });
         },
-        bindEvent: function(name, callback) {
-            return this.each(function() {
+        bindEvent: function (name, callback) {
+            return this.each(function () {
                 var $elem = $(this),
                     topology = $elem.data('topology-diagram');
 
@@ -1226,7 +1246,7 @@
         }
     };
 
-    jQuery.fn.topology = function() {
+    jQuery.fn.topology = function () {
         var method = arguments[0],
             arg = arguments;
 
