@@ -1172,9 +1172,6 @@
             return this.each(function () {
                 var $elem = $(this),
                     topology = $elem.data('topology-diagram');
-                //relateData,
-                //children,
-                //nodes;
 
                 if (!data) {
                     console.warn('no load data');
