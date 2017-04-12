@@ -141,7 +141,7 @@
             itemId: null
         };
 
-        // 调试代码时将此选项调整为true
+        // 调试代码时将此选项调整为true,用于节点位置移动的调试
         this.dev = false;
     };
 
@@ -594,7 +594,7 @@
             x: text.attrs.x + offsetX,
             y: text.attrs.y + offsetY
         });
-      
+
         for (var i = 0, len = images.length; i < len; i++) {
             image = images[i];
             image.attr({
@@ -1155,7 +1155,13 @@
             container = $(this.container),
             containerWidth = 0,
             containerHeight = 0,
-            svg;
+            canvas;
+
+        //没有加载节点，不对paper进行调整：
+        //对没有绘图节点的空白pager下，对paper进行调整，IE8执行重新加载（loadNodes）节点方法会出现异常
+        if (!this.data || this.data.length < 1) {
+            return;
+        }
 
         paper.setSize(width, height);
         paper.setViewBox(viewBoxX, viewBoxY, width, height, false);
@@ -1164,8 +1170,9 @@
         if (this.align === 'center' || this.align === 'right') {
             containerWidth = container.width();
             if (containerWidth > width) {
-                svg = container.find('>svg:first');
-                svg.css({
+                //选取SVG（现代浏览器）或DIV（rvml IE8）
+                canvas = container.find('>svg:first,>div:first');
+                canvas.css({
                     left: this.align === 'center' ? '50%' : '90%',
                     'margin-left': this.align === 'center' ? '-' + width / 2 + 'px' : '-' + width + 'px'
                 });
@@ -1176,8 +1183,8 @@
         if (this['vertical-align'] === 'middle' || this['vertical-align'] === 'bottom') {
             containerHeight = container.height();
             if (containerHeight > height) {
-                svg = container.find('>svg:first');
-                svg.css({
+                canvas = container.find('>svg:first');
+                canvas.css({
                     top: this['vertical-align'] === 'middle' ? '50%' : '90%',
                     'margin-top': this['vertical-align'] === 'middle' ? '-' + height / 2 + 'px' : '-' + height + 'px'
                 });
