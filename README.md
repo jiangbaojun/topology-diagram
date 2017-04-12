@@ -83,7 +83,7 @@ javascript：
         },
         {
             id: '1-2',
-            src: 'images/counter.png',
+            src: ['images/counter.png','images/counter.png'],
             text: '二级节点1-2',
             children: [{
                 id: '1-2-1',
@@ -230,6 +230,12 @@ $('#topologyElementId').topology('destroy');
 
 ```javascript
 $('#topologyElementId').topology('getSelected');
+```
+
+`loadNodes`:加载数据
+
+```javascript
+$('#topologyElementId').topology('loadNodes',nodes);
 ```
 
 `addNodes`:添加子节点

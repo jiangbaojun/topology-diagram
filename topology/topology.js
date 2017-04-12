@@ -55,6 +55,10 @@
                 'margin-left': 40,
                 'margin-top': 22
             },
+            paper: {
+                width: 600,
+                height: 600,
+            },
             relateTypeEnum: {
                 parent: 'parent',
                 child: 'child'
@@ -81,12 +85,12 @@
 
         };
         // left center right
-        this.align = options.align || 'left';
+        this.align = 'left';
         // top middle bottom
-        this['vertical-align'] = options['vertical-align'] || 'top';
+        this['vertical-align'] = 'top';
         this.container = elem;
         this.paper = {
-            element: Raphael(this.container, 600, 600),
+            element: Raphael(this.container, this.config.paper.width, this.config.paper.height),
             height: 0,
             width: 0
         };
@@ -103,16 +107,16 @@
             arrow: 'forward',
             node: 'forward'
         };
-        this.data = options.data;
-        if (options.direction) {
-            if (options.direction.arrow) {
-                this.direction.arrow = options.direction.arrow;
-            }
+        this.data = [];
+        // if (options.direction) {
+        //     if (options.direction.arrow) {
+        //         this.direction.arrow = options.direction.arrow;
+        //     }
 
-            if (options.direction.node) {
-                this.direction.node = options.direction.node;
-            }
-        }
+        //     if (options.direction.node) {
+        //         this.direction.node = options.direction.node;
+        //     }
+        // }
         // 通过创建node自动生成的id绑定节点相关信息
         this.nodesHash = {};
         this.nodes = [];
@@ -127,12 +131,12 @@
         this.onrightclick;
         this.ondblclickLoad;
 
-        if (options) {
-            this.ondblclick = options.ondblclick || null;
-            this.onclick = options.onclick || null;
-            this.onrightclick = options.onrightclick || null;
-            this.ondblclickLoad = options.ondblclickLoad || null;
-        }
+        // if (options) {
+        //     this.ondblclick = options.ondblclick || null;
+        //     this.onclick = options.onclick || null;
+        //     this.onrightclick = options.onrightclick || null;
+        //     this.ondblclickLoad = options.ondblclickLoad || null;
+        // }
 
         this.currentEventType;
 
@@ -143,6 +147,56 @@
 
         // 调试代码时将此选项调整为true,用于节点位置移动的调试
         this.dev = false;
+
+        this.setOptions(options);
+    };
+
+    TopologyDiagram.prototype.setOptions = function (options) {
+        if (options) {
+            this.align = options.align || this.align;
+            // top middle bottom
+            this['vertical-align'] = options['vertical-align'] || this['vertical-align'];
+            // this.container = elem;
+            // this.paper = {
+            //     element: Raphael(this.container, 600, 600),
+            //     height: 0,
+            //     width: 0
+            // };
+            // this.viewBox = {
+            //     width: 0,
+            //     height: 0,
+            //     top: 0,
+            //     left: 0,
+            //     right: 0,
+            //     bottom: 0
+            // };
+            // forward reverse
+            // this.direction = {
+            //     arrow: 'forward',
+            //     node: 'forward'
+            // };
+
+            if (options.direction) {
+                if (options.direction.arrow) {
+                    this.direction.arrow = options.direction.arrow;
+                }
+
+                if (options.direction.node) {
+                    this.direction.node = options.direction.node;
+                }
+            }
+
+            this.ondblclick = options.ondblclick || this.ondblclick;
+            this.onclick = options.onclick || this.onclick;
+            this.onrightclick = options.onrightclick || this.onrightclick;
+            this.ondblclickLoad = options.ondblclickLoad || this.ondblclickLoad;
+
+            this.data = options.data || this.data;
+            if (options.data && options.data instanceof Array && options.data.length < 1) {
+                //debugger;
+                this.paper.element.setSize(this.config.paper.width, this.config.paper.height);
+            }
+        }
     };
 
     TopologyDiagram.prototype.createRect = function (x, y, width, id) {
@@ -225,13 +279,14 @@
             startY = y,
             nextY,
             bBox,
-            srcLength = 1,
+            srcLength = 0,
             srcItem;
 
 
         //支持多图标
         if (typeof src === 'string') {
             src = [src];
+            srcLength = 1;
         }
         else if (src instanceof Array) {
             srcLength = src.length;
@@ -312,6 +367,7 @@
             var self = this;
             this.currentEventType = 'ondblclick';
             this.triggerNodeEvent(handler, node, 'ondblclick');
+            handler.stopPropagation();
             setTimeout(function () {
                 self.currentEventType = null;
             }, 400);
@@ -320,6 +376,7 @@
         function bindRightClick(handler, node) {
             this.currentEventType = 'onrightclick';
             this.triggerNodeEvent(handler, node, 'onrightclick');
+            handler.stopPropagation();
         }
 
         function bindMousedown(handler) {
@@ -328,6 +385,7 @@
             } else if (handler.which === 3) {
                 bindRightClick.call(this, handler, node);
             }
+            handler.stopPropagation();
         }
 
         // 单击事件
@@ -1203,18 +1261,24 @@
         init: function (options) {
             return this.each(function () {
                 var $elem = $(this),
-                    topologyDiagram;
+                    topology = $elem.data('topology-diagram');
 
-                methods.destroy.apply($elem);
+                //methods.destroy.apply($elem);
 
-                topologyDiagram = new TopologyDiagram(this, Raphael, options);
-                topologyDiagram.loadTopologyNodes();
-                $elem.addClass('topology-diagram').data('topology-diagram', topologyDiagram);
+                //初始化
+                if (!topology) {
+                    topology = new TopologyDiagram(this, Raphael, options);
+                    $elem.addClass('topology-diagram').data('topology-diagram', topology);
+                    // 取消默认的右键菜单
+                    this.oncontextmenu = function () {
+                        return false;
+                    };
 
-                // 取消默认的右键菜单
-                this.oncontextmenu = function () {
-                    return false;
-                };
+                } else {//调整配置项
+                    topology.setOptions(options);
+                }
+                topology.loadTopologyNodes();
+
             });
         },
         loadNodes: function (data) {

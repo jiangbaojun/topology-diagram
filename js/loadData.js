@@ -192,10 +192,10 @@ $(function () {
     // topology-sample
     //
     $('#topology-loadData').topology({
-        ondblclick: function (data) {
-            //console.dir(data);
-            console.log('ondblclick !');
-        }
+        // ondblclick: function (data) {
+        //     //console.dir(data);
+        //     console.log('ondblclick !');
+        // }
     });
 
     // 再次加载
