@@ -1,5 +1,5 @@
 /*!
- * topology diagram v1.1.0 -  jQuery raphael plug
+ * topology diagram v1.3.0 -  jQuery raphael plug
  *
  * Includes jquery.js
  * Includes raphael.js
