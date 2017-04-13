@@ -94,29 +94,14 @@
             height: 0,
             width: 0
         };
-        this.viewBox = {
-            width: 0,
-            height: 0,
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0
-        };
+        this.viewBox = {};
         // forward reverse
         this.direction = {
             arrow: 'forward',
             node: 'forward'
         };
-        this.data = [];
-        // if (options.direction) {
-        //     if (options.direction.arrow) {
-        //         this.direction.arrow = options.direction.arrow;
-        //     }
 
-        //     if (options.direction.node) {
-        //         this.direction.node = options.direction.node;
-        //     }
-        // }
+        this.data = [];
         // 通过创建node自动生成的id绑定节点相关信息
         this.nodesHash = {};
         this.nodes = [];
@@ -131,19 +116,9 @@
         this.onrightclick;
         this.ondblclickLoad;
 
-        // if (options) {
-        //     this.ondblclick = options.ondblclick || null;
-        //     this.onclick = options.onclick || null;
-        //     this.onrightclick = options.onrightclick || null;
-        //     this.ondblclickLoad = options.ondblclickLoad || null;
-        // }
-
         this.currentEventType;
 
-        this.selected = {
-            nodeId: null,
-            itemId: null
-        };
+        this.selected = {};
 
         // 调试代码时将此选项调整为true,用于节点位置移动的调试
         this.dev = false;
@@ -813,14 +788,27 @@
     };
 
     TopologyDiagram.prototype.init = function () {
-        var paper = this.paper.element;
-        paper.clear();
+        this.paper.element.clear();
+        this.paper.width = 0;
+        this.paper.height = 0;
+
         this.selected = {
             nodeId: null,
             itemId: null
-        }
+        };
+
+        this.viewBox = {
+            width: 0,
+            height: 0,
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0
+        };
+        // 通过创建node自动生成的id绑定节点相关信息
         this.nodesHash = {};
         this.nodes = [];
+        this.nodeMergeKey = 'id';
         this.nodeMergeHash = {};
         this.virtualRootNode = $.extend(true, {}, this.config.virtualRootNode);
         this.virtualRootNode.originalData = {
@@ -828,6 +816,8 @@
             text: '',
             children: this.data
         };
+
+        this.currentEventType = null;
     };
 
     TopologyDiagram.prototype.loadTopologyNodes = function () {
