@@ -193,7 +193,7 @@
 
             this.data = options.data || this.data;
             if (options.data && options.data instanceof Array && options.data.length < 1) {
-                //debugger;
+                
                 this.paper.element.setSize(this.config.paper.width, this.config.paper.height);
             }
         }
@@ -811,8 +811,8 @@
     };
 
     TopologyDiagram.prototype.init = function () {
-        var pager = this.paper.element;
-        pager.clear();
+        var paper = this.paper.element;
+        paper.clear();
         this.nodesHash = {};
         this.nodes = [];
         this.nodeMergeHash = {};
@@ -838,7 +838,7 @@
         }
 
         this.createTopologyAllLine();
-        this.resetTopologyPager();
+        this.resetTopologyPaper();
     };
 
     TopologyDiagram.prototype.AddTopologyNodes = function (data, parentNode) {
@@ -1202,7 +1202,7 @@
         viewBox.height = viewBox.bottom - viewBox.top;
     };
 
-    TopologyDiagram.prototype.resetTopologyPager = function () {
+    TopologyDiagram.prototype.resetTopologyPaper = function () {
         var viewBox = this.viewBox,
             paper = this.paper.element,
             offset = 10,
@@ -1216,7 +1216,7 @@
             canvas;
 
         //没有加载节点，不对paper进行调整：
-        //对没有绘图节点的空白pager下，对paper进行调整，IE8执行重新加载（loadNodes）节点方法会出现异常
+        //对没有绘图节点的空白paper下，对paper进行调整，IE8执行重新加载（loadNodes）节点方法会出现异常
         if (!this.data || this.data.length < 1) {
             return;
         }
@@ -1240,7 +1240,7 @@
         // 垂直位置
         if (this['vertical-align'] === 'middle' || this['vertical-align'] === 'bottom') {
             containerHeight = container.height();
-            debugger;
+           
             if (containerHeight > height + 25) {
                 canvas = container.find('>svg:first');
                 canvas.css({
