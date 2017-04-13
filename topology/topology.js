@@ -1240,7 +1240,8 @@
         // 垂直位置
         if (this['vertical-align'] === 'middle' || this['vertical-align'] === 'bottom') {
             containerHeight = container.height();
-            if (containerHeight > height) {
+            debugger;
+            if (containerHeight > height + 25) {
                 canvas = container.find('>svg:first');
                 canvas.css({
                     top: this['vertical-align'] === 'middle' ? '50%' : '90%',

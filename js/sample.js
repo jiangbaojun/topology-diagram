@@ -217,5 +217,7 @@ $(function () {
         ondblclick: function (data) {
             console.log('reinit ondblclick!');
         }
+        //align: 'right',
+        //'vertical-align': 'middle',
     });
 });
