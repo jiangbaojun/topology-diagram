@@ -193,7 +193,7 @@
 
             this.data = options.data || this.data;
             if (options.data && options.data instanceof Array && options.data.length < 1) {
-                
+
                 this.paper.element.setSize(this.config.paper.width, this.config.paper.height);
             }
         }
@@ -463,17 +463,19 @@
 
         if (selected.nodeId) {
             selectedNode = this.nodesHash[selected.nodeId];
-            rect = selectedNode.nodeElements.rect;
-            text = selectedNode.nodeElements.text;
+            if (selectedNode) {
+                rect = selectedNode.nodeElements.rect;
+                text = selectedNode.nodeElements.text;
 
-            rect.attr({
-                fill: rectConfig.fill['default'],
-                stroke: rectConfig.stroke['default']
-            });
+                rect.attr({
+                    fill: rectConfig.fill['default'],
+                    stroke: rectConfig.stroke['default']
+                });
 
-            text.attr({
-                fill: textConfig.fill['default']
-            });
+                text.attr({
+                    fill: textConfig.fill['default']
+                });
+            }
         }
 
         selected.nodeId = node.id;
@@ -813,6 +815,10 @@
     TopologyDiagram.prototype.init = function () {
         var paper = this.paper.element;
         paper.clear();
+        this.selected = {
+            nodeId: null,
+            itemId: null
+        }
         this.nodesHash = {};
         this.nodes = [];
         this.nodeMergeHash = {};
@@ -1240,7 +1246,7 @@
         // 垂直位置
         if (this['vertical-align'] === 'middle' || this['vertical-align'] === 'bottom') {
             containerHeight = container.height();
-           
+
             if (containerHeight > height + 25) {
                 canvas = container.find('>svg:first');
                 canvas.css({
