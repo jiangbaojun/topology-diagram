@@ -16,7 +16,7 @@ $(function () {
     var sampleData = [{
         id: '1',
         src: 'images/counter.png',
-        text: '顶级节点1-超过了8个字符的节点',
+        text: '顶级节点1-[ maxLength: 16]配置允许到16个字符',
         children: [{
             id: '1-1',
             src: ['images/counter.png', 'images/counter.png', 'images/counter.png'],
@@ -216,6 +216,9 @@ $(function () {
         data: sampleData,
         ondblclick: function (data) {
             console.log('reinit ondblclick!');
+        },
+        text: {
+            maxLength: 16
         }
         //align: 'right',
         //'vertical-align': 'middle',

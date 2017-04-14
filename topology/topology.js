@@ -128,10 +128,11 @@
 
     TopologyDiagram.prototype.setOptions = function (options) {
         if (options) {
+            //align:left center right
             this.align = options.align || this.align;
-            // top middle bottom
+            //vertical-align: top middle bottom
             this['vertical-align'] = options['vertical-align'] || this['vertical-align'];
-            // direction
+            //direction: forward reverse
             if (options.direction) {
                 if (options.direction.arrow) {
                     this.direction.arrow = options.direction.arrow;
@@ -141,16 +142,20 @@
                     this.direction.node = options.direction.node;
                 }
             }
-
+            //event
             this.ondblclick = options.ondblclick || this.ondblclick;
             this.onclick = options.onclick || this.onclick;
             this.onrightclick = options.onrightclick || this.onrightclick;
             this.ondblclickLoad = options.ondblclickLoad || this.ondblclickLoad;
-
+            // data
             this.data = options.data || this.data;
+            //paper size
             if (options.data && options.data instanceof Array && options.data.length < 1) {
-
                 this.paper.element.setSize(this.config.paper.width, this.config.paper.height);
+            }
+            //text length
+            if (options.text && options.text.maxLength) {
+                this.config.text.maxLength = options.text.maxLength;
             }
         }
     };
