@@ -131,26 +131,7 @@
             this.align = options.align || this.align;
             // top middle bottom
             this['vertical-align'] = options['vertical-align'] || this['vertical-align'];
-            // this.container = elem;
-            // this.paper = {
-            //     element: Raphael(this.container, 600, 600),
-            //     height: 0,
-            //     width: 0
-            // };
-            // this.viewBox = {
-            //     width: 0,
-            //     height: 0,
-            //     top: 0,
-            //     left: 0,
-            //     right: 0,
-            //     bottom: 0
-            // };
-            // forward reverse
-            // this.direction = {
-            //     arrow: 'forward',
-            //     node: 'forward'
-            // };
-
+            // direction
             if (options.direction) {
                 if (options.direction.arrow) {
                     this.direction.arrow = options.direction.arrow;
