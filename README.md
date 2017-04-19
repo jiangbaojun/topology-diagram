@@ -2,7 +2,7 @@
 
 基于 raphael 的 jQuery 拓扑图插件。
 
-[demo](https://huang-qing.github.io/topology-diagram/)
+[demo:huang-qing.github.io/topology-diagram/](https://huang-qing.github.io/topology-diagram/)
 
 ## 简介
 
