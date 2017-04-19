@@ -208,9 +208,14 @@ javascript：
 
 `onrightclick`:拓扑图节点右键单击事件。 回调函数参数： `event`, `data`, `nodeId` 
 
+`text`: 
+    + `maxLength`:节点文字的最大长度，默认为8
+
 ## 方法
 
 `init`:初始化
+
+允许多次通过初始化方法调整配置参数，控件会与之前的配置自动合并调整。例如重新加载数据，重新绑定事件。
 
 ```javascript
 $('#topologyElementId').topology(options);
