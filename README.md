@@ -2,6 +2,8 @@
 
 基于 raphael 的 jQuery 拓扑图插件。
 
+[demo](https://huang-qing.github.io/topology-diagram/)
+
 ## 简介
 
 拓扑图展示控件，支持ie8及以上、Chrome等现代浏览器。主要有以下功能：
