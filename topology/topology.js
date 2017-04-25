@@ -121,7 +121,7 @@
         this.selected = {};
 
         // 调试代码时将此选项调整为true,用于节点位置移动的调试
-        this.dev = false;
+        this.dev = options.dev || false;
 
         this.setOptions(options);
     };
@@ -248,8 +248,7 @@
         if (typeof src === 'string') {
             src = [src];
             srcLength = 1;
-        }
-        else if (src instanceof Array) {
+        } else if (src instanceof Array) {
             srcLength = src.length;
         }
 
@@ -889,19 +888,24 @@
             y,
             offset;
 
-        if (count <= 1) {
+        if (count < 1) {
             return;
         }
-        if (count > 1) {
+
+        if (count === 1) {
+            first = children[0];
+            y = first.y;
+            node.y = y;
+        } else if (count > 1) {
             first = children[0];
             last = children[count - 1];
             offset = (last.y - first.y) / 2;
             y = first.y + offset;
             node.y = y;
-
-            // dev:moveNode
-            this.dev ? this.moveTopologyNode(node) : null;
         }
+
+        // dev:moveNode
+        this.dev ? this.moveTopologyNode(node) : null;
     };
 
     TopologyDiagram.prototype.fitXByMergeTypeNode = function (node) {
@@ -1052,25 +1056,25 @@
                 startY,
                 endY;
 
-            // 一个节点
+            // 父节点为一个节点，绘制父节点到当前节点(1:1)的连线
             if (parentLength === 1) {
                 parentItem = parent[0];
                 if (!parentItem.virtualRoot && parentItem.childrenNodes.length === 1) {
                     parentX = direction.node === 'forward' ? (parentItem.x + parentItem.width) : parentItem.x;
-                    currentX = direction.node === 'forward' ? current.x : (current.x + current.width);
+                    endX = direction.node === 'forward' ? current.x : (current.x + current.width);
 
                     startX = parentX;
-                    endX = currentX;
+                    //endX = currentX;
                     startY = currentY;
                     endY = currentY;
 
-                    direction.arrow === 'forward'
-                        ? this.createStraightLine(startX, startY, endX, endY, true)
-                        : this.createStraightLine(endX, startY, startX, endY, true);
+                    direction.arrow === 'forward' ?
+                        this.createStraightLine(startX, startY, endX, endY, true) :
+                        this.createStraightLine(endX, startY, startX, endY, true);
                     // this.createStraightLine(parentX, currentY, currentX, currentY, true);
                 }
             }
-            // 发散的节点
+            // 发散的节点：子节点大于1，绘制当前节点到子节点(1：n)的连线
             if (childrenLength > 1) {
                 // 前横线
                 startX = currentX;
@@ -1078,9 +1082,9 @@
                 startY = currentY;
                 endY = currentY;
 
-                direction.arrow === 'forward'
-                    ? this.createStraightLine(startX, startY, endX, endY, false)
-                    : this.createStraightLine(endX, startY, startX, endY, true);
+                direction.arrow === 'forward' ?
+                    this.createStraightLine(startX, startY, endX, endY, false) :
+                    this.createStraightLine(endX, startY, startX, endY, true);
 
                 // 竖线
                 childItemFirst = children[0];
@@ -1107,14 +1111,14 @@
                         startY = childY;
                         endY = childY;
 
-                        direction.arrow === 'forward'
-                            ? this.createStraightLine(startX, startY, endX, endY)
-                            : this.createStraightLine(endX, startY, startX, endY, false);
+                        direction.arrow === 'forward' ?
+                            this.createStraightLine(startX, startY, endX, endY) :
+                            this.createStraightLine(endX, startY, startX, endY, false);
                     }
                 }
             }
 
-            // 聚合的节点
+            // 聚合的节点：父节点大于1，绘制多个父节点到当前节点(n:1)的连线
             if (parentLength > 1) {
                 // 竖线
                 parentItemFirst = parent[0];
@@ -1130,9 +1134,9 @@
                 endX = parentX;
                 startY = currentY;
                 endY = currentY;
-                direction.arrow === 'forward'
-                    ? this.createStraightLine(startX, startY, endX, endY, true)
-                    : this.createStraightLine(endX, startY, startX, endY, false);
+                direction.arrow === 'forward' ?
+                    this.createStraightLine(startX, startY, endX, endY, true) :
+                    this.createStraightLine(endX, startY, startX, endY, false);
                 // this.createStraightLine(currentX, currentY, parentX, currentY, true);
                 // 前横线
                 for (var j = 0; j < parentLength; j++) {
@@ -1144,9 +1148,9 @@
                     endX = currentX;
                     startY = parentY;
                     endY = parentY;
-                    direction.arrow === 'forward'
-                        ? this.createStraightLine(startX, startY, endX, endY, false)
-                        : this.createStraightLine(endX, startY, startX, endY, true);
+                    direction.arrow === 'forward' ?
+                        this.createStraightLine(startX, startY, endX, endY, false) :
+                        this.createStraightLine(endX, startY, startX, endY, true);
                     // this.createStraightLine(parentX, parentY, currentX, parentY, false);
                 }
             }
@@ -1257,7 +1261,7 @@
                         return false;
                     };
 
-                } else {//调整配置项
+                } else { //调整配置项
                     topology.setOptions(options);
                 }
                 topology.loadTopologyNodes();

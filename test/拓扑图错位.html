@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>拓扑图</title>
+    <link href="../topology/topology.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/index.css"/>
+    <script src="../topology/jquery-3.1.1.js"></script>
+    <script src="../topology/raphael.js"></script>
+</head>
+
+<body>
+
+    <div id='topology'></div>
+
+    <script src="../topology/topology.js"></script>
+
+    <script>
+        //以下数据节点结构中，拓扑图绘制错位
+
+        var data = [{
+            id: '1',
+            src: '../images/counter.png',
+            text: '1',
+            children: [{
+                id: '1-1',
+                src: '../images/counter.png',
+                text: '1-1',
+                children: [{
+                        id: '1-1-1',
+                        src: '../images/counter.png',
+                        text: '1-1-1',
+                        children: []
+                    },
+                    {
+                        id: '1-1-2',
+                        src: '../images/counter.png',
+                        text: '1-1-2',
+                        children: []
+                    }
+                ]
+            }]
+        }];
+
+        $('#topology').topology({
+            data: data,
+            dev: true
+        });
+
+        $('#topology').topology({
+            data: data,
+            dev: true,
+            direction:{
+                arrow:'reverse',
+                node:'reverse'
+            }
+        });
+    </script>
+</body>
+
+</html>
