@@ -1228,7 +1228,8 @@
             containerHeight = container.height();
 
             if (containerHeight > height + 25) {
-                canvas = container.find('>svg:first');
+                //选取SVG（现代浏览器）或DIV（rvml IE8）
+                canvas = container.find('>svg:first,>div:first');
                 canvas.css({
                     top: this['vertical-align'] === 'middle' ? '50%' : '90%',
                     'margin-top': this['vertical-align'] === 'middle' ? '-' + height / 2 + 'px' : '-' + height + 'px'
