@@ -857,7 +857,8 @@
     TopologyDiagram.prototype.fitTopologyNodesPosition = function (nodes) {
         var node,
             childrenNodes,
-            childrenNodesCount;
+            childrenNodesCount,
+            isMergedNode = false;
 
         for (var i = 0, len = nodes.length; i < len; i++) {
             node = nodes[i];
@@ -891,8 +892,8 @@
         if (count < 1) {
             return;
         }
-
-        if (count === 1) {
+        //子节点数为1并排除汇聚类型的节点
+        if (count === 1 && children[0].parentNodes.length === 1) {
             first = children[0];
             y = first.y;
             node.y = y;
