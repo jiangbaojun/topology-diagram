@@ -56,8 +56,8 @@
                 'margin-top': 22
             },
             paper: {
-                width: 600,
-                height: 600,
+                width: 1000,
+                height: 1000,
             },
             relateTypeEnum: {
                 parent: 'parent',
@@ -67,7 +67,6 @@
                 virtualRoot: true,
                 id: 'virtualRoot',
                 x: -40,
-                //x: 100,
                 y: 0,
                 width: 0,
                 height: 0,
@@ -122,6 +121,15 @@
 
         // 调试代码时将此选项调整为true,用于节点位置移动的调试
         this.dev = options.dev || false;
+
+        if (this.dev && options.virtualRootNode) {
+            if (typeof options.virtualRootNode.x !== 'undefined') {
+                this.config.virtualRootNode.x = options.virtualRootNode.x;
+            }
+            if (typeof options.virtualRootNode.y !== 'undefined') {
+                this.config.virtualRootNode.y = options.virtualRootNode.y;
+            }
+        }
 
         this.setOptions(options);
     };
@@ -479,7 +487,7 @@
         return this.createPath(startX, startY, middleX, middleY, endX, endY);
     };
 
-    TopologyDiagram.prototype.createTopologyNode = function (data, parentNode) {
+    TopologyDiagram.prototype.createTopologyNode = function (data, parentNode, index) {
         var currentData = data,
             nodeElements,
             id = this.getId(),
@@ -524,11 +532,15 @@
             parentNodes = currentNode.parentNodes;
             lastParentNode = parentNodes[parentNodes.length - 1];
 
+            // 存在相同的合并标识时（默认为id），且存在父节点，且父节点上一个兄弟节点存在并且其最后的子节点标识与当前节点的标识相同
             // 为同级相邻的兄弟节点，添加关联
             if (parentNode.prevNode && lastParentNode.id === parentNode.prevNode.id) {
                 this.relateMergeTopologyNode(currentNode, parentNode);
             } else {
-                console.warn('node id=' + currentNode.originalData.id + ' is exist! ignore!');
+                //其他的情况为错误的节点结构
+                console.warn('node id=' + currentNode.originalData.id + ' is exist! ');
+                //修正由于错误数据造成的父节点偏移量错误
+                parentNode.offsetY -= (parentNode.originalData.children.length - index) * (this.config.rect.height + this.config.node['margin-top']);
             }
 
             return null;
@@ -841,13 +853,14 @@
                 children = item.children;
 
                 // 合并的节点返回null
-                node = this.createTopologyNode(item, parentNode);
+                node = this.createTopologyNode(item, parentNode, i);
 
                 if (node) {
                     if (children && children.length > 0) {
                         this.AddTopologyNodes(children, node);
                     }
                 } else {
+                    //合并的节点，忽略后续的兄弟节点
                     break;
                 }
             }
