@@ -755,7 +755,7 @@
         if (prevNode) {
             y = prevNode.y + nodeHeight + nodeOffset.y;
         }
-        debugger;
+       
         if (currentItemChildCount > 1) {
             positionOffsetY = (currentItemChildCount - 1) * (nodeHeight + nodeOffset.y);
             //查找此节点的父节点，如果父节点没有兄弟节点（即单节点）并且不是虚根节点，则将偏移量一直延父级向上传导
@@ -763,8 +763,6 @@
             do {
                 if (singleNode && singleNode.length === 1 && !singleNode[0].virtualRoot) {
                     singleNode = singleNode[0];
-                    debugger;
-                    //originalData
                     //存在父级节点且只有一个
                     if (singleNode.parentNodes && singleNode.parentNodes.length === 1) {
                         singleNodeParent = singleNode.parentNodes[0];
