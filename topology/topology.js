@@ -739,6 +739,8 @@
             // 计算offsetTop累计实际偏移量相关参数
             prevNodeChildren,
             prevNodeChildrenCount,
+            singleNode,
+            singleNodeParent,
             prevNodeChildItem;
 
         // x轴正向向展示
@@ -753,9 +755,32 @@
         if (prevNode) {
             y = prevNode.y + nodeHeight + nodeOffset.y;
         }
-
+        debugger;
         if (currentItemChildCount > 1) {
             positionOffsetY = (currentItemChildCount - 1) * (nodeHeight + nodeOffset.y);
+            //查找此节点的父节点，如果父节点没有兄弟节点（即单节点）并且不是虚根节点，则将偏移量一直延父级向上传导
+            singleNode = currentNode.parentNodes;
+            do {
+                if (singleNode && singleNode.length === 1 && !singleNode[0].virtualRoot) {
+                    singleNode = singleNode[0];
+                    debugger;
+                    //originalData
+                    //存在父级节点且只有一个
+                    if (singleNode.parentNodes && singleNode.parentNodes.length === 1) {
+                        singleNodeParent = singleNode.parentNodes[0];
+                        //节点为单节点（没有兄弟节点）
+                        if (singleNodeParent.originalData.children && singleNodeParent.originalData.children.length === 1) {
+                            singleNode.offsetY += positionOffsetY;
+                            singleNode = singleNode.parentNodes;
+                        } else {
+                            singleNode = null;
+                        }
+                    }
+
+                } else {
+                    singleNode = null;
+                }
+            } while (singleNode)
         }
 
         // 计算prevNode节点Y值实际的下偏移量（通过计算累加下级节点的偏移量得到）
