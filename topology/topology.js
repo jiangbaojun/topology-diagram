@@ -4,10 +4,10 @@
  * Includes jquery.js
  * Includes raphael.js
  *
- * Copyright © 2017-2017 huangqing
+ * Copyright © 2017-2018 huangqing
  * Released under the MIT license
  *
- * Date: 2017-01-20
+ * Date: 2017-07-27
  */
 
 ;
