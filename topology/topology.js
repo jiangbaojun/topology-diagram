@@ -567,11 +567,11 @@
 
         position = this.calculateTopologyNodePosition(parentNode, currentNode);
 
-        $.extend(currentNode, {
-            x: position.x,
-            y: position.y,
-            offsetY: position.offsetY
-        });
+        // $.extend(currentNode, {
+        //     x: position.x,
+        //     y: position.y,
+        //     offsetY: position.offsetY
+        // });
 
         // 移动节点元素位置 dev:moveNode
         this.dev ? this.moveTopologyNode(currentNode) : null;
@@ -739,8 +739,6 @@
             // 计算offsetTop累计实际偏移量相关参数
             prevNodeChildren,
             prevNodeChildrenCount,
-            singleNode,
-            singleNodeParent,
             prevNodeChildItem;
 
         // x轴正向向展示
@@ -755,57 +753,53 @@
         if (prevNode) {
             y = prevNode.y + nodeHeight + nodeOffset.y;
         }
-       
+
         if (currentItemChildCount > 1) {
             positionOffsetY = (currentItemChildCount - 1) * (nodeHeight + nodeOffset.y);
-            //查找此节点的父节点，如果父节点没有兄弟节点（即单节点）并且不是虚根节点，则将偏移量一直延父级向上传导
-            singleNode = currentNode.parentNodes;
-            do {
-                if (singleNode && singleNode.length === 1 && !singleNode[0].virtualRoot) {
-                    singleNode = singleNode[0];
-                    //存在父级节点且只有一个
-                    if (singleNode.parentNodes && singleNode.parentNodes.length === 1) {
-                        singleNodeParent = singleNode.parentNodes[0];
-                        //节点为单节点（没有兄弟节点）
-                        if (singleNodeParent.originalData.children && singleNodeParent.originalData.children.length === 1) {
-                            singleNode.offsetY += positionOffsetY;
-                            singleNode = singleNode.parentNodes;
-                        } else {
-                            singleNode = null;
-                        }
-                    }
-
-                } else {
-                    singleNode = null;
-                }
-            } while (singleNode)
         }
 
-        // 计算prevNode节点Y值实际的下偏移量（通过计算累加下级节点的偏移量得到）
         if (prevNode) {
-            // 非合并类型节点，追加全部子节点的偏移量
             if (!prevNode.mergeNode) {
-                prevNodeChildren = prevNode.childrenNodes;
-
-                prevNodeChildrenCount = prevNodeChildren.length;
-                for (var i = 0; i < prevNodeChildrenCount; i++) {
-                    prevNodeChildItem = prevNodeChildren[i];
-                    prevNode.offsetY += prevNodeChildItem.offsetY;
-                }
-
-                y += prevNode.offsetY;
-            } else {
                 y += prevNode.offsetY;
             }
         }
 
-        return {
+        $.extend(currentNode, {
             x: x,
             y: y,
-            // 全部子节点累计的偏移量
             offsetY: positionOffsetY
-        };
+        });
+
+        this.recursionTopologyNodePosition(parentNode, currentNode);
     };
+
+    TopologyDiagram.prototype.recursionTopologyNodePosition = function (parentNode, currentNode) {
+        
+        var currentItemChild = currentNode.originalData.children,
+            currentItemChildCount = currentItemChild.length,
+            prevNode = currentNode.prevNode,
+            singleNode,
+            singleNodeParent,
+            prevNodeChildItem;
+
+        //查找此节点的父节点，如果父节点没有兄弟节点（即单节点）并且不是虚根节点，则将偏移量一直延父级向上传导
+        singleNode = currentNode.parentNodes;
+        do {
+            if (singleNode && singleNode.length === 1 && !singleNode[0].virtualRoot) {
+                singleNode = singleNode[0];
+                //存在父级节点且只有一个
+                if (singleNode.parentNodes && singleNode.parentNodes.length === 1) {
+                    singleNodeParent = singleNode.parentNodes[0];
+                    singleNode.offsetY += currentNode.offsetY;
+                    singleNode = singleNode.parentNodes;
+                }
+
+            } else {
+                singleNode = null;
+            }
+        } while (singleNode)
+
+    }
 
     TopologyDiagram.prototype.init = function () {
         this.paper.element.clear();
@@ -844,7 +838,7 @@
         var nodes;
         this.init();
         this.AddTopologyNodes(this.data, this.virtualRootNode);
-
+        //test：测试时可以注释暂时去除位置的重排
         this.fitTopologyNodesPosition(this.nodes);
 
         nodes = this.nodes;

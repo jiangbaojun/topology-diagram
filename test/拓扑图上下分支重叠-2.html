@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>拓扑图</title>
+    <link href="../topology/topology.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <script src="../topology/jquery-3.1.1.js"></script>
+    <script src="../topology/raphael.js"></script>
+</head>
+
+<body>
+
+    <div id='topology'></div>
+
+    <script src="../topology/topology.js"></script>
+
+    <script>
+        //以下数据节点结构中，拓扑图绘制错位
+
+        var data = [{
+            "id": "DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+            "text": "图文档导入模板.xlsx/WQ071801/A",
+            "ico": "/Platform/Image/Document/xls.png",
+            "objectID": "DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+            "children": [{
+                "id": "PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "WQ0715/WQ0715/B.001",
+                "ico": "/InforCenter/Image/Model/l_components1.png",
+                "objectID": "PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e",
+                "children": [{
+                    "id": "PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "WQ0703-01名称/WQ0703-01bh/A.001",
+                    "ico": "/InforCenter/Image/Model/l_components1.png",
+                    "objectID": "PSEITEM_7cba45e0e92041f4809a7d83440e56d3",
+                    "children": [{
+                        "id": "PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "inforcenter80第一轮测试(登录及关联功能30%)--8h--缺陷记录/inforcenter803322/A.001",
+                        "ico": "/InforCenter/Image/Model/l_components1.png",
+                        "objectID": "PSEITEM_9b09ad56507b40c1a99c5320698d2bdb",
+                        "children": [{
+                            "id": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQ-收藏夹测试",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3",
+                            "children": []
+                        }, {
+                            "id": "PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "XJLJ01/XJLJ01/A.001",
+                            "ico": "/InforCenter/Image/Model/l_components1.png",
+                            "objectID": "PSEITEM_b62eade163ab4f6a997c855079de9338",
+                            "children": [{
+                                "id": "CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQ-WTBG0001/WQ-WTBG0001",
+                                "ico": "/InforCenter/Image/Model/l_problem_report.png",
+                                "objectID": "CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d",
+                                "children": []
+                            }, {
+                                "id": "PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQXJ0001/WQXJ0001/A.001",
+                                "ico": "/InforCenter/Image/Model/l_components1.png",
+                                "objectID": "PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5",
+                                "children": [{
+                                    "id": "CMPROBLEM_41fd1bd1916045f9818055f684055122-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "AQ123/AQ123",
+                                    "ico": "/InforCenter/Image/Model/l_problem_report.png",
+                                    "objectID": "CMPROBLEM_41fd1bd1916045f9818055f684055122",
+                                    "children": []
+                                }, {
+                                    "id": "CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "WQ-WTBG0001/WQ-WTBG0001",
+                                    "ico": "/InforCenter/Image/Model/l_problem_report.png",
+                                    "objectID": "CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }]
+                }]
+            }, {
+                "id": "CMPROBLEM_353b802ea85c41d5b3fd89d752785809-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "WQHG001/WQHG001",
+                "ico": "/InforCenter/Image/Model/l_problem_report.png",
+                "objectID": "CMPROBLEM_353b802ea85c41d5b3fd89d752785809",
+                "children": [{
+                    "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMPROBLEM_353b802ea85c41d5b3fd89d752785809-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "WQ-BG01",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                    "children": [{
+                        "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMPROBLEM_353b802ea85c41d5b3fd89d752785809-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "个人空间(吴琼)",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                        "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                        "children": []
+                    }]
+                }]
+            }]
+        }]
+
+        var dataALL = [{
+            "id": "DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+            "text": "图文档导入模板.xlsx/WQ071801/A",
+            "ico": "/Platform/Image/Document/xls.png",
+            "objectID": "DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+            "children": [{
+                "id": "PSEITEM_c55b0663934544cabfbffa155f731e63-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "WQ071801名称/WQ071801/A.001",
+                "ico": "/InforCenter/Image/Model/l_components1.png",
+                "objectID": "PSEITEM_c55b0663934544cabfbffa155f731e63",
+                "children": [{
+                    "id": "WSFOLDER_fabe8710d4f14151b5e4c2cf4ec8ab11-PSEITEM_c55b0663934544cabfbffa155f731e63-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "所有对象",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_fabe8710d4f14151b5e4c2cf4ec8ab11",
+                    "children": [{
+                        "id": "WSMYSPACE_66f62824c708486e81f484b474236f81-WSFOLDER_fabe8710d4f14151b5e4c2cf4ec8ab11-PSEITEM_c55b0663934544cabfbffa155f731e63-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "个人空间(宋田华)",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                        "objectID": "WSMYSPACE_66f62824c708486e81f484b474236f81",
+                        "children": []
+                    }]
+                }, {
+                    "id": "WSFOLDER_3ff07ad35945403bbcda9ace8994dcf2-PSEITEM_c55b0663934544cabfbffa155f731e63-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "111111111111",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_3ff07ad35945403bbcda9ace8994dcf2",
+                    "children": [{
+                        "id": "WSMYSPACE_8b8231c084d6430b875440511bd4ee9b-WSFOLDER_3ff07ad35945403bbcda9ace8994dcf2-PSEITEM_c55b0663934544cabfbffa155f731e63-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "个人空间(test1)",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                        "objectID": "WSMYSPACE_8b8231c084d6430b875440511bd4ee9b",
+                        "children": []
+                    }]
+                }, {
+                    "id": "WSFOLDER_d41f51f5913247ccb8bcf725557d827f-PSEITEM_c55b0663934544cabfbffa155f731e63-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "33333",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_d41f51f5913247ccb8bcf725557d827f",
+                    "children": [{
+                        "id": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc-WSFOLDER_d41f51f5913247ccb8bcf725557d827f-PSEITEM_c55b0663934544cabfbffa155f731e63-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "公共空间",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_close.png",
+                        "objectID": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc",
+                        "children": []
+                    }]
+                }, {
+                    "id": "CLASSIFYCLASS_da316f12daf242748f68c2ee4bd2b865-PSEITEM_c55b0663934544cabfbffa155f731e63-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "存储/0004000023",
+                    "ico": "/InforCenter/Image/Model/l_classification.png",
+                    "objectID": "CLASSIFYCLASS_da316f12daf242748f68c2ee4bd2b865",
+                    "children": [{
+                        "id": "CLASSIFYCLASS_814f763b9abc4821a3febe72d6244dd5-CLASSIFYCLASS_da316f12daf242748f68c2ee4bd2b865-PSEITEM_c55b0663934544cabfbffa155f731e63-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "归类1/0003000017",
+                        "ico": "/InforCenter/Image/Model/l_classification.png",
+                        "objectID": "CLASSIFYCLASS_814f763b9abc4821a3febe72d6244dd5",
+                        "children": [{
+                            "id": "CLASSIFYCLASS_437de89771834482a49e48c52f101725-CLASSIFYCLASS_814f763b9abc4821a3febe72d6244dd5-CLASSIFYCLASS_da316f12daf242748f68c2ee4bd2b865-PSEITEM_c55b0663934544cabfbffa155f731e63-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "归类型号/0002000017",
+                            "ico": "/InforCenter/Image/Model/l_classification.png",
+                            "objectID": "CLASSIFYCLASS_437de89771834482a49e48c52f101725",
+                            "children": [{
+                                "id": "CLASSIFYGROUP_f2ed14badaa344e5bacb7d7bfc731a68-CLASSIFYCLASS_437de89771834482a49e48c52f101725-CLASSIFYCLASS_814f763b9abc4821a3febe72d6244dd5-CLASSIFYCLASS_da316f12daf242748f68c2ee4bd2b865-PSEITEM_c55b0663934544cabfbffa155f731e63-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "发动机/0001000005",
+                                "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                "objectID": "CLASSIFYGROUP_f2ed14badaa344e5bacb7d7bfc731a68",
+                                "children": [{
+                                    "id": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc-CLASSIFYGROUP_f2ed14badaa344e5bacb7d7bfc731a68-CLASSIFYCLASS_437de89771834482a49e48c52f101725-CLASSIFYCLASS_814f763b9abc4821a3febe72d6244dd5-CLASSIFYCLASS_da316f12daf242748f68c2ee4bd2b865-PSEITEM_c55b0663934544cabfbffa155f731e63-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "分类管理",
+                                    "ico": "InforCenter/Image/Model/l_classified_management.png",
+                                    "objectID": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }]
+                }]
+            }, {
+                "id": "PSEITEM_0a12bab2cdf64e13a170fd65ae557467-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "WQ071801名称/WQ071801/B.001",
+                "ico": "/InforCenter/Image/Model/l_components1.png",
+                "objectID": "PSEITEM_0a12bab2cdf64e13a170fd65ae557467",
+                "children": [{
+                    "id": "WSFOLDER_fabe8710d4f14151b5e4c2cf4ec8ab11-PSEITEM_0a12bab2cdf64e13a170fd65ae557467-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "所有对象",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_fabe8710d4f14151b5e4c2cf4ec8ab11",
+                    "children": [{
+                        "id": "WSMYSPACE_66f62824c708486e81f484b474236f81-WSFOLDER_fabe8710d4f14151b5e4c2cf4ec8ab11-PSEITEM_0a12bab2cdf64e13a170fd65ae557467-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "个人空间(宋田华)",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                        "objectID": "WSMYSPACE_66f62824c708486e81f484b474236f81",
+                        "children": []
+                    }]
+                }, {
+                    "id": "WSFOLDER_3ff07ad35945403bbcda9ace8994dcf2-PSEITEM_0a12bab2cdf64e13a170fd65ae557467-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "111111111111",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_3ff07ad35945403bbcda9ace8994dcf2",
+                    "children": [{
+                        "id": "WSMYSPACE_8b8231c084d6430b875440511bd4ee9b-WSFOLDER_3ff07ad35945403bbcda9ace8994dcf2-PSEITEM_0a12bab2cdf64e13a170fd65ae557467-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "个人空间(test1)",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                        "objectID": "WSMYSPACE_8b8231c084d6430b875440511bd4ee9b",
+                        "children": []
+                    }]
+                }, {
+                    "id": "WSFOLDER_d41f51f5913247ccb8bcf725557d827f-PSEITEM_0a12bab2cdf64e13a170fd65ae557467-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "33333",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_d41f51f5913247ccb8bcf725557d827f",
+                    "children": [{
+                        "id": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc-WSFOLDER_d41f51f5913247ccb8bcf725557d827f-PSEITEM_0a12bab2cdf64e13a170fd65ae557467-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "公共空间",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_close.png",
+                        "objectID": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc",
+                        "children": []
+                    }]
+                }, {
+                    "id": "CLASSIFYCLASS_da316f12daf242748f68c2ee4bd2b865-PSEITEM_0a12bab2cdf64e13a170fd65ae557467-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "存储/0004000023",
+                    "ico": "/InforCenter/Image/Model/l_classification.png",
+                    "objectID": "CLASSIFYCLASS_da316f12daf242748f68c2ee4bd2b865",
+                    "children": [{
+                        "id": "CLASSIFYCLASS_814f763b9abc4821a3febe72d6244dd5-CLASSIFYCLASS_da316f12daf242748f68c2ee4bd2b865-PSEITEM_0a12bab2cdf64e13a170fd65ae557467-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "归类1/0003000017",
+                        "ico": "/InforCenter/Image/Model/l_classification.png",
+                        "objectID": "CLASSIFYCLASS_814f763b9abc4821a3febe72d6244dd5",
+                        "children": [{
+                            "id": "CLASSIFYCLASS_437de89771834482a49e48c52f101725-CLASSIFYCLASS_814f763b9abc4821a3febe72d6244dd5-CLASSIFYCLASS_da316f12daf242748f68c2ee4bd2b865-PSEITEM_0a12bab2cdf64e13a170fd65ae557467-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "归类型号/0002000017",
+                            "ico": "/InforCenter/Image/Model/l_classification.png",
+                            "objectID": "CLASSIFYCLASS_437de89771834482a49e48c52f101725",
+                            "children": [{
+                                "id": "CLASSIFYGROUP_f2ed14badaa344e5bacb7d7bfc731a68-CLASSIFYCLASS_437de89771834482a49e48c52f101725-CLASSIFYCLASS_814f763b9abc4821a3febe72d6244dd5-CLASSIFYCLASS_da316f12daf242748f68c2ee4bd2b865-PSEITEM_0a12bab2cdf64e13a170fd65ae557467-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "发动机/0001000005",
+                                "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                "objectID": "CLASSIFYGROUP_f2ed14badaa344e5bacb7d7bfc731a68",
+                                "children": [{
+                                    "id": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc-CLASSIFYGROUP_f2ed14badaa344e5bacb7d7bfc731a68-CLASSIFYCLASS_437de89771834482a49e48c52f101725-CLASSIFYCLASS_814f763b9abc4821a3febe72d6244dd5-CLASSIFYCLASS_da316f12daf242748f68c2ee4bd2b865-PSEITEM_0a12bab2cdf64e13a170fd65ae557467-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "分类管理",
+                                    "ico": "InforCenter/Image/Model/l_classified_management.png",
+                                    "objectID": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }]
+                }]
+            }, {
+                "id": "PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "WQ0715/WQ0715/B.001",
+                "ico": "/InforCenter/Image/Model/l_components1.png",
+                "objectID": "PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e",
+                "children": [{
+                    "id": "CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "WQWTBG0101XG/WQWTBG0101",
+                    "ico": "/InforCenter/Image/Model/l_problem_report.png",
+                    "objectID": "CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505",
+                    "children": [{
+                        "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "WQ-BG01",
+                        "ico": "/Base/Image/tree_folder_small.png",
+                        "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                        "children": [{
+                            "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "个人空间(吴琼)",
+                            "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                            "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                            "children": []
+                        }]
+                    }, {
+                        "id": "CMAPPLY_3a3f2e097a614b67bba81eb0cf6e53ca-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "AQ112/AQ112",
+                        "ico": "/InforCenter/Image/Model/l_change_request.png",
+                        "objectID": "CMAPPLY_3a3f2e097a614b67bba81eb0cf6e53ca",
+                        "children": [{
+                            "id": "WSFOLDER_e9fa68c4e8b54818a7a5ce41370977ff-CMAPPLY_3a3f2e097a614b67bba81eb0cf6e53ca-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "aa",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_e9fa68c4e8b54818a7a5ce41370977ff",
+                            "children": [{
+                                "id": "WSMYSPACE_d15015c9e01a4edfb7086f0121950ccd-WSFOLDER_e9fa68c4e8b54818a7a5ce41370977ff-CMAPPLY_3a3f2e097a614b67bba81eb0cf6e53ca-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "个人空间(李宏)",
+                                "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                "objectID": "WSMYSPACE_d15015c9e01a4edfb7086f0121950ccd",
+                                "children": []
+                            }]
+                        }]
+                    }, {
+                        "id": "CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "WQBGSQ-01/WQBGSQ-01",
+                        "ico": "/InforCenter/Image/Model/l_change_request.png",
+                        "objectID": "CMAPPLY_755071f50424428baa4a32563b61ccb6",
+                        "children": [{
+                            "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQ-BG01",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                            "children": [{
+                                "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "个人空间(吴琼)",
+                                "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                "children": []
+                            }]
+                        }, {
+                            "id": "CMNOTICE_5e7c5cb9afad4970ba8349fef8f5a98b-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQ0725-01/WQ0725-01",
+                            "ico": "/InforCenter/Image/Model/l_change_notification.png",
+                            "objectID": "CMNOTICE_5e7c5cb9afad4970ba8349fef8f5a98b",
+                            "children": [{
+                                "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMNOTICE_5e7c5cb9afad4970ba8349fef8f5a98b-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQ-BG01",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                                "children": [{
+                                    "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMNOTICE_5e7c5cb9afad4970ba8349fef8f5a98b-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "个人空间(吴琼)",
+                                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                    "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                    "children": []
+                                }]
+                            }]
+                        }, {
+                            "id": "CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQBGSQ-01-WQBGSQ-01TZ/WQBGSQ-01-WQBGSQ-01",
+                            "ico": "/InforCenter/Image/Model/l_change_notification.png",
+                            "objectID": "CMNOTICE_cabfc5b204644546a24c47c3dd37d530",
+                            "children": [{
+                                "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQ-BG01",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                                "children": [{
+                                    "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "个人空间(吴琼)",
+                                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                    "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                    "children": []
+                                }]
+                            }, {
+                                "id": "WSFOLDER_7004663e591e47d9bcaf6fc6cbfc402d-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQ-XJ071801",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_7004663e591e47d9bcaf6fc6cbfc402d",
+                                "children": [{
+                                    "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_7004663e591e47d9bcaf6fc6cbfc402d-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "个人空间(吴琼)",
+                                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                    "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }, {
+                        "id": "CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "多问题报告/1111",
+                        "ico": "/InforCenter/Image/Model/l_change_request.png",
+                        "objectID": "CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83",
+                        "children": [{
+                            "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQ-BG01",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                            "children": [{
+                                "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "个人空间(吴琼)",
+                                "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                "children": []
+                            }]
+                        }]
+                    }]
+                }, {
+                    "id": "CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "多问题报告/1111",
+                    "ico": "/InforCenter/Image/Model/l_change_request.png",
+                    "objectID": "CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83",
+                    "children": [{
+                        "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "WQ-BG01",
+                        "ico": "/Base/Image/tree_folder_small.png",
+                        "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                        "children": [{
+                            "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "个人空间(吴琼)",
+                            "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                            "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                            "children": []
+                        }]
+                    }]
+                }, {
+                    "id": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "WQ-收藏夹测试",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3",
+                    "children": [{
+                        "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "个人空间(吴琼)",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                        "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                        "children": []
+                    }]
+                }, {
+                    "id": "PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "caa-00019/CA00A10001114/B.001",
+                    "ico": "/InforCenter/Image/Model/l_components1.png",
+                    "objectID": "PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf",
+                    "children": [{
+                        "id": "CMNOTICE_cabfc5b204644546a24c47c3dd37d530-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "WQBGSQ-01-WQBGSQ-01TZ/WQBGSQ-01-WQBGSQ-01",
+                        "ico": "/InforCenter/Image/Model/l_change_notification.png",
+                        "objectID": "CMNOTICE_cabfc5b204644546a24c47c3dd37d530",
+                        "children": [{
+                            "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQ-BG01",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                            "children": [{
+                                "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "个人空间(吴琼)",
+                                "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                "children": []
+                            }]
+                        }, {
+                            "id": "WSFOLDER_7004663e591e47d9bcaf6fc6cbfc402d-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQ-XJ071801",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_7004663e591e47d9bcaf6fc6cbfc402d",
+                            "children": [{
+                                "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_7004663e591e47d9bcaf6fc6cbfc402d-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "个人空间(吴琼)",
+                                "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                "children": []
+                            }]
+                        }]
+                    }, {
+                        "id": "CMAPPLY_755071f50424428baa4a32563b61ccb6-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "WQBGSQ-01/WQBGSQ-01",
+                        "ico": "/InforCenter/Image/Model/l_change_request.png",
+                        "objectID": "CMAPPLY_755071f50424428baa4a32563b61ccb6",
+                        "children": [{
+                            "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMAPPLY_755071f50424428baa4a32563b61ccb6-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQ-BG01",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                            "children": [{
+                                "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMAPPLY_755071f50424428baa4a32563b61ccb6-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "个人空间(吴琼)",
+                                "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                "children": []
+                            }]
+                        }, {
+                            "id": "CMNOTICE_5e7c5cb9afad4970ba8349fef8f5a98b-CMAPPLY_755071f50424428baa4a32563b61ccb6-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQ0725-01/WQ0725-01",
+                            "ico": "/InforCenter/Image/Model/l_change_notification.png",
+                            "objectID": "CMNOTICE_5e7c5cb9afad4970ba8349fef8f5a98b",
+                            "children": [{
+                                "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMNOTICE_5e7c5cb9afad4970ba8349fef8f5a98b-CMAPPLY_755071f50424428baa4a32563b61ccb6-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQ-BG01",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                                "children": [{
+                                    "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMNOTICE_5e7c5cb9afad4970ba8349fef8f5a98b-CMAPPLY_755071f50424428baa4a32563b61ccb6-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "个人空间(吴琼)",
+                                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                    "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                    "children": []
+                                }]
+                            }]
+                        }, {
+                            "id": "CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQBGSQ-01-WQBGSQ-01TZ/WQBGSQ-01-WQBGSQ-01",
+                            "ico": "/InforCenter/Image/Model/l_change_notification.png",
+                            "objectID": "CMNOTICE_cabfc5b204644546a24c47c3dd37d530",
+                            "children": [{
+                                "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQ-BG01",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                                "children": [{
+                                    "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "个人空间(吴琼)",
+                                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                    "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                    "children": []
+                                }]
+                            }, {
+                                "id": "WSFOLDER_7004663e591e47d9bcaf6fc6cbfc402d-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQ-XJ071801",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_7004663e591e47d9bcaf6fc6cbfc402d",
+                                "children": [{
+                                    "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_7004663e591e47d9bcaf6fc6cbfc402d-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "个人空间(吴琼)",
+                                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                    "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }, {
+                        "id": "CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "WQWTBG0101XG/WQWTBG0101",
+                        "ico": "/InforCenter/Image/Model/l_problem_report.png",
+                        "objectID": "CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505",
+                        "children": [{
+                            "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQ-BG01",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                            "children": [{
+                                "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "个人空间(吴琼)",
+                                "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                "children": []
+                            }]
+                        }, {
+                            "id": "CMAPPLY_3a3f2e097a614b67bba81eb0cf6e53ca-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "AQ112/AQ112",
+                            "ico": "/InforCenter/Image/Model/l_change_request.png",
+                            "objectID": "CMAPPLY_3a3f2e097a614b67bba81eb0cf6e53ca",
+                            "children": [{
+                                "id": "WSFOLDER_e9fa68c4e8b54818a7a5ce41370977ff-CMAPPLY_3a3f2e097a614b67bba81eb0cf6e53ca-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "aa",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_e9fa68c4e8b54818a7a5ce41370977ff",
+                                "children": [{
+                                    "id": "WSMYSPACE_d15015c9e01a4edfb7086f0121950ccd-WSFOLDER_e9fa68c4e8b54818a7a5ce41370977ff-CMAPPLY_3a3f2e097a614b67bba81eb0cf6e53ca-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "个人空间(李宏)",
+                                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                    "objectID": "WSMYSPACE_d15015c9e01a4edfb7086f0121950ccd",
+                                    "children": []
+                                }]
+                            }]
+                        }, {
+                            "id": "CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQBGSQ-01/WQBGSQ-01",
+                            "ico": "/InforCenter/Image/Model/l_change_request.png",
+                            "objectID": "CMAPPLY_755071f50424428baa4a32563b61ccb6",
+                            "children": [{
+                                "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQ-BG01",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                                "children": [{
+                                    "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "个人空间(吴琼)",
+                                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                    "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                    "children": []
+                                }]
+                            }, {
+                                "id": "CMNOTICE_5e7c5cb9afad4970ba8349fef8f5a98b-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQ0725-01/WQ0725-01",
+                                "ico": "/InforCenter/Image/Model/l_change_notification.png",
+                                "objectID": "CMNOTICE_5e7c5cb9afad4970ba8349fef8f5a98b",
+                                "children": [{
+                                    "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMNOTICE_5e7c5cb9afad4970ba8349fef8f5a98b-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "WQ-BG01",
+                                    "ico": "/Base/Image/tree_folder_small.png",
+                                    "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                                    "children": [{
+                                        "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMNOTICE_5e7c5cb9afad4970ba8349fef8f5a98b-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "个人空间(吴琼)",
+                                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                        "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                        "children": []
+                                    }]
+                                }]
+                            }, {
+                                "id": "CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQBGSQ-01-WQBGSQ-01TZ/WQBGSQ-01-WQBGSQ-01",
+                                "ico": "/InforCenter/Image/Model/l_change_notification.png",
+                                "objectID": "CMNOTICE_cabfc5b204644546a24c47c3dd37d530",
+                                "children": [{
+                                    "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "WQ-BG01",
+                                    "ico": "/Base/Image/tree_folder_small.png",
+                                    "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                                    "children": [{
+                                        "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "个人空间(吴琼)",
+                                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                        "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                        "children": []
+                                    }]
+                                }, {
+                                    "id": "WSFOLDER_7004663e591e47d9bcaf6fc6cbfc402d-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "WQ-XJ071801",
+                                    "ico": "/Base/Image/tree_folder_small.png",
+                                    "objectID": "WSFOLDER_7004663e591e47d9bcaf6fc6cbfc402d",
+                                    "children": [{
+                                        "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_7004663e591e47d9bcaf6fc6cbfc402d-CMNOTICE_cabfc5b204644546a24c47c3dd37d530-CMAPPLY_755071f50424428baa4a32563b61ccb6-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "个人空间(吴琼)",
+                                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                        "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                        "children": []
+                                    }]
+                                }]
+                            }]
+                        }, {
+                            "id": "CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "多问题报告/1111",
+                            "ico": "/InforCenter/Image/Model/l_change_request.png",
+                            "objectID": "CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83",
+                            "children": [{
+                                "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQ-BG01",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                                "children": [{
+                                    "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83-CMPROBLEM_0a8e1c7b28cc47d0b2418a1b7fc7e505-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "个人空间(吴琼)",
+                                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                    "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }, {
+                        "id": "CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "多问题报告/1111",
+                        "ico": "/InforCenter/Image/Model/l_change_request.png",
+                        "objectID": "CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83",
+                        "children": [{
+                            "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQ-BG01",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                            "children": [{
+                                "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMAPPLY_7be16dd5f0cd4bf485cb3ff47f787c83-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "个人空间(吴琼)",
+                                "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                "children": []
+                            }]
+                        }]
+                    }, {
+                        "id": "WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "dasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
+                        "ico": "/Base/Image/tree_folder_small.png",
+                        "objectID": "WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838",
+                        "children": [{
+                            "id": "WSFOLDER_b12721873bae44e0b79084e4cb7cf319-WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "0730",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_b12721873bae44e0b79084e4cb7cf319",
+                            "children": [{
+                                "id": "WSMYSPACE_b78afe06df8746bdb02a8d89d0052c06-WSFOLDER_b12721873bae44e0b79084e4cb7cf319-WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "个人空间(陈爱爱)",
+                                "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                "objectID": "WSMYSPACE_b78afe06df8746bdb02a8d89d0052c06",
+                                "children": []
+                            }]
+                        }]
+                    }, {
+                        "id": "CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "存储分类1/0004000001",
+                        "ico": "/InforCenter/Image/Model/l_classification.png",
+                        "objectID": "CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802",
+                        "children": [{
+                            "id": "CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "抽象分类1/0003000004",
+                            "ico": "/InforCenter/Image/Model/l_classification.png",
+                            "objectID": "CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d",
+                            "children": [{
+                                "id": "CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "德标件/0002000002",
+                                "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                "objectID": "CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59",
+                                "children": [{
+                                    "id": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "标准件/0001000001",
+                                    "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                    "objectID": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928",
+                                    "children": [{
+                                        "id": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc-CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "分类管理",
+                                        "ico": "InforCenter/Image/Model/l_classified_management.png",
+                                        "objectID": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc",
+                                        "children": []
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }, {
+                        "id": "CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "存储分类2/0004000003",
+                        "ico": "/InforCenter/Image/Model/l_classification.png",
+                        "objectID": "CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4",
+                        "children": [{
+                            "id": "CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "抽象分类1/0003000004",
+                            "ico": "/InforCenter/Image/Model/l_classification.png",
+                            "objectID": "CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d",
+                            "children": [{
+                                "id": "CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "德标件/0002000002",
+                                "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                "objectID": "CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59",
+                                "children": [{
+                                    "id": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "标准件/0001000001",
+                                    "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                    "objectID": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928",
+                                    "children": [{
+                                        "id": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc-CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "分类管理",
+                                        "ico": "InforCenter/Image/Model/l_classified_management.png",
+                                        "objectID": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc",
+                                        "children": []
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }, {
+                        "id": "CLASSIFYCLASS_6d8ca6da58644e34bcf076aaeab5f210-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "螺栓/0003000001",
+                        "ico": "/InforCenter/Image/Model/l_classification.png",
+                        "objectID": "CLASSIFYCLASS_6d8ca6da58644e34bcf076aaeab5f210",
+                        "children": [{
+                            "id": "CLASSIFYCLASS_6bb6f29df42847d1bdb8ca2bdb3a0fa1-CLASSIFYCLASS_6d8ca6da58644e34bcf076aaeab5f210-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "国标件/0002000001",
+                            "ico": "/InforCenter/Image/Model/l_classification.png",
+                            "objectID": "CLASSIFYCLASS_6bb6f29df42847d1bdb8ca2bdb3a0fa1",
+                            "children": [{
+                                "id": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYCLASS_6bb6f29df42847d1bdb8ca2bdb3a0fa1-CLASSIFYCLASS_6d8ca6da58644e34bcf076aaeab5f210-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "标准件/0001000001",
+                                "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                "objectID": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928",
+                                "children": [{
+                                    "id": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc-CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYCLASS_6bb6f29df42847d1bdb8ca2bdb3a0fa1-CLASSIFYCLASS_6d8ca6da58644e34bcf076aaeab5f210-PSEITEM_d53c2dc876ec417fb8291dc968f7e8cf-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "分类管理",
+                                    "ico": "InforCenter/Image/Model/l_classified_management.png",
+                                    "objectID": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }]
+                }, {
+                    "id": "PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "caa-00019/CA00A10001114/A.001",
+                    "ico": "/InforCenter/Image/Model/l_components1.png",
+                    "objectID": "PSEITEM_c60de2e250944331b0ff1ce8c8b3efea",
+                    "children": [{
+                        "id": "WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "dasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
+                        "ico": "/Base/Image/tree_folder_small.png",
+                        "objectID": "WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838",
+                        "children": [{
+                            "id": "WSFOLDER_b12721873bae44e0b79084e4cb7cf319-WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "0730",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_b12721873bae44e0b79084e4cb7cf319",
+                            "children": [{
+                                "id": "WSMYSPACE_b78afe06df8746bdb02a8d89d0052c06-WSFOLDER_b12721873bae44e0b79084e4cb7cf319-WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "个人空间(陈爱爱)",
+                                "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                "objectID": "WSMYSPACE_b78afe06df8746bdb02a8d89d0052c06",
+                                "children": []
+                            }]
+                        }]
+                    }, {
+                        "id": "CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "存储分类1/0004000001",
+                        "ico": "/InforCenter/Image/Model/l_classification.png",
+                        "objectID": "CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802",
+                        "children": [{
+                            "id": "CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "抽象分类1/0003000004",
+                            "ico": "/InforCenter/Image/Model/l_classification.png",
+                            "objectID": "CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d",
+                            "children": [{
+                                "id": "CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "德标件/0002000002",
+                                "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                "objectID": "CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59",
+                                "children": [{
+                                    "id": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "标准件/0001000001",
+                                    "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                    "objectID": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928",
+                                    "children": [{
+                                        "id": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc-CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "分类管理",
+                                        "ico": "InforCenter/Image/Model/l_classified_management.png",
+                                        "objectID": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc",
+                                        "children": []
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }, {
+                        "id": "CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "存储分类2/0004000003",
+                        "ico": "/InforCenter/Image/Model/l_classification.png",
+                        "objectID": "CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4",
+                        "children": [{
+                            "id": "CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "抽象分类1/0003000004",
+                            "ico": "/InforCenter/Image/Model/l_classification.png",
+                            "objectID": "CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d",
+                            "children": [{
+                                "id": "CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "德标件/0002000002",
+                                "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                "objectID": "CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59",
+                                "children": [{
+                                    "id": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "标准件/0001000001",
+                                    "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                    "objectID": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928",
+                                    "children": [{
+                                        "id": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc-CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "分类管理",
+                                        "ico": "InforCenter/Image/Model/l_classified_management.png",
+                                        "objectID": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc",
+                                        "children": []
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }, {
+                        "id": "CLASSIFYCLASS_6d8ca6da58644e34bcf076aaeab5f210-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "螺栓/0003000001",
+                        "ico": "/InforCenter/Image/Model/l_classification.png",
+                        "objectID": "CLASSIFYCLASS_6d8ca6da58644e34bcf076aaeab5f210",
+                        "children": [{
+                            "id": "CLASSIFYCLASS_6bb6f29df42847d1bdb8ca2bdb3a0fa1-CLASSIFYCLASS_6d8ca6da58644e34bcf076aaeab5f210-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "国标件/0002000001",
+                            "ico": "/InforCenter/Image/Model/l_classification.png",
+                            "objectID": "CLASSIFYCLASS_6bb6f29df42847d1bdb8ca2bdb3a0fa1",
+                            "children": [{
+                                "id": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYCLASS_6bb6f29df42847d1bdb8ca2bdb3a0fa1-CLASSIFYCLASS_6d8ca6da58644e34bcf076aaeab5f210-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "标准件/0001000001",
+                                "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                "objectID": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928",
+                                "children": [{
+                                    "id": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc-CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYCLASS_6bb6f29df42847d1bdb8ca2bdb3a0fa1-CLASSIFYCLASS_6d8ca6da58644e34bcf076aaeab5f210-PSEITEM_c60de2e250944331b0ff1ce8c8b3efea-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "分类管理",
+                                    "ico": "InforCenter/Image/Model/l_classified_management.png",
+                                    "objectID": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }]
+                }, {
+                    "id": "PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "caa-0001937/CA00A100011145/A.001",
+                    "ico": "/InforCenter/Image/Model/l_components1.png",
+                    "objectID": "PSEITEM_9f5c511c5cc7467586333659c1b182fd",
+                    "children": [{
+                        "id": "WSFOLDER_68c2751c2cd346cbb3d5fb9574a8c6f0-PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "zza",
+                        "ico": "/Base/Image/tree_folder_small.png",
+                        "objectID": "WSFOLDER_68c2751c2cd346cbb3d5fb9574a8c6f0",
+                        "children": [{
+                            "id": "WSFOLDER_a615b745bcf545988f9dc845314f785f-WSFOLDER_68c2751c2cd346cbb3d5fb9574a8c6f0-PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "ddd",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_a615b745bcf545988f9dc845314f785f",
+                            "children": [{
+                                "id": "WSFOLDER_b12721873bae44e0b79084e4cb7cf319-WSFOLDER_a615b745bcf545988f9dc845314f785f-WSFOLDER_68c2751c2cd346cbb3d5fb9574a8c6f0-PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "0730",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_b12721873bae44e0b79084e4cb7cf319",
+                                "children": [{
+                                    "id": "WSMYSPACE_b78afe06df8746bdb02a8d89d0052c06-WSFOLDER_b12721873bae44e0b79084e4cb7cf319-WSFOLDER_a615b745bcf545988f9dc845314f785f-WSFOLDER_68c2751c2cd346cbb3d5fb9574a8c6f0-PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "个人空间(陈爱爱)",
+                                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                    "objectID": "WSMYSPACE_b78afe06df8746bdb02a8d89d0052c06",
+                                    "children": []
+                                }]
+                            }]
+                        }, {
+                            "id": "WSFOLDER_21d8894987a64019b0b85e8c49d4747e-WSFOLDER_68c2751c2cd346cbb3d5fb9574a8c6f0-PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "zza(复件)",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_21d8894987a64019b0b85e8c49d4747e",
+                            "children": [{
+                                "id": "WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838-WSFOLDER_21d8894987a64019b0b85e8c49d4747e-WSFOLDER_68c2751c2cd346cbb3d5fb9574a8c6f0-PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "dasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838",
+                                "children": [{
+                                    "id": "WSFOLDER_b12721873bae44e0b79084e4cb7cf319-WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838-WSFOLDER_21d8894987a64019b0b85e8c49d4747e-WSFOLDER_68c2751c2cd346cbb3d5fb9574a8c6f0-PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "0730",
+                                    "ico": "/Base/Image/tree_folder_small.png",
+                                    "objectID": "WSFOLDER_b12721873bae44e0b79084e4cb7cf319",
+                                    "children": [{
+                                        "id": "WSMYSPACE_b78afe06df8746bdb02a8d89d0052c06-WSFOLDER_b12721873bae44e0b79084e4cb7cf319-WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838-WSFOLDER_21d8894987a64019b0b85e8c49d4747e-WSFOLDER_68c2751c2cd346cbb3d5fb9574a8c6f0-PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "个人空间(陈爱爱)",
+                                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                        "objectID": "WSMYSPACE_b78afe06df8746bdb02a8d89d0052c06",
+                                        "children": []
+                                    }]
+                                }]
+                            }, {
+                                "id": "WSFOLDER_30ef3cb9ca344b5397988926b85a6852-WSFOLDER_21d8894987a64019b0b85e8c49d4747e-WSFOLDER_68c2751c2cd346cbb3d5fb9574a8c6f0-PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "bb",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_30ef3cb9ca344b5397988926b85a6852",
+                                "children": [{
+                                    "id": "WSFOLDER_b12721873bae44e0b79084e4cb7cf319-WSFOLDER_30ef3cb9ca344b5397988926b85a6852-WSFOLDER_21d8894987a64019b0b85e8c49d4747e-WSFOLDER_68c2751c2cd346cbb3d5fb9574a8c6f0-PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "0730",
+                                    "ico": "/Base/Image/tree_folder_small.png",
+                                    "objectID": "WSFOLDER_b12721873bae44e0b79084e4cb7cf319",
+                                    "children": [{
+                                        "id": "WSMYSPACE_b78afe06df8746bdb02a8d89d0052c06-WSFOLDER_b12721873bae44e0b79084e4cb7cf319-WSFOLDER_30ef3cb9ca344b5397988926b85a6852-WSFOLDER_21d8894987a64019b0b85e8c49d4747e-WSFOLDER_68c2751c2cd346cbb3d5fb9574a8c6f0-PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "个人空间(陈爱爱)",
+                                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                        "objectID": "WSMYSPACE_b78afe06df8746bdb02a8d89d0052c06",
+                                        "children": []
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }, {
+                        "id": "WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838-PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "dasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
+                        "ico": "/Base/Image/tree_folder_small.png",
+                        "objectID": "WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838",
+                        "children": [{
+                            "id": "WSFOLDER_b12721873bae44e0b79084e4cb7cf319-WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838-PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "0730",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_b12721873bae44e0b79084e4cb7cf319",
+                            "children": [{
+                                "id": "WSMYSPACE_b78afe06df8746bdb02a8d89d0052c06-WSFOLDER_b12721873bae44e0b79084e4cb7cf319-WSFOLDER_950cbb05f61a4f8d880837cd0e1c8838-PSEITEM_9f5c511c5cc7467586333659c1b182fd-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "个人空间(陈爱爱)",
+                                "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                "objectID": "WSMYSPACE_b78afe06df8746bdb02a8d89d0052c06",
+                                "children": []
+                            }]
+                        }]
+                    }]
+                }, {
+                    "id": "PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "WQ0703-01名称/WQ0703-01bh/A.001",
+                    "ico": "/InforCenter/Image/Model/l_components1.png",
+                    "objectID": "PSEITEM_7cba45e0e92041f4809a7d83440e56d3",
+                    "children": [{
+                        "id": "PMTASK_98b4887a08834000ba57f462aea2ef3d-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "任务3",
+                        "ico": "/InforCenter/Image/Model/l_common_tasks.png",
+                        "objectID": "PMTASK_98b4887a08834000ba57f462aea2ef3d",
+                        "children": []
+                    }, {
+                        "id": "CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "WQ-WTBG0001/WQ-WTBG0001",
+                        "ico": "/InforCenter/Image/Model/l_problem_report.png",
+                        "objectID": "CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d",
+                        "children": [{
+                            "id": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQ-收藏夹测试",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3",
+                            "children": [{
+                                "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "个人空间(吴琼)",
+                                "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                "children": []
+                            }]
+                        }]
+                    }, {
+                        "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "0623",
+                        "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                        "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                        "children": [{
+                            "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "0623",
+                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                            "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                            "children": [{
+                                "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "0623",
+                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                "children": [{
+                                    "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "0623",
+                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                    "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                    "children": [{
+                                        "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "0623",
+                                        "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                        "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                        "children": [{
+                                            "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                            "text": "0623",
+                                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                            "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                            "children": [{
+                                                "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                "text": "0623",
+                                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                                "children": [{
+                                                    "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                    "text": "0623",
+                                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                    "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                                    "children": []
+                                                }]
+                                            }]
+                                        }]
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }, {
+                        "id": "WSFOLDER_1ffd75ca64e64fcabb6d5188d6dc5837-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "111111111112",
+                        "ico": "/Base/Image/tree_folder_small.png",
+                        "objectID": "WSFOLDER_1ffd75ca64e64fcabb6d5188d6dc5837",
+                        "children": [{
+                            "id": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-WSFOLDER_1ffd75ca64e64fcabb6d5188d6dc5837-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQ-收藏夹测试",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3",
+                            "children": [{
+                                "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-WSFOLDER_1ffd75ca64e64fcabb6d5188d6dc5837-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "个人空间(吴琼)",
+                                "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                "children": []
+                            }]
+                        }, {
+                            "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_1ffd75ca64e64fcabb6d5188d6dc5837-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "0623",
+                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                            "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                            "children": [{
+                                "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_1ffd75ca64e64fcabb6d5188d6dc5837-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "0623",
+                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                "children": [{
+                                    "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_1ffd75ca64e64fcabb6d5188d6dc5837-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "0623",
+                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                    "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                    "children": [{
+                                        "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_1ffd75ca64e64fcabb6d5188d6dc5837-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "0623",
+                                        "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                        "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                        "children": [{
+                                            "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_1ffd75ca64e64fcabb6d5188d6dc5837-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                            "text": "0623",
+                                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                            "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                            "children": [{
+                                                "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_1ffd75ca64e64fcabb6d5188d6dc5837-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                "text": "0623",
+                                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                                "children": [{
+                                                    "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_1ffd75ca64e64fcabb6d5188d6dc5837-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                    "text": "0623",
+                                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                    "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                                    "children": []
+                                                }]
+                                            }]
+                                        }]
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }, {
+                        "id": "PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "inforcenter80第一轮测试(登录及关联功能30%)--8h--缺陷记录/inforcenter803322/A.001",
+                        "ico": "/InforCenter/Image/Model/l_components1.png",
+                        "objectID": "PSEITEM_9b09ad56507b40c1a99c5320698d2bdb",
+                        "children": [{
+                            "id": "PMTASK_3a9437a4ec1441048ad35a5032a65151-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "1/1/A.001",
+                            "ico": "/InforCenter/Image/Model/l_common_tasks.png",
+                            "objectID": "PMTASK_3a9437a4ec1441048ad35a5032a65151",
+                            "children": []
+                        }, {
+                            "id": "CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQ-WTBG0001/WQ-WTBG0001",
+                            "ico": "/InforCenter/Image/Model/l_problem_report.png",
+                            "objectID": "CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d",
+                            "children": [{
+                                "id": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQ-收藏夹测试",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3",
+                                "children": [{
+                                    "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "个人空间(吴琼)",
+                                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                    "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                    "children": []
+                                }]
+                            }]
+                        }, {
+                            "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "0623",
+                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                            "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                            "children": [{
+                                "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "0623",
+                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                "children": [{
+                                    "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "0623",
+                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                    "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                    "children": [{
+                                        "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "0623",
+                                        "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                        "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                        "children": [{
+                                            "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                            "text": "0623",
+                                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                            "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                            "children": [{
+                                                "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                "text": "0623",
+                                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                                "children": [{
+                                                    "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                    "text": "0623",
+                                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                    "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                                    "children": []
+                                                }]
+                                            }]
+                                        }]
+                                    }]
+                                }]
+                            }]
+                        }, {
+                            "id": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "WQ-收藏夹测试",
+                            "ico": "/Base/Image/tree_folder_small.png",
+                            "objectID": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3",
+                            "children": [{
+                                "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "个人空间(吴琼)",
+                                "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                "children": []
+                            }]
+                        }, {
+                            "id": "PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "XJLJ01/XJLJ01/A.001",
+                            "ico": "/InforCenter/Image/Model/l_components1.png",
+                            "objectID": "PSEITEM_b62eade163ab4f6a997c855079de9338",
+                            "children": [{
+                                "id": "CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQ-WTBG0001/WQ-WTBG0001",
+                                "ico": "/InforCenter/Image/Model/l_problem_report.png",
+                                "objectID": "CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d",
+                                "children": [{
+                                    "id": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "WQ-收藏夹测试",
+                                    "ico": "/Base/Image/tree_folder_small.png",
+                                    "objectID": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3",
+                                    "children": [{
+                                        "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "个人空间(吴琼)",
+                                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                        "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                        "children": []
+                                    }]
+                                }]
+                            }, {
+                                "id": "WSFOLDER_dd13f02694fa4cf8b1924c75c1708af7-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "文件",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_dd13f02694fa4cf8b1924c75c1708af7",
+                                "children": [{
+                                    "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_dd13f02694fa4cf8b1924c75c1708af7-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "个人空间(吴琼)",
+                                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                    "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                    "children": []
+                                }]
+                            }, {
+                                "id": "WSFOLDER_d41f51f5913247ccb8bcf725557d827f-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "33333",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_d41f51f5913247ccb8bcf725557d827f",
+                                "children": [{
+                                    "id": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc-WSFOLDER_d41f51f5913247ccb8bcf725557d827f-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "公共空间",
+                                    "ico": "/Base/Ctrls/Tree/img/diy/1_close.png",
+                                    "objectID": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc",
+                                    "children": []
+                                }]
+                            }, {
+                                "id": "WSFOLDER_79ecdcffbb00461d8e73e990cf3b52b8-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQ_RENWU",
+                                "ico": "/Base/Image/tree_folder_small.png",
+                                "objectID": "WSFOLDER_79ecdcffbb00461d8e73e990cf3b52b8",
+                                "children": [{
+                                    "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_79ecdcffbb00461d8e73e990cf3b52b8-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "个人空间(吴琼)",
+                                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                    "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                    "children": []
+                                }]
+                            }, {
+                                "id": "PMTASK_9ce9f688117b45fa9938c7eefc31da6c-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "XJLJ01/XJLJ01/A.001",
+                                "ico": "/InforCenter/Image/Model/l_common_tasks.png",
+                                "objectID": "PMTASK_9ce9f688117b45fa9938c7eefc31da6c",
+                                "children": []
+                            }, {
+                                "id": "PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQXJ0001/WQXJ0001/A.001",
+                                "ico": "/InforCenter/Image/Model/l_components1.png",
+                                "objectID": "PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5",
+                                "children": [{
+                                    "id": "CMPROBLEM_41fd1bd1916045f9818055f684055122-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "AQ123/AQ123",
+                                    "ico": "/InforCenter/Image/Model/l_problem_report.png",
+                                    "objectID": "CMPROBLEM_41fd1bd1916045f9818055f684055122",
+                                    "children": [{
+                                        "id": "WSFOLDER_e9fa68c4e8b54818a7a5ce41370977ff-CMPROBLEM_41fd1bd1916045f9818055f684055122-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "aa",
+                                        "ico": "/Base/Image/tree_folder_small.png",
+                                        "objectID": "WSFOLDER_e9fa68c4e8b54818a7a5ce41370977ff",
+                                        "children": [{
+                                            "id": "WSMYSPACE_d15015c9e01a4edfb7086f0121950ccd-WSFOLDER_e9fa68c4e8b54818a7a5ce41370977ff-CMPROBLEM_41fd1bd1916045f9818055f684055122-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                            "text": "个人空间(李宏)",
+                                            "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                            "objectID": "WSMYSPACE_d15015c9e01a4edfb7086f0121950ccd",
+                                            "children": []
+                                        }]
+                                    }]
+                                }, {
+                                    "id": "CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "WQ-WTBG0001/WQ-WTBG0001",
+                                    "ico": "/InforCenter/Image/Model/l_problem_report.png",
+                                    "objectID": "CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d",
+                                    "children": [{
+                                        "id": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "WQ-收藏夹测试",
+                                        "ico": "/Base/Image/tree_folder_small.png",
+                                        "objectID": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3",
+                                        "children": [{
+                                            "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-CMPROBLEM_30721f85561a427ba3d3886e8ae4dc2d-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                            "text": "个人空间(吴琼)",
+                                            "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                            "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                            "children": []
+                                        }]
+                                    }]
+                                }, {
+                                    "id": "CMAPPLY_e29deb95aa5e4493bcbdda2380383d9e-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "PSE1/PSE1",
+                                    "ico": "/InforCenter/Image/Model/l_change_request.png",
+                                    "objectID": "CMAPPLY_e29deb95aa5e4493bcbdda2380383d9e",
+                                    "children": [{
+                                        "id": "WSFOLDER_911b7380497c41d6943cacbbe064be70-CMAPPLY_e29deb95aa5e4493bcbdda2380383d9e-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "变更对象0",
+                                        "ico": "/Base/Image/tree_folder_small.png",
+                                        "objectID": "WSFOLDER_911b7380497c41d6943cacbbe064be70",
+                                        "children": [{
+                                            "id": "WSMYSPACE_66f62824c708486e81f484b474236f81-WSFOLDER_911b7380497c41d6943cacbbe064be70-CMAPPLY_e29deb95aa5e4493bcbdda2380383d9e-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                            "text": "个人空间(宋田华)",
+                                            "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                            "objectID": "WSMYSPACE_66f62824c708486e81f484b474236f81",
+                                            "children": []
+                                        }]
+                                    }]
+                                }, {
+                                    "id": "WSFOLDER_dd13f02694fa4cf8b1924c75c1708af7-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "文件",
+                                    "ico": "/Base/Image/tree_folder_small.png",
+                                    "objectID": "WSFOLDER_dd13f02694fa4cf8b1924c75c1708af7",
+                                    "children": [{
+                                        "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_dd13f02694fa4cf8b1924c75c1708af7-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "个人空间(吴琼)",
+                                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                        "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                        "children": []
+                                    }]
+                                }, {
+                                    "id": "WSFOLDER_79ecdcffbb00461d8e73e990cf3b52b8-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "WQ_RENWU",
+                                    "ico": "/Base/Image/tree_folder_small.png",
+                                    "objectID": "WSFOLDER_79ecdcffbb00461d8e73e990cf3b52b8",
+                                    "children": [{
+                                        "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_79ecdcffbb00461d8e73e990cf3b52b8-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "个人空间(吴琼)",
+                                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                                        "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                                        "children": []
+                                    }]
+                                }, {
+                                    "id": "PMTASK_53e7ee2bd93247e2a0e8e75ccf8730f7-PSEITEM_723db0b28cfc4f29a2a5ed91eb813db5-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "WQXJ0001/WQXJ0001/A.001",
+                                    "ico": "/InforCenter/Image/Model/l_common_tasks.png",
+                                    "objectID": "PMTASK_53e7ee2bd93247e2a0e8e75ccf8730f7",
+                                    "children": []
+                                }]
+                            }, {
+                                "id": "CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "存储分类1/0004000001",
+                                "ico": "/InforCenter/Image/Model/l_classification.png",
+                                "objectID": "CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802",
+                                "children": [{
+                                    "id": "CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "抽象分类1/0003000004",
+                                    "ico": "/InforCenter/Image/Model/l_classification.png",
+                                    "objectID": "CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d",
+                                    "children": [{
+                                        "id": "CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "德标件/0002000002",
+                                        "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                        "objectID": "CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59",
+                                        "children": [{
+                                            "id": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                            "text": "标准件/0001000001",
+                                            "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                            "objectID": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928",
+                                            "children": [{
+                                                "id": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc-CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                "text": "分类管理",
+                                                "ico": "InforCenter/Image/Model/l_classified_management.png",
+                                                "objectID": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc",
+                                                "children": []
+                                            }]
+                                        }]
+                                    }]
+                                }]
+                            }, {
+                                "id": "CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "存储分类2/0004000003",
+                                "ico": "/InforCenter/Image/Model/l_classification.png",
+                                "objectID": "CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4",
+                                "children": [{
+                                    "id": "CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "抽象分类1/0003000004",
+                                    "ico": "/InforCenter/Image/Model/l_classification.png",
+                                    "objectID": "CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d",
+                                    "children": [{
+                                        "id": "CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "德标件/0002000002",
+                                        "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                        "objectID": "CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59",
+                                        "children": [{
+                                            "id": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                            "text": "标准件/0001000001",
+                                            "ico": "/InforCenter/Image/Model/l_grouping.png",
+                                            "objectID": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928",
+                                            "children": [{
+                                                "id": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc-CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_26ef5041d38b4a929781055b46bdf4c4-PSEITEM_b62eade163ab4f6a997c855079de9338-PSEITEM_9b09ad56507b40c1a99c5320698d2bdb-PSEITEM_7cba45e0e92041f4809a7d83440e56d3-PSEITEM_3d901f0ef01b4361a8bb99f444c74d3e-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                "text": "分类管理",
+                                                "ico": "InforCenter/Image/Model/l_classified_management.png",
+                                                "objectID": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc",
+                                                "children": []
+                                            }]
+                                        }]
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }]
+                }]
+            }, {
+                "id": "CMPROBLEM_353b802ea85c41d5b3fd89d752785809-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "WQHG001/WQHG001",
+                "ico": "/InforCenter/Image/Model/l_problem_report.png",
+                "objectID": "CMPROBLEM_353b802ea85c41d5b3fd89d752785809",
+                "children": [{
+                    "id": "WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMPROBLEM_353b802ea85c41d5b3fd89d752785809-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "WQ-BG01",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_ea4d00eb984e474baa91422476986dc3",
+                    "children": [{
+                        "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ea4d00eb984e474baa91422476986dc3-CMPROBLEM_353b802ea85c41d5b3fd89d752785809-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "个人空间(吴琼)",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                        "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                        "children": []
+                    }]
+                }]
+            }, {
+                "id": "FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "WQAA",
+                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                "objectID": "FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373",
+                "children": [{
+                    "id": "FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "AAB",
+                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                    "objectID": "FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032",
+                    "children": [{
+                        "id": "FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "WQAA",
+                        "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                        "objectID": "FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373",
+                        "children": [{
+                            "id": "FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "AAB",
+                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                            "objectID": "FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032",
+                            "children": [{
+                                "id": "FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "WQAA",
+                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                "objectID": "FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373",
+                                "children": [{
+                                    "id": "FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "AAB",
+                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                    "objectID": "FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032",
+                                    "children": [{
+                                        "id": "FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "WQAA",
+                                        "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                        "objectID": "FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373",
+                                        "children": [{
+                                            "id": "FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                            "text": "AAB",
+                                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                            "objectID": "FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032",
+                                            "children": [{
+                                                "id": "FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                "text": "WQAA",
+                                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                "objectID": "FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373",
+                                                "children": [{
+                                                    "id": "FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032-FAVORITEFOLDER_ac23a6e70b7942be82c1c5aea8ba1373-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                    "text": "AAB",
+                                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                    "objectID": "FAVORITEFOLDER_c4f1f097ec3347bf9e567077198c5032",
+                                                    "children": []
+                                                }]
+                                            }]
+                                        }]
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }]
+                }]
+            }, {
+                "id": "FAVORITE_fd61e7a80de24719959faf272c625d1b-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "收藏夹(吴琼)",
+                "ico": "Platform/Image/Model/p_favorites.png",
+                "objectID": "FAVORITE_fd61e7a80de24719959faf272c625d1b",
+                "children": []
+            }, {
+                "id": "WSFOLDER_097b322b90f4484fa8b2ac96907c01b2-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "ccqqq",
+                "ico": "/Base/Image/tree_folder_small.png",
+                "objectID": "WSFOLDER_097b322b90f4484fa8b2ac96907c01b2",
+                "children": [{
+                    "id": "WSMYSPACE_3660a452aa4a429eb8c22b088e798941-WSFOLDER_097b322b90f4484fa8b2ac96907c01b2-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "个人空间(cc)",
+                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                    "objectID": "WSMYSPACE_3660a452aa4a429eb8c22b088e798941",
+                    "children": []
+                }]
+            }, {
+                "id": "WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "SCWJJ",
+                "ico": "/Base/Image/tree_folder_small.png",
+                "objectID": "WSFOLDER_3100f1b035414a6da88c218b849a2327",
+                "children": [{
+                    "id": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "WQ-收藏夹测试",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3",
+                    "children": [{
+                        "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "个人空间(吴琼)",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                        "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                        "children": []
+                    }]
+                }, {
+                    "id": "FAVORITEFOLDER_fa235f51cf6148f99e452b50b83888f2-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "新建收藏夹新建收藏夹新建收藏夹新建收藏夹新建收藏夹新建收藏夹新建收藏夹",
+                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                    "objectID": "FAVORITEFOLDER_fa235f51cf6148f99e452b50b83888f2",
+                    "children": [{
+                        "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_fa235f51cf6148f99e452b50b83888f2-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "0623",
+                        "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                        "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                        "children": [{
+                            "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_fa235f51cf6148f99e452b50b83888f2-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "0623",
+                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                            "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                            "children": [{
+                                "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_fa235f51cf6148f99e452b50b83888f2-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "0623",
+                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                "children": [{
+                                    "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_fa235f51cf6148f99e452b50b83888f2-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "0623",
+                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                    "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                    "children": [{
+                                        "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_fa235f51cf6148f99e452b50b83888f2-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "0623",
+                                        "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                        "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                        "children": [{
+                                            "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_fa235f51cf6148f99e452b50b83888f2-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                            "text": "0623",
+                                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                            "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                            "children": [{
+                                                "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_fa235f51cf6148f99e452b50b83888f2-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                "text": "0623",
+                                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                                "children": [{
+                                                    "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_fa235f51cf6148f99e452b50b83888f2-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                    "text": "0623",
+                                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                    "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                                    "children": []
+                                                }]
+                                            }]
+                                        }]
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }]
+                }, {
+                    "id": "FAVORITEFOLDER_a85146657c4345048f09ef5c37711bd4-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "0622-xg",
+                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                    "objectID": "FAVORITEFOLDER_a85146657c4345048f09ef5c37711bd4",
+                    "children": [{
+                        "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_a85146657c4345048f09ef5c37711bd4-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "0623",
+                        "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                        "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                        "children": [{
+                            "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_a85146657c4345048f09ef5c37711bd4-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "0623",
+                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                            "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                            "children": [{
+                                "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_a85146657c4345048f09ef5c37711bd4-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "0623",
+                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                "children": [{
+                                    "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_a85146657c4345048f09ef5c37711bd4-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "0623",
+                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                    "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                    "children": [{
+                                        "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_a85146657c4345048f09ef5c37711bd4-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "0623",
+                                        "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                        "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                        "children": [{
+                                            "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_a85146657c4345048f09ef5c37711bd4-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                            "text": "0623",
+                                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                            "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                            "children": [{
+                                                "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_a85146657c4345048f09ef5c37711bd4-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                "text": "0623",
+                                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                                "children": [{
+                                                    "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_a85146657c4345048f09ef5c37711bd4-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                    "text": "0623",
+                                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                    "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                                    "children": []
+                                                }]
+                                            }]
+                                        }]
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }]
+                }, {
+                    "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "0623",
+                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                    "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                    "children": [{
+                        "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "0623",
+                        "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                        "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                        "children": [{
+                            "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "0623",
+                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                            "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                            "children": [{
+                                "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "0623",
+                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                "children": [{
+                                    "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "0623",
+                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                    "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                    "children": [{
+                                        "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "0623",
+                                        "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                        "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                        "children": [{
+                                            "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                            "text": "0623",
+                                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                            "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                            "children": [{
+                                                "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                "text": "0623",
+                                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                                "children": [{
+                                                    "id": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9-WSFOLDER_3100f1b035414a6da88c218b849a2327-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                    "text": "0623",
+                                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                    "objectID": "FAVORITEFOLDER_3f3bf1d3f22e420899c34a61aec80cc9",
+                                                    "children": []
+                                                }]
+                                            }]
+                                        }]
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }]
+                }]
+            }, {
+                "id": "WSFOLDER_9ecf6acd2cc24c6a981e5be620e33d72-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "hq",
+                "ico": "/Base/Image/tree_folder_small.png",
+                "objectID": "WSFOLDER_9ecf6acd2cc24c6a981e5be620e33d72",
+                "children": [{
+                    "id": "WSMYSPACE_System-WSFOLDER_9ecf6acd2cc24c6a981e5be620e33d72-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "个人空间(系统管理员)",
+                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                    "objectID": "WSMYSPACE_System",
+                    "children": []
+                }]
+            }, {
+                "id": "WSFOLDER_4ed8894b3e7d48498ebcb266d2804fd8-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "ceshi",
+                "ico": "/Base/Image/tree_folder_small.png",
+                "objectID": "WSFOLDER_4ed8894b3e7d48498ebcb266d2804fd8",
+                "children": [{
+                    "id": "WSFOLDER_7372b451136743fe9982de69b72a3896-WSFOLDER_4ed8894b3e7d48498ebcb266d2804fd8-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "qqqq",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_7372b451136743fe9982de69b72a3896",
+                    "children": [{
+                        "id": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc-WSFOLDER_7372b451136743fe9982de69b72a3896-WSFOLDER_4ed8894b3e7d48498ebcb266d2804fd8-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "公共空间",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_close.png",
+                        "objectID": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc",
+                        "children": []
+                    }]
+                }, {
+                    "id": "WSFOLDER_2aac9e7d5c414f5c8814119b37f2953b-WSFOLDER_4ed8894b3e7d48498ebcb266d2804fd8-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "qqqq(复件)",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_2aac9e7d5c414f5c8814119b37f2953b",
+                    "children": [{
+                        "id": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc-WSFOLDER_2aac9e7d5c414f5c8814119b37f2953b-WSFOLDER_4ed8894b3e7d48498ebcb266d2804fd8-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "公共空间",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_close.png",
+                        "objectID": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc",
+                        "children": []
+                    }]
+                }]
+            }, {
+                "id": "WSFOLDER_3e2785aa6c2a4ac3acdf932cf332a3bd-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "cc",
+                "ico": "/Base/Image/tree_folder_small.png",
+                "objectID": "WSFOLDER_3e2785aa6c2a4ac3acdf932cf332a3bd",
+                "children": [{
+                    "id": "WSMYSPACE_3660a452aa4a429eb8c22b088e798941-WSFOLDER_3e2785aa6c2a4ac3acdf932cf332a3bd-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "个人空间(cc)",
+                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                    "objectID": "WSMYSPACE_3660a452aa4a429eb8c22b088e798941",
+                    "children": []
+                }]
+            }, {
+                "id": "WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "ccc",
+                "ico": "/Base/Image/tree_folder_small.png",
+                "objectID": "WSFOLDER_9d856602b04145fa97fe70934c56e8c9",
+                "children": [{
+                    "id": "WSFOLDER_0bb7c6e2a0da4426bfc7a7272b0c1658-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "111",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_0bb7c6e2a0da4426bfc7a7272b0c1658",
+                    "children": [{
+                        "id": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc-WSFOLDER_0bb7c6e2a0da4426bfc7a7272b0c1658-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "公共空间",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_close.png",
+                        "objectID": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc",
+                        "children": []
+                    }]
+                }, {
+                    "id": "WSFOLDER_8100fd22e81146fdbcb5723519d84c26-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "A",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_8100fd22e81146fdbcb5723519d84c26",
+                    "children": [{
+                        "id": "WSFOLDER_e558e783e5bc4349949a17a66eb9f661-WSFOLDER_8100fd22e81146fdbcb5723519d84c26-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "D",
+                        "ico": "/Base/Image/tree_folder_small.png",
+                        "objectID": "WSFOLDER_e558e783e5bc4349949a17a66eb9f661",
+                        "children": [{
+                            "id": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc-WSFOLDER_e558e783e5bc4349949a17a66eb9f661-WSFOLDER_8100fd22e81146fdbcb5723519d84c26-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "公共空间",
+                            "ico": "/Base/Ctrls/Tree/img/diy/1_close.png",
+                            "objectID": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc",
+                            "children": []
+                        }]
+                    }, {
+                        "id": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc-WSFOLDER_8100fd22e81146fdbcb5723519d84c26-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "公共空间",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_close.png",
+                        "objectID": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc",
+                        "children": []
+                    }]
+                }, {
+                    "id": "WSFOLDER_c409176586d5431eb86608ddbe1256f9-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "11",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_c409176586d5431eb86608ddbe1256f9",
+                    "children": [{
+                        "id": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc-WSFOLDER_c409176586d5431eb86608ddbe1256f9-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "公共空间",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_close.png",
+                        "objectID": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc",
+                        "children": []
+                    }]
+                }, {
+                    "id": "WSFOLDER_d41f51f5913247ccb8bcf725557d827f-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "33333",
+                    "ico": "/Base/Image/tree_folder_small.png",
+                    "objectID": "WSFOLDER_d41f51f5913247ccb8bcf725557d827f",
+                    "children": [{
+                        "id": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc-WSFOLDER_d41f51f5913247ccb8bcf725557d827f-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "公共空间",
+                        "ico": "/Base/Ctrls/Tree/img/diy/1_close.png",
+                        "objectID": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc",
+                        "children": []
+                    }]
+                }, {
+                    "id": "FAVORITEFOLDER_baf78dab722f4472ac4b3675b901aa10-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "i",
+                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                    "objectID": "FAVORITEFOLDER_baf78dab722f4472ac4b3675b901aa10",
+                    "children": [{
+                        "id": "FAVORITE_3660a452aa4a429eb8c22b088e798941-FAVORITEFOLDER_baf78dab722f4472ac4b3675b901aa10-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "收藏夹(cc)",
+                        "ico": "Platform/Image/Model/p_favorites.png",
+                        "objectID": "FAVORITE_3660a452aa4a429eb8c22b088e798941",
+                        "children": []
+                    }]
+                }, {
+                    "id": "FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "r",
+                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                    "objectID": "FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7",
+                    "children": [{
+                        "id": "FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "y",
+                        "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                        "objectID": "FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50",
+                        "children": [{
+                            "id": "FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "r",
+                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                            "objectID": "FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7",
+                            "children": [{
+                                "id": "FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "y",
+                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                "objectID": "FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50",
+                                "children": [{
+                                    "id": "FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                    "text": "r",
+                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                    "objectID": "FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7",
+                                    "children": [{
+                                        "id": "FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                        "text": "y",
+                                        "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                        "objectID": "FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50",
+                                        "children": [{
+                                            "id": "FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                            "text": "r",
+                                            "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                            "objectID": "FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7",
+                                            "children": [{
+                                                "id": "FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                "text": "y",
+                                                "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                "objectID": "FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50",
+                                                "children": [{
+                                                    "id": "FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-FAVORITEFOLDER_2e64ec7d3d914b08a191e4f46b7c2a50-FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7-WSFOLDER_9d856602b04145fa97fe70934c56e8c9-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                                    "text": "r",
+                                                    "ico": "Platform/Image/Model/p_the_collection_folder.png",
+                                                    "objectID": "FAVORITEFOLDER_b9c0e60f6acf40bd9d2c63de735600a7",
+                                                    "children": []
+                                                }]
+                                            }]
+                                        }]
+                                    }]
+                                }]
+                            }]
+                        }]
+                    }]
+                }]
+            }, {
+                "id": "WSFOLDER_ff219eccac3a413ba1c022bda213dbc8-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "登录用户的信息验证：首页上方显示当前登录用的用户名、组、角色信息；",
+                "ico": "/Base/Image/tree_folder_small.png",
+                "objectID": "WSFOLDER_ff219eccac3a413ba1c022bda213dbc8",
+                "children": [{
+                    "id": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc-WSFOLDER_ff219eccac3a413ba1c022bda213dbc8-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "公共空间",
+                    "ico": "/Base/Ctrls/Tree/img/diy/1_close.png",
+                    "objectID": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc",
+                    "children": []
+                }]
+            }, {
+                "id": "WSFOLDER_dd13f02694fa4cf8b1924c75c1708af7-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "文件",
+                "ico": "/Base/Image/tree_folder_small.png",
+                "objectID": "WSFOLDER_dd13f02694fa4cf8b1924c75c1708af7",
+                "children": [{
+                    "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_dd13f02694fa4cf8b1924c75c1708af7-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "个人空间(吴琼)",
+                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                    "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                    "children": []
+                }]
+            }, {
+                "id": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "WQ-收藏夹测试",
+                "ico": "/Base/Image/tree_folder_small.png",
+                "objectID": "WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3",
+                "children": [{
+                    "id": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b-WSFOLDER_ac0be76d7fbe42979bce7e3c69b328c3-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "个人空间(吴琼)",
+                    "ico": "/Base/Ctrls/Tree/img/diy/1_open.png",
+                    "objectID": "WSMYSPACE_fd61e7a80de24719959faf272c625d1b",
+                    "children": []
+                }]
+            }, {
+                "id": "WSFOLDER_2aac9e7d5c414f5c8814119b37f2953b-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "qqqq(复件)",
+                "ico": "/Base/Image/tree_folder_small.png",
+                "objectID": "WSFOLDER_2aac9e7d5c414f5c8814119b37f2953b",
+                "children": [{
+                    "id": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc-WSFOLDER_2aac9e7d5c414f5c8814119b37f2953b-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "公共空间",
+                    "ico": "/Base/Ctrls/Tree/img/diy/1_close.png",
+                    "objectID": "WSPUBLICSPACE_155f6a331e804b69a6fc47e6273699fc",
+                    "children": []
+                }]
+            }, {
+                "id": "CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                "text": "存储分类1/0004000001",
+                "ico": "/InforCenter/Image/Model/l_classification.png",
+                "objectID": "CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802",
+                "children": [{
+                    "id": "CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                    "text": "抽象分类1/0003000004",
+                    "ico": "/InforCenter/Image/Model/l_classification.png",
+                    "objectID": "CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d",
+                    "children": [{
+                        "id": "CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                        "text": "德标件/0002000002",
+                        "ico": "/InforCenter/Image/Model/l_grouping.png",
+                        "objectID": "CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59",
+                        "children": [{
+                            "id": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                            "text": "标准件/0001000001",
+                            "ico": "/InforCenter/Image/Model/l_grouping.png",
+                            "objectID": "CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928",
+                            "children": [{
+                                "id": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc-CLASSIFYGROUP_12e4a04474e349e6b5f33ed566fd8928-CLASSIFYGROUP_20473964cf074fd69c7827af234d9b59-CLASSIFYCLASS_ed191165495347e69ceaa03d97a7511d-CLASSIFYCLASS_d4d2d7c842ec45bd95b9303deee54802-DOCDATASET_7363b267f0b745cc91ed1db9b6ab364b",
+                                "text": "分类管理",
+                                "ico": "InforCenter/Image/Model/l_classified_management.png",
+                                "objectID": "CLASSIFYMANAGE_155f6a331e804b69a6fc47e6273699fc",
+                                "children": []
+                            }]
+                        }]
+                    }]
+                }]
+            }]
+        }];
+
+
+        // $('#topology').topology({
+        //     data: dataALL,
+        //     dev: true
+        // });
+
+        $('#topology').topology({
+            data: dataALL,
+            dev: true,
+            direction: {
+                arrow: 'reverse',
+                node: 'reverse'
+            }
+        });
+    </script>
+
+</body>
+
+</html>
